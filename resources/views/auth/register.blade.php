@@ -27,23 +27,69 @@
 document.getElementById("registerForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        body: JSON.stringify({
-            email: document.getElementById("email").value,
-            username: document.getElementById("username").value,
-            password: document.getElementById("password").value,
-        })
-    });
+    const msg = document.getElementById("msg");
+    msg.textContent = "";
+    msg.className = "";
 
-    const data = await res.json();
-    document.getElementById("msg").innerText = JSON.stringify(data);
+    const payload = {
+        email: document.getElementById("email").value,
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value,
+    };
+
+    try {
+        const res = await fetch("/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const contentType = res.headers.get("content-type") || "";
+        let data = {};
+
+        if (contentType.includes("application/json")) {
+            data = await res.json();
+        } else {
+            const text = await res.text();
+            console.log("Nem JSON válasz:", text);
+            msg.textContent = "Szerver hiba (nem JSON válasz). Nézd a konzolt 😈";
+            msg.className = "error";
+            return;
+        }
+
+        // 🔴 HTTP hiba (pl. 422 validation)
+        if (!res.ok) {
+            if (data.errors) {
+                const firstKey = Object.keys(data.errors)[0];
+                msg.textContent = data.errors[firstKey][0];
+            } else {
+                msg.textContent = data.message || "Hiba történt a regisztrációnál!";
+            }
+            msg.className = "error";
+            return;
+        }
+
+        // 🟢 Siker
+        msg.textContent = data.message || "Sikeres regisztráció! ✅";
+        msg.className = "success";
+
+        // opcionális: ürítsd a formot
+        // document.getElementById("registerForm").reset();
+
+        // opcionális átirányítás
+        // setTimeout(() => window.location.href = "/login", 1500);
+
+    } catch (err) {
+        console.error(err);
+        msg.textContent = "Hálózati/Szerver hiba történt 😬";
+        msg.className = "error";
+    }
 });
 </script>
+
 <style>
 /* Teljes oldal */
 body {
