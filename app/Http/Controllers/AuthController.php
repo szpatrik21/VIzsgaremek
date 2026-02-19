@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -14,17 +13,27 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email|unique:users,email',
             'username' => 'required|min:3|unique:users,username',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+
+            // ÚJ MEZŐK
+            'phone' => 'required|string|max:20',
+            'birthdate' => 'required|date',
+            'address' => 'required|string|max:255',
         ]);
 
         User::create([
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
+
+            // ÚJ MEZŐK
+            'phone' => $request->phone,
+            'birthdate' => $request->birthdate,
+            'address' => $request->address,
         ]);
 
         return response()->json([
-            'message' => 'User registered successfully.'
+            'message' => 'Sikeres regisztráció.'
         ], 201);
     }
 
@@ -37,10 +46,9 @@ class AuthController extends Controller
 
         $credentials = $request->only('username', 'password');
 
-        // 🟢 A LEGNAGYOBB FIX: mindig a JWT guardot kell hívni
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json([
-                'error' => 'Invalid username or password'
+                'error' => 'Hibás felhasználónév vagy jelszó.'
             ], 401);
         }
 
@@ -61,8 +69,7 @@ class AuthController extends Controller
         auth('api')->logout();
 
         return response()->json([
-            'message' => 'Logged out successfully'
+            'message' => 'Sikeres kijelentkezés.'
         ]);
     }
 }
-

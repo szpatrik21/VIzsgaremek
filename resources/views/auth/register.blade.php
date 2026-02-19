@@ -5,10 +5,12 @@
     <title>Regisztráció</title>
 </head>
 <body>
-    <x-navbar />
+<x-navbar />
+
 <h2>Regisztráció</h2>
 
 <form id="registerForm">
+
     <label>Email:</label><br>
     <input type="email" id="email" required><br><br>
 
@@ -17,6 +19,17 @@
 
     <label>Jelszó:</label><br>
     <input type="password" id="password" required><br><br>
+
+    <!-- ÚJ MEZŐK -->
+
+    <label>Telefonszám:</label><br>
+    <input type="tel" id="phone" required><br><br>
+
+    <label>Születési dátum:</label><br>
+    <input type="date" id="birthdate" required><br><br>
+
+    <label>Lakóhely:</label><br>
+    <input type="text" id="address" required><br><br>
 
     <button type="submit">Regisztráció</button>
 </form>
@@ -35,6 +48,9 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         email: document.getElementById("email").value,
         username: document.getElementById("username").value,
         password: document.getElementById("password").value,
+        phone: document.getElementById("phone").value,
+        birthdate: document.getElementById("birthdate").value,
+        address: document.getElementById("address").value,
     };
 
     try {
@@ -55,12 +71,11 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         } else {
             const text = await res.text();
             console.log("Nem JSON válasz:", text);
-            msg.textContent = "Szerver hiba (nem JSON válasz). Nézd a konzolt 😈";
+            msg.textContent = "Szerver hiba történt.";
             msg.className = "error";
             return;
         }
 
-        // 🔴 HTTP hiba (pl. 422 validation)
         if (!res.ok) {
             if (data.errors) {
                 const firstKey = Object.keys(data.errors)[0];
@@ -72,67 +87,64 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             return;
         }
 
-        // 🟢 Siker
+        // 🟢 SIKER
         msg.textContent = data.message || "Sikeres regisztráció! ✅";
         msg.className = "success";
 
-        // opcionális: ürítsd a formot
-        // document.getElementById("registerForm").reset();
+        document.getElementById("registerForm").reset();
 
-        // opcionális átirányítás
-        // setTimeout(() => window.location.href = "/login", 1500);
+        // 🚀 ÁTIRÁNYÍTÁS LOGIN OLDALRA
+        setTimeout(() => {
+            window.location.href = "/login";
+        }, 1200);
 
     } catch (err) {
         console.error(err);
-        msg.textContent = "Hálózati/Szerver hiba történt 😬";
+        msg.textContent = "Hálózati hiba történt.";
         msg.className = "error";
     }
 });
 </script>
 
+
 <style>
-/* Teljes oldal */
 body {
     font-family: Arial, sans-serif;
-    background: #0f0f0f;        /* teljesen sötét háttér */
+    background: #0f0f0f;
     margin: 0;
-    padding-top: 120px;         /* navbar miatt */
+    padding-top: 120px;
     text-align: center;
     color: #f5f5f5;
 }
 
-/* Cím */
 h2 {
     margin-bottom: 20px;
     font-size: 26px;
     color: #ffffff;
 }
 
-/* Form kerete */
 form {
     width: 350px;
     margin: auto;
-    background: #1a1a1a;        /* sötétszürke doboz */
+    background: #1a1a1a;
     padding: 25px;
     border-radius: 10px;
     text-align: left;
 }
 
-/* Label */
 label {
     font-weight: bold;
     font-size: 14px;
     color: #e0e0e0;
 }
 
-/* Input mezők */
 input {
     width: 100%;
     padding: 10px;
     margin-top: 6px;
     border-radius: 6px;
     font-size: 15px;
-    background: #2b2b2b;        /* sötét input */
+    background: #2b2b2b;
     border: 1px solid #444;
     color: #fff;
     transition: 0.2s;
@@ -144,12 +156,11 @@ input:focus {
     background: #333;
 }
 
-/* Gomb */
 button {
     width: 100%;
     padding: 12px;
     margin-top: 15px;
-    background: #d4af37;      /* arany gomb */
+    background: #d4af37;
     color: #000;
     border: none;
     border-radius: 6px;
@@ -163,12 +174,18 @@ button:hover {
     background: #e6c35c;
 }
 
-/* Üzenetek */
 #msg {
     margin-top: 15px;
+}
+
+#msg.error {
     color: #ff5c5c;
 }
 
+#msg.success {
+    color: #66ff99;
+}
 </style>
+
 </body>
 </html>
