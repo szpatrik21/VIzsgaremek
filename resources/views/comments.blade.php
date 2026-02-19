@@ -13,21 +13,24 @@
   <x-navbar />
 
   <div class="wrap">
-    <h1>Vélemények</h1>
+  <h1>Vélemények</h1>
 
-    <div id="status" class="status"></div>
+  <div id="status" class="status"></div>
 
-    <form id="commentForm" class="card">
-      <label for="content">Írj egy kommentet</label>
-      <textarea id="content" rows="4" placeholder="Pl. nagyon korrekt szolgáltatás..." required></textarea>
-      <button id="sendBtn" type="submit">Küldés</button>
-      <div id="msg" class="msg"></div>
-    </form>
+  <!-- 🔽 KOMMENT LISTA FELÜL -->
+  <div id="commentsList" class="list"></div>
 
-    <div class="divider"></div>
+  <div class="divider"></div>
 
-    <div id="commentsList" class="list"></div>
-  </div>
+  <!-- 🔽 KOMMENT ÍRÁS ALUL -->
+  <form id="commentForm" class="card">
+    <label for="content">Írj egy kommentet</label>
+    <textarea id="content" rows="4" placeholder="Pl. nagyon korrekt szolgáltatás..." required></textarea>
+    <button id="sendBtn" type="submit">Küldés</button>
+    <div id="msg" class="msg"></div>
+  </form>
+</div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -214,12 +217,14 @@ document.addEventListener("DOMContentLoaded", () => {
   .status.success{ color:#66ff99; }
   .status.error{ color:#ff5c5c; }
 
-  .card{
-    background:#1a1a1a;
-    border:1px solid #333;
-    padding: 16px;
-    border-radius: 14px;
-  }
+.card{
+  background:#1a1a1a;
+  border:1px solid #333;
+  padding:16px;
+  border-radius:14px;
+  margin-top:20px;   /* 👈 EZT ADD HOZZÁ */
+}
+
 
   label{
     display:block;
