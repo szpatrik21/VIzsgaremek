@@ -23,32 +23,36 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("jwt_token");
 
-    // Ha nincs token → nem vagy bejelentkezve
     if (!token) return;
 
     try {
         const res = await fetch("/api/user", {
             headers: {
-                "Authorization": "Bearer " + token
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
             }
         });
 
-        if (!res.ok) return;
+        if (!res.ok) {
+            localStorage.removeItem("jwt_token");
+            return;
+        }
 
         const user = await res.json();
 
-        // Username kiírása a navbar-ba
         const navbarRight = document.querySelector(".navbar-right");
 
         navbarRight.innerHTML = `
-            <span class="logged-in-user">Bejelentkezve: <strong>${user.username}</strong></span>
-            <a id="logoutBtn" href="#">Kijelentkezés</a>
+            <a href="/profile" class="profile-link">
+                ${user.first_name} ${user.last_name}
+            </a>
+            <a id="logoutBtn" href="#" class="logout-link">Kijelentkezés</a>
         `;
-        
-        // Kijelentkezés
-        document.getElementById("logoutBtn").addEventListener("click", function() {
+
+        document.getElementById("logoutBtn").addEventListener("click", function(e) {
+            e.preventDefault();
             localStorage.removeItem("jwt_token");
-            location.reload();
+            window.location.href = "/login";
         });
 
     } catch (error) {
