@@ -13,9 +13,9 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email|unique:users,email',
             'username' => 'required|min:3|unique:users,username',
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
             'password' => 'required|min:6',
-
-            // ÚJ MEZŐK
             'phone' => 'required|string|max:20',
             'birthdate' => 'required|date',
             'address' => 'required|string|max:255',
@@ -24,9 +24,9 @@ class AuthController extends Controller
         User::create([
             'email' => $request->email,
             'username' => $request->username,
+            'first_name' => $request->first_name,   // 🔥 EZ HIÁNYZOTT
+            'last_name' => $request->last_name,     // 🔥 EZ HIÁNYZOTT
             'password' => Hash::make($request->password),
-
-            // ÚJ MEZŐK
             'phone' => $request->phone,
             'birthdate' => $request->birthdate,
             'address' => $request->address,

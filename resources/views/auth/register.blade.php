@@ -17,10 +17,16 @@
     <label>Felhasználónév:</label><br>
     <input type="text" id="username" required><br><br>
 
+    <!-- 🔥 ÚJ NÉV MEZŐK -->
+
+    <label>Vezetéknév:</label><br>
+    <input type="text" id="last_name" required><br><br>
+
+    <label>Keresztnév:</label><br>
+    <input type="text" id="first_name" required><br><br>
+
     <label>Jelszó:</label><br>
     <input type="password" id="password" required><br><br>
-
-    <!-- ÚJ MEZŐK -->
 
     <label>Telefonszám:</label><br>
     <input type="tel" id="phone" required><br><br>
@@ -47,6 +53,8 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     const payload = {
         email: document.getElementById("email").value,
         username: document.getElementById("username").value,
+        last_name: document.getElementById("last_name").value,
+        first_name: document.getElementById("first_name").value,
         password: document.getElementById("password").value,
         phone: document.getElementById("phone").value,
         birthdate: document.getElementById("birthdate").value,
@@ -87,13 +95,11 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             return;
         }
 
-        // 🟢 SIKER
         msg.textContent = data.message || "Sikeres regisztráció! ✅";
         msg.className = "success";
 
         document.getElementById("registerForm").reset();
 
-        // 🚀 ÁTIRÁNYÍTÁS LOGIN OLDALRA
         setTimeout(() => {
             window.location.href = "/login";
         }, 1200);

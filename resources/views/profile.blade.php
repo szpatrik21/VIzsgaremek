@@ -38,46 +38,7 @@
     }
    </style>
 
-   <h3>Meghirdetett autóim:</h3>
-
-   <div class="carbox">
-<div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Koenigsegg Jesko/Jesko1.jpg') }}" class="carsbox">
-        <div class="card-content">
-            <p>Koenigsegg Jesko</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('koenigsegg') }}">Megtekintés</a>
-        </div>
-    </div>
-
-    <div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Lamborghini Aventador/aventador1.webp') }}" class="carsbox">
-        <div class="card-content">
-            <p>Lamborghini Aventador</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('lamborghini') }}">Megtekintés</a>
-        </div>
-    </div>
-
-    <div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Koenigsegg Jesko/Jesko1.jpg') }}" class="carsbox">
-        <div class="card-content">
-            <p>Koenigsegg Jesko</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('koenigsegg') }}">Megtekintés</a>
-        </div>
-    </div>
-
-    <div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Lamborghini Aventador/aventador1.webp') }}" class="carsbox">
-        <div class="card-content">
-            <p>Lamborghini Aventador</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('lamborghini') }}">Megtekintés</a>
-        </div>
-    </div>
-
-
+   
 
 </body>
 </html>
