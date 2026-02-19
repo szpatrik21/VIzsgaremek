@@ -11,18 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->id();
+        if (!Schema::hasTable('comments')) {
 
-            // Kapcsolás a users táblához
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            Schema::create('comments', function (Blueprint $table) {
+                $table->id();
 
-            // A komment szövege
-            $table->text('content');
+                // Kapcsolás a users táblához
+                $table->foreignId('user_id')
+                      ->constrained()
+                      ->onDelete('cascade');
 
-            // Létrehozva / frissítve időbélyegek
-            $table->timestamps();
-        });
+                // A komment szövege
+                $table->text('content');
+
+                // Létrehozva / frissítve időbélyegek
+                $table->timestamps();
+            });
+
+        }
     }
 
     /**

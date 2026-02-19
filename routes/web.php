@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\CommentController;
 
 
+
 // ==============================================
 // PUBLIC ROUTES
 // ==============================================
@@ -75,15 +76,9 @@ Route::get('/cars/{id}', [AutoController::class, 'show'])->name('car.details');
 // COMMENTS (AUTH REQUIRED)
 // ==============================================
 
-Route::middleware(['auth'])->group(function () {
-
-    // Komment lista + űrlap
-    Route::get('/comments', [CommentController::class, 'index'])->name('comments'); // ← NÉV VÁLTOZIK
-
-    // Komment mentése
-    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-});
-
+Route::get('/comments', function () {
+    return view('comments'); // resources/views/comments.blade.php
+})->name('comments');
 
 
 // ==============================================

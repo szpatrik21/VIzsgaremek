@@ -53,6 +53,13 @@
         <img src="{{ asset('images/rimac-white-logo.webp') }}" alt="rimac">
     </div>
 
+    <h1 class="webaruhaz_cim">Luxusautó webáruház</h1> 
+    <style>
+        .webaruhaz_cim{
+            font-size:40px;
+            margin-bottom:5px;
+        }
+    </style>
 </div>
 
   <h2 class="cim1">Kiemelt autók:</h2>
