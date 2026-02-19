@@ -23,6 +23,10 @@ class Auto extends Model
         'sebessegvalto',
         'hengerurtartalom',
         'raktaron',
+        'ar',
+        'kep',
+        'kiemelt',
+
     ];
 
     public $timestamps = false;

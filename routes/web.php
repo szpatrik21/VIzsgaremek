@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\HomeController;
 
+Route::get('/main', [HomeController::class, 'index'])->name('main');
 
 
 // ==============================================
@@ -30,9 +32,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 // Fő oldal / dashboard
-Route::get('/main', function () {
-    return view('main_page');
-})->name('main');
+//Route::get('/main', function () {
+ //   return view('main_page');
+//})->name('main');
 
 
 // ==============================================
@@ -123,3 +125,16 @@ Route::view('/admin/carcreate', 'admin.carcreate')->name('carcreate');
 Route::view('/createcars', 'createcars')->name('createcars');
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+use App\Http\Controllers\UserController;
+
+Route::middleware('auth:api')
+    ->post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
+
+
+use App\Http\Controllers\OfferController;
+
+Route::get('/cars/{auto}/offer', [OfferController::class, 'create'])->name('offer.create');
+Route::post('/cars/{auto}/offer', [OfferController::class, 'store'])->name('offer.store');
