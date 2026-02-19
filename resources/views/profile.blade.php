@@ -16,7 +16,6 @@
     <p>Név:</p>
     <p>Email cím:</p>
     <p>Regisztráció dátuma:</p>
-    <button class="yellowbutton">Hirdetés feladása</button>
     </div>
    <style>
     .Hbutton{

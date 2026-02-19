@@ -28,47 +28,55 @@
 
 <style>
 /* Teljes oldal */
+* {
+    box-sizing: border-box; /* 🔥 ettől lesz tényleg ugyanakkora a szélesség */
+}
+
 body {
     font-family: Arial, sans-serif;
-    background: #0f0f0f;        /* teljesen sötét háttér */
+    background: #0f0f0f;
     margin: 0;
-    padding-top: 120px;         /* navbar miatt */
+    padding-top: 120px;
     text-align: center;
     color: #f5f5f5;
 }
 
 /* Cím */
 h2 {
-    margin-bottom: 20px;
-    font-size: 26px;
+
+    font-size: 30px;
     color: #ffffff;
 }
 
-/* Form kerete */
+/* Form keret */
 form {
-    width: 350px;
-    margin: auto;
-    background: #1a1a1a;        /* sötétszürke doboz */
-    padding: 25px;
-    border-radius: 10px;
+    width: 420px;                /* kicsit szélesebb, kényelmesebb */
+    max-width: calc(100% - 32px);
+    margin: 0 auto;
+    background: #1a1a1a;
+    padding: 28px;
+    border-radius: 14px;
     text-align: left;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
 /* Label */
 label {
+    display: block;
     font-weight: bold;
     font-size: 14px;
     color: #e0e0e0;
+    margin: 12px 0 6px;          /* szép ritmus */
 }
 
 /* Input mezők */
 input {
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border-radius: 6px;
+    height: 44px;                /* egységes magasság */
+    padding: 10px 12px;
+    border-radius: 8px;
     font-size: 15px;
-    background: #2b2b2b;        /* sötét input */
+    background: #2b2b2b;
     border: 1px solid #444;
     color: #fff;
     transition: 0.2s;
@@ -80,15 +88,15 @@ input:focus {
     background: #333;
 }
 
-/* Gomb */
+/* Gomb – ugyanakkora széles és magas, mint az inputok */
 button {
     width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    background: #d4af37;      /* arany gomb */
+    height: 46px;
+    margin-top: 18px;
+    background: #d4af37;
     color: #000;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
@@ -101,10 +109,17 @@ button:hover {
 
 /* Üzenetek */
 #msg {
-    margin-top: 15px;
-    color: #ff5c5c;
+    width: 420px;
+    max-width: calc(100% - 32px);
+    margin: 14px auto 0;
+    text-align: center;
+    font-weight: 600;
 }
 
+#msg.error { color: #ff5c5c; }
+#msg.success { color: #66ff99; }
+
 </style>
+
 </body>
 </html>
