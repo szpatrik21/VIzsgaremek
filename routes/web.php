@@ -138,3 +138,8 @@ use App\Http\Controllers\OfferController;
 
 Route::get('/cars/{auto}/offer', [OfferController::class, 'create'])->name('offer.create');
 Route::post('/cars/{auto}/offer', [OfferController::class, 'store'])->name('offer.store');
+
+
+Route::get('/autok', [AutoController::class, 'index'])->name('autok.index');
+Route::get('/auto/{id}', [AutoController::class, 'show'])->name('auto.show');
+

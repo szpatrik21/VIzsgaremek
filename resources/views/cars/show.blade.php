@@ -18,46 +18,28 @@
 
 <div class="egesz">
 
-  <!-- KÉPEK AUTOMATIKUS BETÖLTÉSE -->
-@php
-    $folder = $auto->marka . ' ' . $auto->modell;
-    $path = public_path('images/Autok/Autok/' . $folder);
-
-    $imageUrls = [];
-
-    if (is_dir($path)) {
-        $files = scandir($path);
-
-        foreach ($files as $file) {
-            if (preg_match('/\.(jpg|jpeg|png|webp)$/i', $file)) {
-                $imageUrls[] = 'images/Autok/Autok/' . $folder . '/' . $file;
-            }
-        }
-    }
-@endphp
-
-
-
   <div class="kepauto">
 
-    <!-- Nagy kép -->
+    <!-- Nagy kép (DB: kep) -->
     <div class="auto1">
-        @if(isset($imageUrls[0]))
-            <img src="{{ asset($imageUrls[0]) }}" alt="{{ $auto->marka }}">
+        @if(!empty($auto->kep))
+            <img src="{{ asset($auto->kep) }}" alt="{{ $auto->marka }} {{ $auto->modell }}">
+        @else
+            <p>Nincs kép</p>
         @endif
     </div>
 
-    <!-- Oldalsó kép -->
+    <!-- Oldalsó kép (DB: kep2) -->
     <div class="auto3">
-        @if(isset($imageUrls[1]))
-            <img class="autocska" src="{{ asset($imageUrls[1]) }}" alt="{{ $auto->marka }}">
+        @if(!empty($auto->kep2))
+            <img class="autocska" src="{{ asset($auto->kep2) }}" alt="{{ $auto->marka }} {{ $auto->modell }}">
         @endif
 
         <button>06 20 281 35 95</button>
         <button>Kérj árajánlatot</button>
 
         <p>
-          Raktáron: 
+          Raktáron:
           @if($auto->raktaron > 0)
               {{ $auto->raktaron }} db
           @else
@@ -68,11 +50,11 @@
 
   </div>
 
-  <!-- Árak -->
+  <!-- Ár (DB: ar) -->
   <div class="ar">
     <h3 class="ar1">{{ $auto->marka }} {{ $auto->modell }}</h3>
     <div class="ar2">
-      <p>{{ number_format($auto->teljesitmeny * 100000, 0, ',', ' ') }} Ft</p>
+      <p>{{ number_format($auto->ar, 0, ',', ' ') }} Ft</p>
     </div>
   </div>
 

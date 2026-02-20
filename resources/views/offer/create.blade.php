@@ -26,13 +26,13 @@
     @csrf
 
     <label>Név *</label>
-    <input name="name" value="{{ old('name') }}" required>
+    <input id="name" name="name" value="{{ old('name') }}" required>
 
     <label>Email *</label>
-    <input name="email" type="email" value="{{ old('email') }}" required>
+    <input id="email" name="email" type="email" value="{{ old('email') }}" required>
 
     <label>Telefon</label>
-    <input name="phone" value="{{ old('phone') }}" placeholder="+36 20 123 4567">
+    <input id="phone" name="phone" value="{{ old('phone') }}" placeholder="+36 20 123 4567">
 
     <label>Üzenet</label>
     <textarea name="message" rows="5" placeholder="Írd le, mire szeretnél ajánlatot...">{{ old('message') }}</textarea>
@@ -59,6 +59,41 @@
   .back{ display:block; text-align:center; margin-top:12px; color:#bbb; text-decoration:none; }
   .back:hover{ color:#fff; }
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  const token = localStorage.getItem("jwt_token");
+  if (!token) return; // ha nincs login, marad kézi kitöltés
+
+  try {
+    const res = await fetch("/api/user", {
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Accept": "application/json"
+      }
+    });
+
+    if (!res.ok) return;
+
+    const user = await res.json();
+
+    const nameEl = document.getElementById("name");
+    const emailEl = document.getElementById("email");
+    const phoneEl = document.getElementById("phone");
+
+    const fullName = ((user.first_name || "") + " " + (user.last_name || "")).trim();
+
+    if (nameEl && !nameEl.value) nameEl.value = fullName || user.username || "";
+    if (emailEl && !emailEl.value) emailEl.value = user.email || "";
+    if (phoneEl && !phoneEl.value) phoneEl.value = user.phone || "";
+
+  } catch (error) {
+    console.error("Nem sikerült lekérni a user adatokat:", error);
+  }
+
+});
+</script>
 
 </body>
 </html>
