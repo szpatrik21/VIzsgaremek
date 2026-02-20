@@ -1,46 +1,32 @@
 <?php
 
-use App\Http\Controllers\AutoController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminAuthController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AutoController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\OfferController;
 
+// ==============================================
+// HOME
+// ==============================================
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/main', [HomeController::class, 'index'])->name('main');
 
-
 // ==============================================
-// PUBLIC ROUTES
+// AUTH
 // ==============================================
-
-// Főoldal
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Regisztrációs oldal
 Route::view('/register', 'auth.register')->name('register');
-
-// Bejelentkezési oldal
 Route::view('/login', 'auth.login')->name('login');
 
-// Regisztráció POST
 Route::post('/register', [AuthController::class, 'register']);
-
-// Bejelentkezés POST
 Route::post('/login', [AuthController::class, 'login']);
-
-// Fő oldal / dashboard
-//Route::get('/main', function () {
- //   return view('main_page');
-//})->name('main');
-
 
 // ==============================================
 // AUTÓ OLDALAK (STATIC PAGES)
 // ==============================================
-
 Route::get('/alfa_romeo', fn() => view('cars.alfaromeo'))->name('alfaromeo');
 Route::get('/aston_martin_db11', fn() => view('cars.astonmartin'))->name('astonmartin');
 Route::get('/audi_r8_v10_performance', fn() => view('cars.audir8'))->name('audir8');
@@ -62,47 +48,49 @@ Route::get('/porsche_911_turbo_s', fn() => view('cars.porsche911'))->name('porsc
 Route::get('/rolls_royce_phantom', fn() => view('cars.rollsroyce'))->name('rollsroyce');
 Route::get('/tesla_model_s_paid', fn() => view('cars.teslamodel'))->name('teslamodel');
 
-
 // ==============================================
 // NAVBAR OLDALAK
 // ==============================================
+Route::get('/autok', [AutoController::class, 'index'])->name('autok.index');
+Route::get('/autok/{id}', [AutoController::class, 'show'])->name('autok.show');
 
-Route::get('/cars', fn() => view('cars_list'))->name('cars');
 Route::get('/cart', fn() => view('cart'))->name('cart');
 
-// Autó dinamikus részletei
-Route::get('/cars/{id}', [AutoController::class, 'show'])->name('car.details');
-
+// ==============================================
+// COMMENTS
+// ==============================================
+Route::get('/comments', fn() => view('comments'))->name('comments');
 
 // ==============================================
-// COMMENTS (AUTH REQUIRED)
+// PROFILE + API
 // ==============================================
+Route::view('/profile', 'profile')->name('profile');
 
-Route::get('/comments', function () {
-    return view('comments'); // resources/views/comments.blade.php
-})->name('comments');
-
+Route::middleware('auth:api')
+    ->post('/upload-profile-image', [UserController::class, 'uploadProfileImage'])
+    ->name('profile.upload-image');
 
 // ==============================================
-// ADMIN ROUTES
+// OFFER (Ajánlatkérés)
 // ==============================================
+Route::get('/autok/{auto}/offer', [OfferController::class, 'create'])->name('offer.create');
+Route::post('/autok/{auto}/offer', [OfferController::class, 'store'])->name('offer.store');
 
-// Admin login & regisztráció
+// ==============================================
+// ADMIN
+// ==============================================
 Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
 
 Route::get('/admin/register', [AdminAuthController::class, 'showRegister'])->name('admin.register');
 Route::post('/admin/register', [AdminAuthController::class, 'register'])->name('admin.register.post');
 
-// Admin protected
 Route::middleware('admin')->group(function () {
-
     Route::get('/admin/dashboard', function () {
-
-        $usersCount      = \App\Models\User::count();
-        $carsCount       = \App\Models\Auto::count();
-        $availableCars   = \App\Models\Auto::where('raktaron', '>', 0)->count();
-        $adminsCount     = \App\Models\Admin::count();
+        $usersCount    = \App\Models\User::count();
+        $carsCount     = \App\Models\Auto::count();
+        $availableCars = \App\Models\Auto::where('raktaron', '>', 0)->count();
+        $adminsCount   = \App\Models\Admin::count();
 
         return view('admin.dashboard', compact(
             'usersCount',
@@ -113,33 +101,10 @@ Route::middleware('admin')->group(function () {
     })->name('admin.dashboard');
 
     Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+    // ezek csak ha tényleg adminhoz tartoznak:
+    Route::view('/admin/carcreate', 'admin.carcreate')->name('carcreate');
 });
 
-//Profil oldal
-Route::view('/profile', 'profile')->name('profile');
-
-// Bejelentkezési oldal
-Route::view('/admin/carcreate', 'admin.carcreate')->name('carcreate');
-
-// Bejelentkezési oldal
+// Ha ez kell, hagyd itt:
 Route::view('/createcars', 'createcars')->name('createcars');
-
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-
-use App\Http\Controllers\UserController;
-
-Route::middleware('auth:api')
-    ->post('/upload-profile-image', [UserController::class, 'uploadProfileImage']);
-
-
-use App\Http\Controllers\OfferController;
-
-Route::get('/cars/{auto}/offer', [OfferController::class, 'create'])->name('offer.create');
-Route::post('/cars/{auto}/offer', [OfferController::class, 'store'])->name('offer.store');
-
-
-Route::get('/autok', [AutoController::class, 'index'])->name('autok.index');
-Route::get('/auto/{id}', [AutoController::class, 'show'])->name('auto.show');
-

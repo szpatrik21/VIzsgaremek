@@ -62,48 +62,29 @@
     </style>
 </div>
 
-  <h2 class="cim1">Kiemelt autók:</h2>
-  <div class="carbox">
-<div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Koenigsegg Jesko/Jesko1.jpg') }}" class="carsbox">
-        <div class="card-content">
-            <p>Koenigsegg Jesko</p>
-            <p>-</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('koenigsegg') }}">Érdekel</a>
-        </div>
-    </div>
 
-    <div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Lamborghini Aventador/aventador1.webp') }}" class="carsbox">
-        <div class="card-content">
-            <p>Lamborghini Aventador</p>
-            <p>-</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('lamborghini') }}">Érdekel</a>
-        </div>
-    </div>
+<h2 class="cim1">Kiemelt autók:</h2>
 
-    <div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Lotus Evija/Lotus2.webp') }}" class="carsbox">
-        <div class="card-content">
-            <p>Lotus Evija</p>
-            <p>-</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('lotus') }}">Érdekel</a>
-        </div>
-    </div>
+<div class="carbox">
+    @foreach($autok as $auto)
+        <div class="carbox1">
+            @if(!empty($auto->kep))
+                <img src="{{ asset($auto->kep) }}" class="carsbox" alt="{{ $auto->marka }} {{ $auto->modell }}">
+            @else
+                <img src="{{ asset('images/no-image.png') }}" class="carsbox" alt="Nincs kép">
+            @endif
 
-    <div class="carbox1">
-        <img src="{{ asset('images/Autok/Autok/Lexus  LC 500/lexus2.jpg') }}" class="carsbox">
-        <div class="card-content">
-            <p>Lexus LC 500</p>
-            <p>-</p>
-            <p><b>12.000.000 Ft</b></p>
-            <a class="yellowbutton" href="{{ route('lexus') }}">Érdekel</a>
-        </div>
-    </div>
+            <div class="card-content">
+                <p>{{ $auto->marka }} {{ $auto->modell }}</p>
+                <p>{{ $auto->teljesitmeny }} LE • {{ $auto->uzemanyag }}</p>
+                <p><b>{{ number_format($auto->ar, 0, ',', ' ') }} Ft</b></p>
 
+                <a class="yellowbutton" href="{{ route('autok.show', $auto->id) }}">
+                    Érdekel
+                </a>
+            </div>
+        </div>
+    @endforeach
 </div>
 
   <div class="about-section">

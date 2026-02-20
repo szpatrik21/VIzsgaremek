@@ -8,8 +8,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $autok = Auto::where('raktaron', '>', 0)
-            ->orderByDesc('kiemelt')
+        $autok = Auto::where('kiemelt', 1)
+            ->where('raktaron', '>', 0)
             ->latest()
             ->take(4)
             ->get();

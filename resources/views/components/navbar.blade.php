@@ -4,7 +4,7 @@
       <h1 class="yel2">Lux</h1><h1 class="yel">Car</h1>
     </div>
     <a href="{{ route('main') }}">Kezdőoldal</a>
-    <a href="{{ route('cars') }}">Autók</a>
+    <a href="{{ route('autok.index') }}">Autók</a>
     <a href="{{ route('comments') }}">Vélemények</a>
   </div>
 

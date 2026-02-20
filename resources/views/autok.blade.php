@@ -26,7 +26,7 @@
                 <p>{{ $auto->teljesitmeny }} LE • {{ $auto->uzemanyag }}</p>
                 <p><b>{{ number_format($auto->ar, 0, ',', ' ') }} Ft</b></p>
 
-                <a class="yellowbutton" href="{{ route('auto.show', $auto->id) }}">Érdekel</a>
+                <a class="yellowbutton" href="{{ route('autok.show', $auto->id) }}">Érdekel</a>
             </div>
         </div>
     @endforeach
