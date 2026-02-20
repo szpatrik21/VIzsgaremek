@@ -112,3 +112,16 @@ Route::view('/createcars', 'createcars')->name('createcars');
 
 
 Route::post('/admin/carcreate', [AdminCarController::class, 'store'])->name('admin.carcreate.store');
+
+
+
+
+
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/cars', [AdminCarController::class, 'adminIndex'])->name('admin.cars');
+    Route::patch('/admin/cars/{auto}', [AdminCarController::class, 'adminUpdate'])->name('admin.cars.update');
+    Route::delete('/admin/cars/{auto}', [AdminCarController::class, 'adminDestroy'])->name('admin.cars.destroy');
+});
+
+Route::get('/admin/carcreate', [AdminCarController::class, 'create'])->name('admin.carcreate');
+Route::get('/admin/cars', [AdminCarController::class, 'adminIndex'])->name('admin.cars');

@@ -20,7 +20,6 @@
             color: var(--black);
         }
 
-        /* NAVBAR – fekete háttér */
         header {
             background: var(--black);
             color: var(--white);
@@ -35,11 +34,11 @@
             font-weight: bold;
             font-size: 22px;
         }
+
         .logo span {
             color: var(--gold);
         }
 
-        /* FEHÉR kijelentkezés gomb */
         .logout-btn {
             background: var(--white);
             border: 2px solid var(--white);
@@ -60,7 +59,7 @@
 
         .content {
             padding: 40px;
-            max-width: 450px;
+            max-width: 500px;
         }
 
         h2 {
@@ -76,15 +75,35 @@
             padding: 12px 15px;
             margin-bottom: 12px;
             border-radius: 8px;
-            
         }
 
         .stat strong {
             color: var(--gold);
             font-size: 15px;
-            
         }
 
+        .buttons {
+            margin-left: 40px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: #000;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .btn:hover {
+            background: var(--gold);
+            color: #000;
+        }
     </style>
 </head>
 
@@ -124,30 +143,16 @@
     </div>
 
 </div>
-<a class="btn" href="{{ route('carcreate') }}">Autó feltöltés</a>
 
-<style>
-.btn {
-    background: #000;          /* arany */
-    color: #ffffffff;                  /* fekete szöveg */
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 16px;
-    transition: 0.3s;
-    display: inline-block;
-    margin-left:40px;
-}
+<div class="buttons">
+    <a class="btn" href="{{ route('admin.carcreate') }}">
+        Autó feltöltés
+    </a>
 
-.btn:hover {
-    background: #d4af37;             /* hover: fekete */
-    color: #fff;                  /* fehér szöveg */
-}
-
-
-</style>
-
+    <a class="btn" href="{{ route('admin.cars') }}">
+        Autók kezelése
+    </a>
+</div>
 
 </body>
 </html>

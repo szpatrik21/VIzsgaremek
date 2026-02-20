@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 class AdminCarController extends Controller
 {
+    // ✅ Feltöltő form
     public function create()
     {
         return view('admin.carcreate');
     }
 
+    // ✅ Autó mentése DB-be
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -21,13 +23,16 @@ class AdminCarController extends Controller
             'kilometerora' => 'required|integer|min:0',
             'ajtok_szama' => 'required|integer|in:2,3,4,5',
             'uzemanyag' => 'required|string|max:50',
-            'teljesitmeny' => 'required|integer|min:0',
+
+            // 🔥 itt érdemes maxot adni, hogy ne dőljön el a DB
+            'teljesitmeny' => 'required|integer|min:0|max:3000',
+
             'kivitel' => 'required|string|max:50',
             'allapot' => 'required|string|max:50',
             'szemelyek_szama' => 'required|integer|in:2,4,5,7',
             'szin' => 'required|string|max:50',
             'sebessegvalto' => 'required|string|max:50',
-            'hengerurtartalom' => 'required|integer|min:0',
+            'hengerurtartalom' => 'required|integer|min:0|max:10000',
             'raktaron' => 'required|integer|min:0',
             'ar' => 'required|integer|min:0',
             'kiemelt' => 'required|in:0,1',
@@ -61,5 +66,39 @@ class AdminCarController extends Controller
         ]);
 
         return back()->with('success', 'Autó feltöltve!');
+    }
+
+    // ✅ ADMIN LISTA: összes autó
+    public function adminIndex()
+    {
+        $autok = Auto::orderByDesc('kiemelt')
+            ->orderByDesc('id')
+            ->get();
+
+        return view('admin.cars_index', compact('autok'));
+    }
+
+    // ✅ ADMIN UPDATE: raktáron + kiemelt (radio)
+    public function adminUpdate(Request $request, Auto $auto)
+    {
+        $data = $request->validate([
+            'raktaron' => 'required|integer|min:0',
+            'kiemelt'  => 'required|in:0,1',
+        ]);
+
+        $auto->update([
+            'raktaron' => $data['raktaron'],
+            'kiemelt'  => $data['kiemelt'],
+        ]);
+
+        return back()->with('success', 'Autó frissítve!');
+    }
+
+    // ✅ ADMIN DELETE: autó törlés
+    public function adminDestroy(Auto $auto)
+    {
+        $auto->delete();
+
+        return back()->with('success', 'Autó törölve!');
     }
 }
