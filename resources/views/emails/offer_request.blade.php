@@ -1,19 +1,24 @@
 <!doctype html>
 <html lang="hu">
 <body style="font-family: Arial, sans-serif;">
-  <h2>Új ajánlatkérés 🚗</h2>
+  <div>
+    <h2>Új ajánlatkérés </h2>
 
-  <p><strong>Autó:</strong> {{ $auto->marka }} {{ $auto->modell }} ({{ $auto->evjarat }})</p>
+    <p><strong>Autó:</strong> {{ $auto->marka }} {{ $auto->modell }} ({{ $auto->evjarat }})</p>
 
-  <hr>
+    <hr>
 
-  <p><strong>Név:</strong> {{ $data['name'] }}</p>
-  <p><strong>Email:</strong> {{ $data['email'] }}</p>
-  <p><strong>Telefon:</strong> {{ $data['phone'] ?? '-' }}</p>
+    <p><strong>Név:</strong> {{ $data['name'] }}</p>
+    <p><strong>Email:</strong> {{ $data['email'] }}</p>
+    <p><strong>Telefon:</strong> {{ $data['phone'] ?? '-' }}</p>
 
-  <hr>
+    <hr>
 
-  <p><strong>Üzenet:</strong></p>
-  <p>{{ !empty($data['message']) ? e($data['message']) : '—' }}</p>
+    <p><strong>Üzenet:</strong></p>
+    <p>{{ !empty($data['message']) ? e($data['message']) : '—' }}</p>
+
+  </div>
+
+
 </body>
 </html>

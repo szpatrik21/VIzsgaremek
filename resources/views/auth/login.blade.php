@@ -21,6 +21,29 @@
         <label>Jelszó:</label><br>
         <input type="password" id="password" required><br><br>
 
+<div class="register-wrapper">
+    <a class="reg-link" href="{{ route('register') }}">
+        Új fiók létrehozása
+    </a>
+</div>
+<style>
+.register-wrapper {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.reg-link {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size:15px;
+}
+
+.reg-link:hover {
+    text-decoration: underline;
+       color: #d4af37;
+}
+</style>
         <button type="submit">Bejelentkezés</button>
     </form>
 
