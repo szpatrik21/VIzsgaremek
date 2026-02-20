@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AutoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\AdminCarController;
 
 // ==============================================
 // HOME
@@ -108,3 +109,6 @@ Route::middleware('admin')->group(function () {
 
 // Ha ez kell, hagyd itt:
 Route::view('/createcars', 'createcars')->name('createcars');
+
+
+Route::post('/admin/carcreate', [AdminCarController::class, 'store'])->name('admin.carcreate.store');

@@ -25,8 +25,8 @@ class Auto extends Model
         'raktaron',
         'ar',
         'kep',
+        'kep2',     // 🔥 EZ KELL
         'kiemelt',
-
     ];
 
     public $timestamps = false;
