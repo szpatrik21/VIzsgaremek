@@ -128,6 +128,14 @@ input, select {
             <option>Ferrari</option><option>Lamborghini</option>
             <option>Porsche</option><option>Maserati</option>
             <option>Bugatti</option><option>McLaren</option>
+            <option>Aston Martin</option><option>Rolls-Royce</option>
+            <option>Maybach</option><option>Alfa Romeo</option>
+            <option>Jaguar</option><option>Land Rover</option>
+            <option>Range Rover</option><option>Cadillac</option>
+            <option>Lexus</option><option>Genesis</option>
+            <option>Infiniti</option><option>Bentley</option>
+            <option>Pagani</option><option>Koenigsegg</option>
+            <option>Rimac</option><option>Lotus</option>
         </select>
     </td>
 </tr>
@@ -225,6 +233,22 @@ input, select {
             <option>Fehér</option>
             <option>Piros</option>
             <option>Kék</option>
+            <option>Szürke</option>
+            <option>Sárga</option>
+            <option>Narancssárga</option>
+            <option>Lila</option>
+            <option>Zöld</option>
+            <option>Ezüst</option>
+            <option>Grafitszürke</option>
+            <option>Bordó</option>
+            <option>Barna</option>
+            <option>Bézs</option>
+            <option>Arany</option>
+            <option>Bronz</option>
+            <option>Türkiz</option>
+            <option>Gyöngyház fehér</option>
+            <option>Matt fekete</option>
+
         </select>
     </td>
 </tr>

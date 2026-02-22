@@ -117,7 +117,7 @@
 
                     {{-- DELETE FORM --}}
                     <form method="POST" action="{{ route('admin.cars.destroy', $auto->id) }}"
-                          style="margin-top:10px;" onsubmit="return confirm('Biztos törlöd? 😈');">
+                          style="margin-top:10px;" onsubmit="return confirm('Biztos törlöd? ');">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-del" type="submit">Törlés</button>
