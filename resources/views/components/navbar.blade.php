@@ -20,7 +20,46 @@
        Kapcsolat
     </a>
   </div>
+<!-- HAMBURGER (csak mobil) -->
+<button class="hamburger" id="hamburger"
+        aria-label="Menü"
+        aria-controls="mobileMenu"
+        aria-expanded="false">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
 
+<!-- BACKDROP -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+
+<!-- MOBIL MENÜ (minden benne) -->
+<aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu__head">
+    <div class="mobile-brand">LuxCar</div>
+    <button class="menu-close" id="menuClose" aria-label="Bezárás">✕</button>
+  </div>
+
+  <nav class="mobile-menu__links">
+    <a href="{{ route('main') }}" class="nav-link {{ request()->routeIs('main') ? 'is-active' : '' }}">Kezdőoldal</a>
+    <a href="{{ route('autok.index') }}" class="nav-link {{ request()->routeIs('autok.*') ? 'is-active' : '' }}">Autók</a>
+    <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Kapcsolat</a>
+  </nav>
+
+  <div class="mobile-menu__auth">
+    <!-- Vendég -->
+    <div class="auth-buttons" id="guestAuthMobile" style="display:none;">
+      <a href="{{ route('login') }}" class="btn-auth btn-login">Bejelentkezés</a>
+      <a href="{{ route('register') }}" class="btn-auth btn-register">Regisztráció</a>
+    </div>
+
+    <!-- Bejelentkezett -->
+    <div class="userbox" id="userBoxMobile" style="display:none;">
+      <a href="/profile" class="profile-link" id="profileNameMobile">Profil</a>
+      <a href="#" class="logout-link" id="logoutBtnMobile">Kijelentkezés</a>
+    </div>
+  </div>
+</aside>
   <div class="navbar-right">
 
     <!-- Vendég állapot -->
@@ -43,97 +82,130 @@
 </nav>
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("jwt_token");
+  // ===== DESKTOP AUTH ELEMEK (MEGLÉVŐK) =====
   const guestAuth = document.getElementById("guestAuth");
   const userBox = document.getElementById("userBox");
   const profileName = document.getElementById("profileName");
   const logoutBtn = document.getElementById("logoutBtn");
 
-  // ✅ első render: ne villanjon semmi
+  // ===== MOBILE AUTH ELEMEK (ÚJAK) =====
+  const guestAuthMobile = document.getElementById("guestAuthMobile");
+  const userBoxMobile = document.getElementById("userBoxMobile");
+  const profileNameMobile = document.getElementById("profileNameMobile");
+  const logoutBtnMobile = document.getElementById("logoutBtnMobile");
+
+  // ===== HAMBURGER ELEMEK =====
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const menuBackdrop = document.getElementById("menuBackdrop");
+  const menuClose = document.getElementById("menuClose");
+
+  const openMenu = () => {
+    hamburger?.classList.add("is-open");
+    mobileMenu?.classList.add("is-open");
+    menuBackdrop?.classList.add("is-open");
+    hamburger?.setAttribute("aria-expanded", "true");
+    mobileMenu?.setAttribute("aria-hidden", "false");
+  };
+
+  const closeMenu = () => {
+    hamburger?.classList.remove("is-open");
+    mobileMenu?.classList.remove("is-open");
+    menuBackdrop?.classList.remove("is-open");
+    hamburger?.setAttribute("aria-expanded", "false");
+    mobileMenu?.setAttribute("aria-hidden", "true");
+  };
+
+  hamburger?.addEventListener("click", () => {
+    mobileMenu.classList.contains("is-open") ? closeMenu() : openMenu();
+  });
+
+  menuBackdrop?.addEventListener("click", closeMenu);
+  menuClose?.addEventListener("click", closeMenu);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  mobileMenu?.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", closeMenu);
+  });
+
+  // ===== AUTH LOGIKA =====
+  const token = localStorage.getItem("jwt_token");
+
+  const showGuest = () => {
+    guestAuth.style.display = "flex";
+    userBox.style.display = "none";
+
+    guestAuthMobile.style.display = "flex";
+    userBoxMobile.style.display = "none";
+  };
+
+  const showUser = (fullName) => {
+    guestAuth.style.display = "none";
+    userBox.style.display = "flex";
+    profileName.textContent = fullName;
+
+    guestAuthMobile.style.display = "none";
+    userBoxMobile.style.display = "flex";
+    profileNameMobile.textContent = fullName;
+  };
+
+  // első render: ne villanjon
   guestAuth.style.display = "none";
   userBox.style.display = "none";
+  guestAuthMobile.style.display = "none";
+  userBoxMobile.style.display = "none";
 
-  // nincs token → vendég gombok azonnal
   if (!token) {
-    guestAuth.style.display = "flex";
-    return;
-  }
+    showGuest();
+  } else {
+    try {
+      const res = await fetch("/api/user", {
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Accept": "application/json"
+        }
+      });
 
-  try {
-    const res = await fetch("/api/user", {
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Accept": "application/json"
+      if (!res.ok) {
+        localStorage.removeItem("jwt_token");
+        showGuest();
+      } else {
+        const user = await res.json();
+        showUser(`${user.first_name} ${user.last_name}`);
       }
-    });
-
-    if (!res.ok) {
-      localStorage.removeItem("jwt_token");
-      guestAuth.style.display = "flex";
-      return;
+    } catch (err) {
+      console.error("User fetch error:", err);
+      showGuest();
     }
-
-    const user = await res.json();
-
-    guestAuth.style.display = "none";
-    userBox.style.display = "flex";
-    profileName.textContent = `${user.first_name} ${user.last_name}`;
-
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("jwt_token");
-      window.location.href = "/login";
-    });
-
-  } catch (err) {
-    console.error("User fetch error:", err);
-    guestAuth.style.display = "flex";
   }
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("jwt_token");
-  const guestAuth = document.getElementById("guestAuth");
-  const userBox = document.getElementById("userBox");
-  const profileName = document.getElementById("profileName");
-  const logoutBtn = document.getElementById("logoutBtn");
 
-  if (!token) return;
+  const doLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("jwt_token");
+    window.location.href = "/login";
+  };
 
-  try {
-    const res = await fetch("/api/user", {
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Accept": "application/json"
-      }
-    });
-
-    if (!res.ok) {
-      localStorage.removeItem("jwt_token");
-      return;
-    }
-
-    const user = await res.json();
-
-    guestAuth.style.display = "none";
-    userBox.style.display = "flex";
-    profileName.textContent = `${user.first_name} ${user.last_name}`;
-
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("jwt_token");
-      window.location.href = "/login";
-    });
-
-  } catch (err) {
-    console.error("User fetch error:", err);
-  }
+  logoutBtn?.addEventListener("click", doLogout);
+  logoutBtnMobile?.addEventListener("click", doLogout);
 });
 </script>
 
 <style>
 
+  .hamburger{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+@media (max-width:700px){
+  .hamburger{
+    margin-right: 30px; /* állítsd 8-16px között ízlésre */
+  }
+}
 
 /* ===== NAVBAR FONTS ===== */
 
@@ -402,5 +474,169 @@ body{
 
 .logout-link:hover{
   color: #fff;
+}
+</style>
+
+<style>
+  /* ===== HAMBURGER + MOBILE DRAWER (DESKTOPOT NEM BÁNTJA) ===== */
+.hamburger,
+.menu-backdrop,
+.mobile-menu{
+  display: none; /* desktopon nincs */
+}
+
+/* mobilon jelenik meg */
+@media (max-width:700px){
+  /* Desktop elemek elrejtése mobilon */
+  .navbar-left .nav-link,
+  .navbar-right{
+    display: none !important;
+  }
+
+  /* Hamburger jobbra */
+  .hamburger{
+    display: inline-flex;
+    margin-left: auto;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.03);
+    cursor: pointer;
+
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .hamburger span{
+    display:block;
+    width: 20px;
+    height: 2px;
+    background:#fff;
+    border-radius: 999px;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  .hamburger.is-open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .hamburger.is-open span:nth-child(2){ opacity: 0; }
+  .hamburger.is-open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  /* Backdrop */
+  .menu-backdrop{
+    display:block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    z-index: 999;
+  }
+  .menu-backdrop.is-open{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Drawer */
+  .mobile-menu{
+    display:flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(86vw, 360px);
+    background: rgba(10,10,10,.95);
+    border-left: 1px solid rgba(212,175,55,.18);
+    backdrop-filter: blur(10px);
+    box-shadow: -30px 0 70px rgba(0,0,0,.6);
+
+    transform: translateX(110%);
+    transition: transform .22s ease;
+    z-index: 1000;
+
+    flex-direction: column;
+  }
+  .mobile-menu.is-open{
+    transform: translateX(0);
+  }
+
+  .mobile-menu__head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  .mobile-brand{
+    font-family: "Playfair Display", serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: .4px;
+  }
+
+  .menu-close{
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.03);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .mobile-menu__links{
+    padding: 14px;
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mobile-menu__links .nav-link{
+    padding: 12px 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .mobile-menu__links .nav-link::after{ display:none; }
+
+  .mobile-menu__links .nav-link.is-active{
+    border-color: rgba(212,175,55,.30);
+    color: var(--gold-light);
+    background: rgba(212,175,55,.08);
+  }
+
+  .mobile-menu__auth{
+    margin-top: auto;
+    padding: 14px;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  #guestAuthMobile,
+  #userBoxMobile{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #guestAuthMobile .btn-auth{
+    width: 100%;
+    text-align: center;
+  }
+
+  #userBoxMobile .profile-link,
+  #userBoxMobile .logout-link{
+    display:flex;
+    justify-content:center;
+    padding: 12px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+  }
+
+  #userBoxMobile .profile-link{ color: var(--gold); font-weight: 700; }
+  #userBoxMobile .logout-link{ color: rgba(255,255,255,.8); }
 }
 </style>

@@ -11,200 +11,11 @@
       'resources/css/main_page.css',
       'resources/css/navbar.css',
     ])
-    
-
-    <style>
-      :root{
-  --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
-}
-
-/* alap */
-body{
-  margin: 0;
-  font-family: var(--font-body);
-  background-color:#000;
-  color:#fff;
-
-}
-
-/* CÍMEK – luxus serif */
-h1, h2, h3,
-.hero-overlay h1,
-.cim1,
-.about-section h2,
-.faq__title{
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: .2px;
-}
-
-/* Szövegek maradnak modern sans */
-.hero-overlay p,
-.about-section p,
-.faq__subtitle,
-.faq__content,
-.card-content p{
-  font-family: var(--font-body);
-}
-
-/* NAV + gombok legyenek modern, “precíz” */
-.navbar,
-.nav-link,
-.btn-auth,
-.yellowbutton,
-.profile-link,
-.logout-link{
-  font-family: var(--font-body);
-  letter-spacing: .2px;
-}
-
-
-      .webaruhaz_cim{ font-size:40px; margin-bottom:5px; }
-
-      /* SLIDER */
-      .slider{
-        position:relative;
-        width:100%;
-        height:490px;
-        overflow:hidden;
-      }
-
-      .slider img{
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-
-        opacity: 0;
-        transition: opacity .8s ease, transform 3.5s ease;
-        transform: scale(1.03);
-
-        will-change: opacity, transform;
-        backface-visibility: hidden;
-      }
-
-      .slider img.active{
-        opacity: 1;
-        transform: scale(1.00);
-      }
-
-      /* HERO OVERLAY (hogy ne legyen üres) */
-      .hero-overlay{
-        position:absolute;
-        inset:0;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        gap:14px;
-        padding: 0 90px;
-        background: linear-gradient(90deg, rgba(0,0,0,.70), rgba(0,0,0,.10));
-        color:#fff;
-      }
-
-      .hero-overlay h1{
-        margin:0;
-        font-size:56px;
-        letter-spacing:0.5px;
-      }
-
-      .hero-overlay p{
-        margin:0;
-        max-width:650px;
-        color:#ddd;
-        font-size:18px;
-        line-height:1.5;
-      }
-
-      .hero-actions{
-        display:flex;
-        gap:12px;
-        margin-top:8px;
-        flex-wrap:wrap;
-      }
-
-      .hero-actions a{
-        text-decoration:none;
-        padding:12px 16px;
-        border-radius:12px;
-        font-weight:900;
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-      }
-
-      .hero-actions .cta{
-        background:#d4af37;
-        color:#000;
-      }
-
-      .hero-actions .ghost{
-        border:1px solid #444;
-        color:#fff;
-        background: rgba(0,0,0,.25);
-      }
-
-      .hero-actions .ghost:hover{
-        border-color:#777;
-      }
-
-      /* BRAND LOGO SOR (ha van már styled, ez nem zavar) */
-      .markak{ margin-top:18px; }
-
-      /* TRUST STRIP (3 kártya) */
-      .trust{
-        max-width:1200px;
-        margin:24px auto 0;
-        padding:0 24px;
-        display:grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap:16px;
-      }
-
-      .trust-card{
-        background:#141414;
-        border:1px solid #2b2b2b;
-        border-radius:16px;
-        padding:16px;
-        min-height:90px;
-      }
-
-      .trust-card b{
-        display:block;
-        margin-bottom:8px;
-        color:#fff;
-      }
-
-      .trust-card span{
-        color:#bbb;
-      }
-
-      /* mobil */
-      @media (max-width: 900px){
-        .slider{ height:420px; }
-        .hero-overlay{ padding: 0 24px; }
-        .hero-overlay h1{ font-size:36px; }
-        .trust{ grid-template-columns:1fr; }
-      }
-
-
-      .hero-overlay h1 {
-  font-size: 54px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.hero-overlay p {
-  font-size: 18px;
-  line-height: 1.6;
-  color: #ddd;
-}
-    </style>
 </head>
 
 <body>
   <x-navbar />
+  
 
   <!-- HERO / SLIDER -->
   <div class="slider">
@@ -257,217 +68,311 @@ h1, h2, h3,
 
   </div>
 
+<style>
+@media (max-width:700px){
 
-  <!-- KIEMELT -->
+  .markak{
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 20px 16px;
+    scroll-behavior: smooth;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .markak::-webkit-scrollbar{
+    display: none; /* eltünteti a scrollbar-t */
+  }
+
+  .wallpaper{
+    flex: 0 0 auto; /* ne törjön új sorba */
+  }
+
+  .wallpaper img{
+    width: 110px;
+    height: auto;
+    opacity: .8;
+    transition: .2s ease;
+  }
+
+  .wallpaper img:active{
+    opacity: 1;
+  }
+
+}
+@media (max-width:700px){
+  .wallpaper img{
+    opacity: .65;
+  }
+}
+</style>
+<!-- KIEMELT -->
+<div class="container">
   <h2 id="kiemelt" class="cim1">Kiemelt autók:</h2>
 
-  <div class="carbox">
-    @foreach($autok as $auto)
-      <div class="carbox1">
-        @if(!empty($auto->kep))
-          <img src="{{ asset($auto->kep) }}" class="carsbox" alt="{{ $auto->marka }} {{ $auto->modell }}">
-        @else
-          <img src="{{ asset('images/no-image.png') }}" class="carsbox" alt="Nincs kép">
-        @endif
+  <div class="carbox carbox-grid">
+  @foreach($autok as $auto)
+    <div class="carbox1">
 
-        <div class="card-content">
-          <p>{{ $auto->marka }} {{ $auto->modell }}</p>
-          <p>{{ $auto->teljesitmeny }} LE • {{ $auto->uzemanyag }}</p>
-          <p><b>{{ number_format($auto->ar, 0, ',', ' ') }} Ft</b></p>
+      @if(!empty($auto->kep))
+        <img src="{{ asset($auto->kep) }}"
+             class="carsbox"
+             alt="{{ $auto->marka }} {{ $auto->modell }}">
+      @else
+        <img src="{{ asset('images/no-image.png') }}"
+             class="carsbox"
+             alt="Nincs kép">
+      @endif
 
-          <a class="yellowbutton" href="{{ route('autok.show', $auto->id) }}">Érdekel</a>
-        </div>
+      <div class="card-content">
+        <p class="card-title">
+          {{ $auto->marka }} {{ $auto->modell }}
+        </p>
+
+        <p class="card-spec">
+          {{ $auto->teljesitmeny }} LE • {{ $auto->uzemanyag }}
+        </p>
+
+        <p class="card-price">
+          {{ number_format($auto->ar, 0, ',', ' ') }} Ft
+        </p>
+
+        <a class="yellowbutton"
+           href="{{ route('autok.show', $auto) }}">
+          Érdekel
+        </a>
       </div>
-    @endforeach
-  </div>
 
+    </div>
+  @endforeach
+</div>
+
+
+  <style>
+/* ===== GYIK KÖZÉPRE IGAZÍTVA ===== */
+.faq{
+  padding: 80px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.faq__inner{
+  width: 100%;
+  max-width: 900px;   /* keskenyebb, elegánsabb */
+  padding: 0 24px;
+  text-align: center; /* cím + alcím középen */
+}
+
+.faq__title{
+  margin-bottom: 12px;
+}
+
+.faq__subtitle{
+  margin: 0 auto 28px;
+  max-width: 600px;
+}
+
+/* A kérdések maradjanak balra igazítva, hogy olvasható legyen */
+.faq__list{
+  text-align: left;
+}
+
+/* Mobil finomítás */
+@media (max-width:700px){
+  .faq{
+    padding: 60px 0;
+  }
+
+  .faq__inner{
+    padding: 0 16px;
+  }
+}
+/* ===== KIEMELT RÁCS ===== */
+.carbox-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:24px;
+  margin:40px 0 80px;
+}
+
+/* ===== KÁRTYA ===== */
+.carbox1{
+  background:#191919;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 20px 50px rgba(0,0,0,.55);
+  transition:.25s ease;
+}
+
+.carbox1:hover{
+  transform:translateY(-5px);
+  border-color:rgba(212,175,55,.25);
+  box-shadow:0 30px 70px rgba(0,0,0,.7);
+}
+
+/* ===== KÉP ===== */
+.carsbox{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  display:block;
+}
+
+/* ===== TARTALOM ===== */
+.card-content{
+  padding:18px;
+}
+
+.card-title{
+  font-family:"Playfair Display", serif;
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:6px;
+  color:#fff;
+}
+
+.card-spec{
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:10px;
+}
+
+.card-price{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:14px;
+  color:#fff;
+}
+
+/* ===== GOMB ===== */
+.yellowbutton{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  padding:12px 0;
+  border-radius:14px;
+  background:#C9A16B;
+  color:#000;
+  text-decoration:none;
+  font-weight:800;
+  transition:.2s ease;
+}
+
+.yellowbutton:hover{
+  background:#d8b27c;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:1100px){
+  .carbox-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media (max-width:850px){
+  .carbox-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media (max-width:520px){
+  .carbox-grid{
+    grid-template-columns:1fr;
+    padding:0 16px;
+  }
+
+  .carsbox{
+    height:170px;
+  }
+}
+
+    /* ===== KIEMELT AUTÓK – MOBILON PRÉMIUM SCROLL ===== */
+@media (max-width:700px){
+
+  .cim1{
+    margin-left: 16px;         /* ne legyen 150px */
+    font-size: 26px;
+    margin-bottom: 18px;
+  }
+
+  .carbox--featured{
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 14px;
+
+    padding: 0 16px 12px;
+    margin-bottom: 40px;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .carbox--featured::-webkit-scrollbar{
+    display:none;
+  }
+
+  .carbox--featured .carbox1{
+    flex: 0 0 auto;
+    width: 240px;              /* kártya szélesség mobilon */
+    scroll-snap-align: start;
+    border-radius: 16px;
+  }
+
+  .carbox--featured .carsbox{
+    height: 150px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .carbox--featured .card-content{
+    padding: 14px;
+  }
+
+  .carbox--featured .yellowbutton{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 12px;
+  }
+}
+  </style>
   <!-- RÓLUNK -->
-  <div class="about-section">
-    <h2>Rólunk</h2>
-    <p>
-      Üdvözlünk a <span class="highlight">LuxCar</span>-nél, ahol a négy kerék nem csupán közlekedési eszköz,
-      hanem életstílus. Webshopunkban a világ legismertebb és legexkluzívabb márkáinak luxusautóit találod –
-      <span class="highlight">Ferrari</span>, <span class="highlight">Lamborghini</span>,
-      <span class="highlight">Aston Martin</span>, <span class="highlight">Bugatti</span> és még sok más ikonikus név.
-    </p>
-    <p>
-      Célunk, hogy ügyfeleink számára elérhetővé tegyük az autózás legfelsőbb szintjét: a teljesítményt,
-      a kifinomultságot és a páratlan dizájnt.
-    </p>
-    <p>
-      Legyen szó vadonatúj sportautóról vagy gondosan válogatott használt prémium modellről,
-      kínálatunk minden darabja a minőség és a luxus garanciája.
-    </p>
+<section class="about">
+  <div class="container">
+    <div class="about-section">
+      <h2 class="section-title">Rólunk</h2>
 
-  </div>
+      <p>
+        Üdvözlünk a <span class="highlight">LuxCar</span>-nél, ahol a négy kerék nem csupán közlekedési eszköz,
+        hanem életstílus. Webshopunkban a világ legismertebb és legexkluzívabb márkáinak luxusautóit találod –
+        <span class="highlight">Ferrari</span>, <span class="highlight">Lamborghini</span>,
+        <span class="highlight">Aston Martin</span>, <span class="highlight">Bugatti</span> és még sok más ikonikus név.
+      </p>
 
+      <p>
+        Célunk, hogy ügyfeleink számára elérhetővé tegyük az autózás legfelsőbb szintjét: a teljesítményt,
+        a kifinomultságot és a páratlan dizájnt.
+      </p>
 
-
-<section class="faq" id="gyik">
-  <div class="faq__inner">
-    <h2 class="faq__title">GYIK</h2>
-    <p class="faq__subtitle">
-      Röviden: te kérsz ajánlatot, mi meg hozunk egy korrekt választ. Gyorsan. 
-    </p>
-
-    <div class="faq__list">
-
-<details class="faq__item">
-  <summary>Hogyan működik az ajánlatkérés?</summary>
-  <div class="faq__content">
-    Válassza ki a kívánt modellt, kattintson az <strong>Ajánlatkérés</strong> gombra, majd töltse ki a szükséges adatokat. 
-    Kollégáink rövid időn belül felveszik Önnel a kapcsolatot a részletek egyeztetése érdekében.
-  </div>
-</details>
-
-<details class="faq__item">
-  <summary>Mennyi idő alatt érkezik válasz?</summary>
-  <div class="faq__content">
-    Az ajánlatkérésekre általában <strong>1 munkanapon belül</strong> válaszolunk. 
-    Kiemelt időszakokban a válaszidő minimálisan eltérhet.
-  </div>
-</details>
-
-<details class="faq__item">
-  <summary>Jár-e vásárlási kötelezettséggel az ajánlatkérés?</summary>
-  <div class="faq__content">
-    Nem. Az ajánlatkérés nem jár vásárlási kötelezettséggel. 
-    Célunk, hogy minden szükséges információt biztosítsunk a megalapozott döntéshez.
-  </div>
-</details>
-
-<details class="faq__item">
-  <summary>Van lehetőség tesztvezetésre?</summary>
-  <div class="faq__content">
-    Igen, előzetes időpont-egyeztetés alapján lehetőség van tesztvezetésre. 
-    Kérjük, vegye fel velünk a kapcsolatot a részletek egyeztetéséhez.
-  </div>
-</details>
-
-<details class="faq__item">
-  <summary>Milyen fizetési lehetőségek érhetők el?</summary>
-  <div class="faq__content">
-    Elérhető banki átutalás, lízing és egyedi finanszírozási konstrukció is. 
-    A pontos feltételek a kiválasztott modell és az egyedi megállapodás alapján kerülnek meghatározásra.
-  </div>
-</details>
-
-<details class="faq__item">
-  <summary>Tartalmazzák az árak az illetékeket és az átírás költségeit?</summary>
-  <div class="faq__content">
-    Az árak tartalma modellenként és konstrukciónként eltérhet. 
-    Az ajánlat minden esetben részletesen tartalmazza az ár összetevőit.
-  </div>
-</details>
-
-<details class="faq__item">
-  <summary>Megadhatók egyedi igények?</summary>
-  <div class="faq__content">
-    Igen. Szín, felszereltség, évjárat vagy egyéb specifikus igény esetén kollégáink személyre szabott ajánlatot készítenek.
-  </div>
-</details>
-
-<details class="faq__item">
-  <summary>Hogyan kezeljük a személyes adatokat?</summary>
-  <div class="faq__content">
-    A megadott adatokat kizárólag az ajánlatkérés feldolgozásához és kapcsolattartáshoz használjuk fel, 
-    az adatvédelmi előírásoknak megfelelően.
-  </div>
-</details>
-
+      <p>
+        Legyen szó vadonatúj sportautóról vagy gondosan válogatott használt prémium modellről,
+        kínálatunk minden darabja a minőség és a luxus garanciája.
+      </p>
     </div>
   </div>
 </section>
 
-<style>/* ===== GYIK ===== */
-.faq{
-  background: linear-gradient(180deg, #0b0b0b 0%, #141414 100%);
-  padding: 80px 0 90px;
-}
+<style>
+  
+</style>
 
-.faq__inner{
-  width: 1200px;
-  max-width: calc(100% - 40px);
-  margin: 0 auto;
-}
 
-.faq__title{
-  color: #fff;
-  font-size: 34px;
-  margin: 0 0 10px;
-  letter-spacing: .6px;
-}
-
-.faq__subtitle{
-  color: rgba(255,255,255,.72);
-  margin: 0 0 26px;
-  line-height: 1.6;
-  max-width: 820px;
-}
-
-.faq__list{
-  display: grid;
-  gap: 14px;
-  max-width: 980px;
-}
-
-.faq__item{
-  border: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.03);
-  border-radius: 14px;
-  overflow: hidden;
-  backdrop-filter: blur(6px);
-}
-
-.faq__item summary{
-  cursor: pointer;
-  list-style: none;
-  padding: 16px 18px;
-  color: #fff;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.faq__item summary::-webkit-details-marker{
-  display: none;
-}
-
-.faq__item summary::after{
-  content: "▾";
-  color: #d4af37; /* arany */
-  font-size: 18px;
-  transform: translateY(-1px);
-  transition: transform .2s ease;
-}
-
-.faq__item[open] summary::after{
-  transform: rotate(180deg);
-}
-
-.faq__content{
-  padding: 0 18px 16px;
-  color: rgba(255,255,255,.78);
-  line-height: 1.65;
-}
-
-.faq__content strong{
-  color: #d4af37;
-}
-
-.faq__item:hover{
-  border-color: rgba(212,175,55,.25);
-  box-shadow: 0 10px 28px rgba(0,0,0,.35);
-}
-
-@media (max-width: 700px){
-  .faq{ padding: 60px 0 70px; }
-  .faq__title{ font-size: 28px; }
-  .faq__item summary{ padding: 14px 14px; }
-  .faq__content{ padding: 0 14px 14px; }
-}</style>
+  <x-gyk />
 
   <script>
     const slides = document.querySelectorAll(".slider img");
@@ -487,124 +392,8 @@ h1, h2, h3,
   </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<footer class="footer">
-  <div class="footer-inner">
-
-    <div class="footer-col">
-      <h3 class="footer-logo">LuxCar</h3>
-      <p>
-        Prémium és exkluzív luxusautók egy helyen.
-        Teljesítmény. Elegancia. Presztízs.
-      </p>
-    </div>
-
-    <div class="footer-col">
-      <h4>Gyors linkek</h4>
-      <a href="{{ route('home') }}">Kezdőoldal</a>
-      <a href="{{ route('autok.index') }}">Autók</a>
-      <a href="#gyik">GYIK</a>
-      <a href="#">Kapcsolat</a>
-    </div>
-
-    <div class="footer-col">
-      <h4>Kapcsolat</h4>
-      <p>Email: info@luxcar.hu</p>
-      <p>Telefon: +36 30 123 4567</p>
-      <p>Budapest, Magyarország</p>
-    </div>
-
-    <div class="footer-col">
-      <h4>Kövess minket</h4>
-      <div class="socials">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © {{ date('Y') }} LuxCar. Minden jog fenntartva.
-  </div>
-</footer>
-
-<style>
-  /* ===== FOOTER ===== */
-
-.footer{
-  background: #0a0a0a;
-  border-top: 1px solid rgba(212,175,55,.15);
-  margin-top: 80px;
-  padding-top: 60px;
-}
-
-.footer-inner{
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-}
-
-.footer-col h3,
-.footer-col h4{
-  color: #fff;
-  margin-bottom: 16px;
-  font-family: var(--font-display);
-}
-
-.footer-col p,
-.footer-col a{
-  color: rgba(255,255,255,.65);
-  font-size: 14px;
-  line-height: 1.7;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 8px;
-  transition: .2s ease;
-}
-
-.footer-col a:hover{
-  color: #d4af37;
-}
-
-.footer-logo{
-  font-size: 24px;
-  letter-spacing: 1px;
-}
-
-.footer-bottom{
-  border-top: 1px solid rgba(255,255,255,.06);
-  margin-top: 50px;
-  padding: 20px;
-  text-align: center;
-  font-size: 13px;
-  color: rgba(255,255,255,.5);
-}
-
-/* mobil */
-@media (max-width: 900px){
-  .footer-inner{
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
-</style>
-
+  <x-footer />
 </body>
+
+
 </html>

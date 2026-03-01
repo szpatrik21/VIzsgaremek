@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <title>Kapcsolat - LuxCar</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <title>Kapcsolat - LuxCar</title>
 
   @vite([
     'resources/css/navbar.css',
@@ -25,7 +26,6 @@
     <p>Elérhetőségeink az alábbiakban találhatók.</p>
 
     <div class="contact-grid">
-
       <div class="info-box">
         <h3>Email</h3>
         <p>luxcar0000@gmail.com</p>
@@ -47,7 +47,6 @@
         <p>Szo: 10:00–14:00</p>
         <p>V: Zárva</p>
       </div>
-
     </div>
   </div>
 </section>
@@ -65,182 +64,107 @@
     </div>
   </div>
 </section>
+
 <style>
-    body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #000;
-  color: #fff;
+:root{
+  --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --gold:#d4af37;
+  --border: rgba(255,255,255,.10);
 }
 
-.contact-hero {
-  padding-top: 40px;
-  padding-bottom: 80px;
-  background: linear-gradient(180deg, #000 0%, #111 100%);
-}
-
-.contact-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-.contact-inner h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.contact-inner p {
-  color: #ccc;
-  margin-bottom: 50px;
-}
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-}
-
-.info-box {
-  background: #111;
-  padding: 25px;
-  border: 1px solid #222;
-  border-radius: 12px;
-
-}
-
-.info-box:hover {
-  border-color: rgba(212,175,55,0.6);
-}
-
-.info-box h3 {
-  color: #d4af37;
-  margin-bottom: 10px;
-}
-
-.map-section {
-  padding-bottom: 100px;
-}
-
-.map-section h2 {
-  font-size: 30px;
-  margin: 0 0 30px;
-  border-left: 5px solid #d4af37;
-  padding-left: 15px;
-}
-
-.map-wrapper {
-  width: 100%;
-  height: 380px;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid #222;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-}
-
-.map-wrapper iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
- 
-}
-
-@media (max-width: 900px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-body{
+html, body{
   margin:0;
-  font-family:"Space Grotesk", sans-serif;
+  padding:0;
   background:#000;
   color:#fff;
+  font-family: var(--font-body);
 }
 
 /* ===== HERO ===== */
 .contact-hero{
-  padding: 80px 0 60px;
-  background: linear-gradient(180deg,#000 0%,#111 100%);
+  padding: 90px 0 60px; /* navbar után kényelmes */
+  background: linear-gradient(180deg, #000 0%, #111 100%);
 }
 
 .contact-inner{
-  max-width:1100px;
-  margin:0 auto;
-  padding:0 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-/* CÍM – luxus serif */
 .contact-inner h1{
-  font-family:"Playfair Display", serif;
-  font-size:40px;
-  margin-bottom:12px;
+  font-family: var(--font-display);
+  font-size: 40px;
+  margin: 0 0 10px;
+  letter-spacing: .2px;
 }
 
-.contact-inner p{
-  color:#bbb;
-  margin-bottom:40px;
-  font-size:16px;
+.contact-inner > p{
+  color: rgba(255,255,255,.72);
+  margin: 0 0 34px;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 680px;
 }
 
-/* ===== GRID ===== */
+/* ===== GRID (középre, nem full width) ===== */
 .contact-grid{
-  display:grid;
+  display: grid;
   grid-template-columns: repeat(2, minmax(240px, 1fr));
-  gap:20px;
-  max-width:700px; /* 🔥 kisebb blokk összszélesség */
+  gap: 18px;
+  max-width: 760px;
 }
 
 /* ===== INFO BOX ===== */
 .info-box{
-  background:#111;
-  padding:18px 20px;      /* 🔥 kisebb padding */
-  border:1px solid #1c1c1c;
-  border-radius:12px;
-
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 18px 18px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.45);
+  transition: .2s ease;
 }
 
 .info-box:hover{
-  border-color: rgba(212,175,55,.6);
-
+  border-color: rgba(212,175,55,.35);
+  transform: translateY(-2px);
 }
 
-/* Box cím */
 .info-box h3{
-  font-family:"Playfair Display", serif;
-  font-size:18px;
-  color:#d4af37;
-  margin-bottom:8px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--gold);
+  margin: 0 0 8px;
 }
 
-/* Box szöveg */
 .info-box p{
-  font-size:14px;
-  color:#ccc;
-  margin:4px 0;
+  margin: 4px 0;
+  font-size: 14px;
+  color: rgba(255,255,255,.78);
 }
 
 /* ===== MAP ===== */
 .map-section{
-  padding: 40px 0 100px;
+  padding: 40px 0 90px;
 }
 
 .map-section h2{
-  font-family:"Playfair Display", serif;
-  font-size:32px;
-  margin-bottom:30px;
-  border-left:5px solid #d4af37;
-  padding-left:15px;
+  font-family: var(--font-display);
+  font-size: 32px;
+  margin: 0 0 22px;
+  border-left: 5px solid var(--gold);
+  padding-left: 14px;
 }
 
 .map-wrapper{
-  width:100%;
-  max-width:900px; /* 🔥 ne legyen full width */
-  height:320px;    /* 🔥 kisebb */
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid #1c1c1c;
-  box-shadow:0 20px 50px rgba(0,0,0,.6);
+  width: 100%;
+  max-width: 900px;
+  height: 340px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 25px 60px rgba(0,0,0,.60);
 }
 
 .map-wrapper iframe{
@@ -250,152 +174,32 @@ body{
 }
 
 /* ===== MOBILE ===== */
-@media(max-width:900px){
+@media (max-width:900px){
   .contact-grid{
-    grid-template-columns:1fr;
-    max-width:100%;
+    grid-template-columns: 1fr;
+    max-width: 520px; /* mobilon se legyen túl széles */
+  }
+}
+
+@media (max-width:700px){
+  .contact-hero{
+    padding: 80px 0 50px;
+  }
+
+  .contact-inner{
+    padding: 0 16px;
+  }
+
+  .contact-inner h1{
+    font-size: 32px;
   }
 
   .map-wrapper{
-    height:260px;
+    height: 260px;
   }
 }
 </style>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<footer class="footer">
-  <div class="footer-inner">
-
-    <div class="footer-col">
-      <h3 class="footer-logo">LuxCar</h3>
-      <p>
-        Prémium és exkluzív luxusautók egy helyen.
-        Teljesítmény. Elegancia. Presztízs.
-      </p>
-    </div>
-
-    <div class="footer-col">
-      <h4>Gyors linkek</h4>
-      <a href="{{ route('home') }}">Kezdőoldal</a>
-      <a href="{{ route('autok.index') }}">Autók</a>
-      <a href="#gyik">GYIK</a>
-      <a href="#">Kapcsolat</a>
-    </div>
-
-    <div class="footer-col">
-      <h4>Kapcsolat</h4>
-      <p>Email: info@luxcar.hu</p>
-      <p>Telefon: +36 30 123 4567</p>
-      <p>Budapest, Magyarország</p>
-    </div>
-
-    <div class="footer-col">
-      <h4>Kövess minket</h4>
-      <div class="socials">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © {{ date('Y') }} LuxCar. Minden jog fenntartva.
-  </div>
-</footer>
-
-<style>
-  /* ===== FOOTER ===== */
-
-.footer{
-  background: #0a0a0a;
-  border-top: 1px solid rgba(212,175,55,.15);
-  margin-top: 80px;
-  padding-top: 60px;
-}
-
-.footer-inner{
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-}
-
-.footer-col h3,
-.footer-col h4{
-  color: #fff;
-  margin-bottom: 16px;
-  font-family: var(--font-display);
-}
-
-.footer-col p,
-.footer-col a{
-  color: rgba(255,255,255,.65);
-  font-size: 14px;
-  line-height: 1.7;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 8px;
-  transition: .2s ease;
-}
-
-.footer-col a:hover{
-  color: #d4af37;
-}
-
-.footer-logo{
-  font-size: 24px;
-  letter-spacing: 1px;
-}
-
-.footer-bottom{
-  border-top: 1px solid rgba(255,255,255,.06);
-  margin-top: 50px;
-  padding: 20px;
-  text-align: center;
-  font-size: 13px;
-  color: rgba(255,255,255,.5);
-}
-
-/* mobil */
-@media (max-width: 900px){
-  .footer-inner{
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
-</style>
+<x-footer />
 </body>
 </html>

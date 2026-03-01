@@ -344,5 +344,7 @@ h2 {
 }
 </style>
 
+
+<x-footer />
 </body>
 </html>

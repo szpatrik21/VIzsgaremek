@@ -95,5 +95,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 </script>
 
+
+
+
+<x-footer />
 </body>
 </html>
