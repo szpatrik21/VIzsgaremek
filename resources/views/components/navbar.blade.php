@@ -19,51 +19,59 @@
        class="nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">
        Kapcsolat
     </a>
-  </div>
-<!-- HAMBURGER (csak mobil) -->
-<button class="hamburger" id="hamburger"
-        aria-label="Menü"
-        aria-controls="mobileMenu"
-        aria-expanded="false">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
 
-<!-- BACKDROP -->
-<div class="menu-backdrop" id="menuBackdrop"></div>
-
-<!-- MOBIL MENÜ (minden benne) -->
-<aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <div class="mobile-menu__head">
-    <div class="mobile-brand">LuxCar</div>
-    <button class="menu-close" id="menuClose" aria-label="Bezárás">✕</button>
+    <!-- ✅ GYIK MENÜ -->
+    <a href="{{ route('gyik') }}" 
+       class="nav-link {{ request()->routeIs('gyik') ? 'is-active' : '' }}">
+       GYIK
+    </a>
   </div>
 
-  <nav class="mobile-menu__links">
-    <a href="{{ route('main') }}" class="nav-link {{ request()->routeIs('main') ? 'is-active' : '' }}">Kezdőoldal</a>
-    <a href="{{ route('autok.index') }}" class="nav-link {{ request()->routeIs('autok.*') ? 'is-active' : '' }}">Autók</a>
-    <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Kapcsolat</a>
-  </nav>
+  <!-- HAMBURGER -->
+  <button class="hamburger" id="hamburger"
+          aria-label="Menü"
+          aria-controls="mobileMenu"
+          aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-  <div class="mobile-menu__auth">
-    <!-- Vendég -->
-    <div class="auth-buttons" id="guestAuthMobile" style="display:none;">
-      <a href="{{ route('login') }}" class="btn-auth btn-login">Bejelentkezés</a>
-      <a href="{{ route('register') }}" class="btn-auth btn-register">Regisztráció</a>
+  <!-- BACKDROP -->
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <!-- MOBIL MENÜ -->
+  <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__head">
+      <div class="mobile-brand">LuxCar</div>
+      <button class="menu-close" id="menuClose" aria-label="Bezárás">✕</button>
     </div>
 
-    <!-- Bejelentkezett -->
-    <div class="userbox" id="userBoxMobile" style="display:none;">
-      <a href="/profile" class="profile-link" id="profileNameMobile">Profil</a>
-      <a href="#" class="logout-link" id="logoutBtnMobile">Kijelentkezés</a>
+    <nav class="mobile-menu__links">
+      <a href="{{ route('main') }}" class="nav-link {{ request()->routeIs('main') ? 'is-active' : '' }}">Kezdőoldal</a>
+      <a href="{{ route('autok.index') }}" class="nav-link {{ request()->routeIs('autok.*') ? 'is-active' : '' }}">Autók</a>
+      <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Kapcsolat</a>
+
+      <!-- ✅ GYIK MOBILON IS -->
+      <a href="{{ route('gyik') }}" class="nav-link {{ request()->routeIs('gyik') ? 'is-active' : '' }}">GYIK</a>
+    </nav>
+
+    <div class="mobile-menu__auth">
+      <div class="auth-buttons" id="guestAuthMobile" style="display:none;">
+        <a href="{{ route('login') }}" class="btn-auth btn-login">Bejelentkezés</a>
+        <a href="{{ route('register') }}" class="btn-auth btn-register">Regisztráció</a>
+      </div>
+
+      <div class="userbox" id="userBoxMobile" style="display:none;">
+        <a href="/profile" class="profile-link" id="profileNameMobile">Profil</a>
+        <a href="#" class="logout-link" id="logoutBtnMobile">Kijelentkezés</a>
+      </div>
     </div>
-  </div>
-</aside>
+  </aside>
+
   <div class="navbar-right">
 
-    <!-- Vendég állapot -->
-<div class="auth-buttons" id="guestAuth" style="display:none;">
+    <div class="auth-buttons" id="guestAuth" style="display:none;">
       <a href="{{ route('login') }}" class="btn-auth btn-login">
         Bejelentkezés
       </a>
@@ -72,7 +80,6 @@
       </a>
     </div>
 
-    <!-- Bejelentkezett állapot -->
     <div class="userbox" id="userBox" style="display:none;">
       <a href="/profile" class="profile-link" id="profileName"><b>Profil</b></a>
       <a href="#" class="logout-link" id="logoutBtn">Kijelentkezés</a>

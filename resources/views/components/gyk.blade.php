@@ -71,8 +71,30 @@
 <style>
 /* ===== FAQ – LUX KÁRTYÁS ===== */
 .faq{
-  background: #000;
-  padding: 90px 0;
+  padding: 80px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.faq__inner{
+  width: 100%;
+  max-width: 900px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.faq__subtitle{
+  margin: 0 auto 28px;
+  max-width: 620px;
+}
+
+.faq__list{
+  text-align: left;
+}
+
+@media (max-width:700px){
+  .faq{ padding: 60px 0; }
+  .faq__inner{ padding: 0 16px; }
 }
 
 .faq__inner{

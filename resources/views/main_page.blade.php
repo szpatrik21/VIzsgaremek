@@ -367,12 +367,9 @@
   </div>
 </section>
 
-<style>
-  
-</style>
 
 
-  <x-gyk />
+
 
   <script>
     const slides = document.querySelectorAll(".slider img");

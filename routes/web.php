@@ -138,3 +138,8 @@ Route::delete('/admin/cars/{auto}', [AdminCarController::class, 'adminDestroy'])
 Route::get('/kapcsolat', function () {
     return view('contact');
 })->name('contact');
+
+
+Route::get('/gyik', function () {
+    return view('gyik');
+})->name('gyik');
