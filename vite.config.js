@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/css/style3.css',
                 'resources/css/main_page.css',
                 'resources/css/navbar.css',
+                'resources/css/register.css',
                 'resources/css/style.css',
                 'resources/css/auto.css',
                 'resources/css/style2.css',
@@ -19,7 +20,6 @@ export default defineConfig({
                 'resources/js/login.js',
                 'resources/css/login.css',
                 'resources/css/profile.css',
-                'resources/css/loggin.css',
                 'resources/css/autok.css',
                 'resources/css/contact.css',
                 'resources/css/createcars.css'

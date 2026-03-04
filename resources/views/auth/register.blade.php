@@ -11,7 +11,8 @@
   <title>Regisztráció</title>
 
   @vite([
-    'resources/css/navbar.css'
+    'resources/css/navbar.css',
+    'resources/css/register.css'
   ])
 </head>
 
