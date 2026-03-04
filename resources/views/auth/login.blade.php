@@ -15,8 +15,35 @@
     'resources/css/loggin.css',
     'resources/js/login.js'
   ])
+</head>
 
-  <style>
+<body>
+  <x-navbar />
+
+  <div class="login-wrapper">
+    <h2>Bejelentkezés</h2>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Felhasználónév</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="field">
+        <label for="password">Jelszó</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <div class="register-wrapper">
+        <a class="reg-link" href="{{ route('register') }}">Új fiók létrehozása</a>
+      </div>
+
+      <button type="submit">Bejelentkezés</button>
+
+      <p id="msg"></p>
+    </form>
+  </div>
+<style>
     :root{
       --bg:#0f0f0f;
       --panel:#1a1a1a;
@@ -141,34 +168,5 @@
     #msg.error{ color:#ff5c5c; }
     #msg.success{ color:#66ff99; }
   </style>
-</head>
-
-<body>
-  <x-navbar />
-
-  <div class="login-wrapper">
-    <h2>Bejelentkezés</h2>
-
-    <form id="loginForm">
-      <div class="field">
-        <label for="username">Felhasználónév</label>
-        <input type="text" id="username" name="username" required>
-      </div>
-
-      <div class="field">
-        <label for="password">Jelszó</label>
-        <input type="password" id="password" name="password" required>
-      </div>
-
-      <div class="register-wrapper">
-        <a class="reg-link" href="{{ route('register') }}">Új fiók létrehozása</a>
-      </div>
-
-      <button type="submit">Bejelentkezés</button>
-
-      <p id="msg"></p>
-    </form>
-  </div>
-
 </body>
 </html>

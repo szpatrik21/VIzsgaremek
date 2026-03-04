@@ -210,11 +210,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 @media (max-width:700px){
   .hamburger{
-    margin-right: 30px; /* állítsd 8-16px között ízlésre */
+    margin-right: 30px; 
   }
 }
 
-/* ===== NAVBAR FONTS ===== */
+/* Navbar */
 
 .navbar{
   font-family: "Space Grotesk", system-ui, sans-serif;
@@ -231,7 +231,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   --border:rgba(255,255,255,.15);
 }
 
-/* NAV + gombok legyenek modern, “precíz” */
 .navbar,
 .nav-link,
 .btn-auth,
@@ -242,7 +241,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   letter-spacing: .2px;
 }
 
-/* NAVBAR */
+
 .navbar{
   position: fixed;
   top: 0;
@@ -256,14 +255,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   display: flex;
   align-items: center;
-  justify-content: flex-start;   /* ✅ ne space-between */
+  justify-content: flex-start;   
 }
 
 body{
   padding-top: 70px;
 }
-
-/* LEFT */
 .navbar-left{
   display: flex;
   align-items: center;
@@ -278,7 +275,6 @@ body{
   color: #fff;
 }
 
-/* LINKS */
 .nav-link{
   position: relative;
   font-size: 16px;
@@ -305,7 +301,7 @@ body{
   transform: scaleX(0);
   transition: transform .2s ease;
 }
-/* KIJELENTKEZÉS = rendes gomb */
+
 .logout-link{
   display: inline-flex;
   align-items: center;
@@ -346,21 +342,21 @@ body{
   transform: scaleX(1);
 }
 
-/* RIGHT */
+
 .navbar-right{
-  margin-left: auto;            /* ✅ EZ tolja teljesen jobbra */
+  margin-left: auto;            
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-/* AUTH BUTTONS */
+
 .auth-buttons{
   display:flex;
   gap:12px;
 }
 
-/* Base */
+
 .btn-auth{
   padding: 10px 18px;
   border-radius: 10px;
@@ -371,7 +367,7 @@ body{
   white-space: nowrap;
 }
 
-/* Login */
+
 .btn-login{
   border: 1px solid rgba(255,255,255,.3);
   color: #fff;
@@ -383,7 +379,6 @@ body{
   color: var(--gold);
 }
 
-/* Register */
 .btn-register{
   background: var(--gold);
   color: #000;
@@ -395,7 +390,7 @@ body{
   border-color: var(--gold-light);
 }
 
-/* USER */
+
 .userbox{
   display:flex;
   align-items:center;
@@ -422,7 +417,7 @@ body{
   color: var(--gold);
 }
 
-/* MOBILE */
+
 @media (max-width:700px){
   .navbar{
     height: 64px;
@@ -453,10 +448,10 @@ body{
   align-items:center;
   gap:18px;
   padding-left:24px;
-  border-left:none;                 /* ❌ kiszedjük a csíkot */
+  border-left:none;                 
 }
 
-/* NÉV – prémium arany */
+
 .profile-link{
   color: var(--gold);
   font-weight: 700;
@@ -470,7 +465,7 @@ body{
   color: var(--gold-light);
 }
 
-/* KIJELETKEZÉS – diszkrét */
+
 .logout-link{
   color: rgba(255,255,255,.65);
   font-size: 14px;
@@ -485,22 +480,21 @@ body{
 </style>
 
 <style>
-  /* ===== HAMBURGER + MOBILE DRAWER (DESKTOPOT NEM BÁNTJA) ===== */
+
 .hamburger,
 .menu-backdrop,
 .mobile-menu{
-  display: none; /* desktopon nincs */
+  display: none; 
 }
 
-/* mobilon jelenik meg */
 @media (max-width:700px){
-  /* Desktop elemek elrejtése mobilon */
+
   .navbar-left .nav-link,
   .navbar-right{
     display: none !important;
   }
 
-  /* Hamburger jobbra */
+
   .hamburger{
     display: inline-flex;
     margin-left: auto;
@@ -529,7 +523,7 @@ body{
   .hamburger.is-open span:nth-child(2){ opacity: 0; }
   .hamburger.is-open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
-  /* Backdrop */
+
   .menu-backdrop{
     display:block;
     position: fixed;
@@ -545,7 +539,7 @@ body{
     pointer-events: auto;
   }
 
-  /* Drawer */
+
   .mobile-menu{
     display:flex;
     position: fixed;

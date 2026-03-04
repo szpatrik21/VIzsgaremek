@@ -20,6 +20,9 @@ export default defineConfig({
                 'resources/css/login.css',
                 'resources/css/profile.css',
                 'resources/css/loggin.css',
+                'resources/css/autok.css',
+                'resources/css/contact.css',
+                'resources/css/createcars.css'
             ],
             refresh: true,
         }),

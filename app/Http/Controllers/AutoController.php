@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class AutoController extends Controller
 {
-    // ====================================
+
     // AUTÓK LISTÁJA (szűréssel)
-    // ====================================
+
     public function index(Request $request)
     {
-        // Szűrő listák (dropdownokhoz)
+        // Szűrő listák 
         $markak = Auto::query()
             ->whereNotNull('marka')->where('marka', '!=', '')
             ->distinct()->orderBy('marka')
@@ -66,13 +66,8 @@ class AutoController extends Controller
         ));
     }
 
-    // ====================================
-    // KÜLÖN AUTÓ OLDAL
-    // ====================================
     public function show(Auto $auto)
     {
-        // Ez a fájl:
-        // resources/views/cars/show.blade.php
         return view('cars.show', compact('auto'));
     }
 }

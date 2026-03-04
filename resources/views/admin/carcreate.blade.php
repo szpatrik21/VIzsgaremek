@@ -2,9 +2,116 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxCar Admin – Autó feltöltése</title>
+    <title>Admin – Kommentek</title>
 
+    <style>
+        :root {
+            --black: #000;
+            --white: #fff;
+            --gold: #d4af37;
+            --gray: #e6e6e6;
+        }
+
+        body {
+            margin: 0;
+            background: #f7f7f7;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background: var(--black);
+            color: var(--white);
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 22px; font-weight: bold; }
+        .logo span { color: var(--gold); }
+
+        .content {
+            padding: 40px;
+            max-width: 1000px;
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--gold);
+            padding-left: 12px;
+        }
+
+        .comment-row {
+            background: var(--white);
+            border: 1px solid var(--gray);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .comment-meta {
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .comment-meta strong { color: var(--gold); }
+
+        .comment-text {
+            font-size: 15px;
+            line-height: 1.45;
+            white-space: pre-wrap;
+        }
+
+        .danger-btn {
+            background: #b00020;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .danger-btn:hover { filter: brightness(1.1); }
+
+        .back-btn {
+            background:#000;
+            color:#d4af37;
+            text-decoration:none;
+            border:1px solid #d4af37;
+            padding:10px 16px;
+            border-radius:6px;
+            font-weight:bold;
+            display:inline-block;
+        }
+
+        .page-link {
+            display:inline-block;
+            padding:6px 10px;
+            margin:0 4px;
+            border-radius:6px;
+            text-decoration:none;
+            font-weight:bold;
+            border:1px solid #d4af37;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Lux<span>Car</span> Admin</div>
+
+    <a href="{{ route('admin.dashboard') }}" class="back-btn">
+        Vissza
+    </a>
+</header>
 <style>
 :root {
     --black: #000;
@@ -83,7 +190,7 @@ input, select {
 
 <body>
 
-<x-adminnavbar />
+
 
 <div class="container">
 

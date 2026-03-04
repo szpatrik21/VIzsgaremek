@@ -1,4 +1,4 @@
-<!-- HERO / SLIDER -->
+
   <div class="slider">
     <img src="{{ asset('images/porsche-4795517.jpg') }}" alt="porsche">
     <img src="{{ asset('images/13.jpg') }}" alt="car">
@@ -10,7 +10,6 @@
     <img src="{{ asset('images/21.jpg') }}" alt="car">
     <img src="{{ asset('images/22.jpg') }}" alt="car">
 
-    <!-- ✅ overlay, ettől nem üres -->
     <div class="hero-overlay">
       <h1>Luxusautók egy helyen</h1>
       <p>Válogass prémium modellek közül, nézd meg a részleteket, és kérj ajánlatot gyorsan, egyszerűen.</p>

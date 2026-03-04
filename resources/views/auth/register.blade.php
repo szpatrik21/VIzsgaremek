@@ -13,6 +13,154 @@
   @vite([
     'resources/css/navbar.css'
   ])
+</head>
+
+<body class="register-page">
+  <x-navbar />
+
+  <div class="register-wrapper">
+
+    <!-- BAL OLDAL -->
+    <div class="register-left">
+      <div class="brand-box">
+        <h1>Csatlakozz a LuxCar világához</h1>
+        <p>Hozz létre fiókot, és kérj ajánlatot prémium modellekre gyorsan, egyszerűen. </p>
+
+        <div class="brand-pills">
+          <span class="pill">Prémium modellek</span>
+          <span class="pill">Gyors ajánlatkérés</span>
+          <span class="pill">Egyszerű kezelés</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOBB OLDAL -->
+    <div class="register-right">
+      <div class="form-shell">
+        <h2>Regisztráció</h2>
+        <p class="sub">Add meg az adataidat, és már mehetsz is válogatni a kiemelt autók között. </p>
+
+        <form id="registerForm" novalidate>
+          <div class="grid">
+            <div class="field full">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+
+            <div class="field full">
+              <label for="username">Felhasználónév</label>
+              <input type="text" id="username" name="username" required />
+            </div>
+
+            <div class="field">
+              <label for="last_name">Vezetéknév</label>
+              <input type="text" id="last_name" name="last_name" required />
+            </div>
+
+            <div class="field">
+              <label for="first_name">Keresztnév</label>
+              <input type="text" id="first_name" name="first_name" required />
+            </div>
+
+            <div class="field full">
+              <label for="password">Jelszó</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+
+            <div class="field">
+              <label for="phone">Telefonszám</label>
+              <input type="tel" id="phone" name="phone" required />
+            </div>
+
+            <div class="field">
+              <label for="birthdate">Születési dátum</label>
+              <input type="date" id="birthdate" name="birthdate" required />
+            </div>
+
+            <div class="field full">
+              <label for="address">Lakóhely</label>
+              <input type="text" id="address" name="address" required />
+            </div>
+          </div>
+
+          <button type="submit">Regisztráció</button>
+
+          <p id="msg"></p>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const msg = document.getElementById("msg");
+      msg.textContent = "";
+      msg.className = "";
+
+      const payload = {
+        email: document.getElementById("email").value.trim(),
+        username: document.getElementById("username").value.trim(),
+        last_name: document.getElementById("last_name").value.trim(),
+        first_name: document.getElementById("first_name").value.trim(),
+        password: document.getElementById("password").value,
+        phone: document.getElementById("phone").value.trim(),
+        birthdate: document.getElementById("birthdate").value,
+        address: document.getElementById("address").value.trim(),
+      };
+
+      try {
+        const res = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const contentType = res.headers.get("content-type") || "";
+        let data = {};
+
+        if (contentType.includes("application/json")) {
+          data = await res.json();
+        } else {
+          const text = await res.text();
+          console.log("Nem JSON válasz:", text);
+          msg.textContent = "Szerver hiba történt.";
+          msg.className = "error";
+          return;
+        }
+
+        if (!res.ok) {
+          if (data.errors) {
+            const firstKey = Object.keys(data.errors)[0];
+            msg.textContent = data.errors[firstKey][0];
+          } else {
+            msg.textContent = data.message || "Hiba történt a regisztrációnál!";
+          }
+          msg.className = "error";
+          return;
+        }
+
+        msg.textContent = data.message || "Sikeres regisztráció! ✅";
+        msg.className = "success";
+
+        document.getElementById("registerForm").reset();
+
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1200);
+
+      } catch (err) {
+        console.error(err);
+        msg.textContent = "Hálózati hiba történt.";
+        msg.className = "error";
+      }
+    });
+  </script>
 
   <style>
     :root{
@@ -232,153 +380,5 @@
       .grid{ grid-template-columns: 1fr; }
     }
   </style>
-</head>
-
-<body class="register-page">
-  <x-navbar />
-
-  <div class="register-wrapper">
-
-    <!-- BAL OLDAL -->
-    <div class="register-left">
-      <div class="brand-box">
-        <h1>Csatlakozz a LuxCar világához</h1>
-        <p>Hozz létre fiókot, és kérj ajánlatot prémium modellekre gyorsan, egyszerűen. </p>
-
-        <div class="brand-pills">
-          <span class="pill">Prémium modellek</span>
-          <span class="pill">Gyors ajánlatkérés</span>
-          <span class="pill">Egyszerű kezelés</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- JOBB OLDAL -->
-    <div class="register-right">
-      <div class="form-shell">
-        <h2>Regisztráció</h2>
-        <p class="sub">Add meg az adataidat, és már mehetsz is válogatni a kiemelt autók között. </p>
-
-        <form id="registerForm" novalidate>
-          <div class="grid">
-            <div class="field full">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-
-            <div class="field full">
-              <label for="username">Felhasználónév</label>
-              <input type="text" id="username" name="username" required />
-            </div>
-
-            <div class="field">
-              <label for="last_name">Vezetéknév</label>
-              <input type="text" id="last_name" name="last_name" required />
-            </div>
-
-            <div class="field">
-              <label for="first_name">Keresztnév</label>
-              <input type="text" id="first_name" name="first_name" required />
-            </div>
-
-            <div class="field full">
-              <label for="password">Jelszó</label>
-              <input type="password" id="password" name="password" required />
-            </div>
-
-            <div class="field">
-              <label for="phone">Telefonszám</label>
-              <input type="tel" id="phone" name="phone" required />
-            </div>
-
-            <div class="field">
-              <label for="birthdate">Születési dátum</label>
-              <input type="date" id="birthdate" name="birthdate" required />
-            </div>
-
-            <div class="field full">
-              <label for="address">Lakóhely</label>
-              <input type="text" id="address" name="address" required />
-            </div>
-          </div>
-
-          <button type="submit">Regisztráció</button>
-
-          <p id="msg"></p>
-        </form>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    document.getElementById("registerForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const msg = document.getElementById("msg");
-      msg.textContent = "";
-      msg.className = "";
-
-      const payload = {
-        email: document.getElementById("email").value.trim(),
-        username: document.getElementById("username").value.trim(),
-        last_name: document.getElementById("last_name").value.trim(),
-        first_name: document.getElementById("first_name").value.trim(),
-        password: document.getElementById("password").value,
-        phone: document.getElementById("phone").value.trim(),
-        birthdate: document.getElementById("birthdate").value,
-        address: document.getElementById("address").value.trim(),
-      };
-
-      try {
-        const res = await fetch("/api/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-
-        const contentType = res.headers.get("content-type") || "";
-        let data = {};
-
-        if (contentType.includes("application/json")) {
-          data = await res.json();
-        } else {
-          const text = await res.text();
-          console.log("Nem JSON válasz:", text);
-          msg.textContent = "Szerver hiba történt.";
-          msg.className = "error";
-          return;
-        }
-
-        if (!res.ok) {
-          if (data.errors) {
-            const firstKey = Object.keys(data.errors)[0];
-            msg.textContent = data.errors[firstKey][0];
-          } else {
-            msg.textContent = data.message || "Hiba történt a regisztrációnál!";
-          }
-          msg.className = "error";
-          return;
-        }
-
-        msg.textContent = data.message || "Sikeres regisztráció! ✅";
-        msg.className = "success";
-
-        document.getElementById("registerForm").reset();
-
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 1200);
-
-      } catch (err) {
-        console.error(err);
-        msg.textContent = "Hálózati hiba történt.";
-        msg.className = "error";
-      }
-    });
-  </script>
 </body>
 </html>

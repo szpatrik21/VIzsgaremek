@@ -24,8 +24,8 @@ class AuthController extends Controller
         User::create([
             'email' => $request->email,
             'username' => $request->username,
-            'first_name' => $request->first_name,   // 🔥 EZ HIÁNYZOTT
-            'last_name' => $request->last_name,     // 🔥 EZ HIÁNYZOTT
+            'first_name' => $request->first_name,   
+            'last_name' => $request->last_name,     
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'birthdate' => $request->birthdate,

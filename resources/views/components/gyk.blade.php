@@ -69,7 +69,6 @@
 </section>
 
 <style>
-/* ===== FAQ – LUX KÁRTYÁS ===== */
 .faq{
   padding: 80px 0;
   display: flex;
@@ -120,10 +119,10 @@
   flex-direction: column;
   gap: 24px;
   max-width: 850px;
-  margin: 0 auto;   /* EZ teszi középre */
+  margin: 0 auto;  
 }
 
-/* ===== KÁRTYA ===== */
+
 .faq__item{
   background: linear-gradient(145deg, #111, #161616);
   border: 1px solid rgba(212,175,55,.15);
@@ -133,14 +132,12 @@
   box-shadow: 0 10px 35px rgba(0,0,0,.45);
 }
 
-/* hover glow */
 .faq__item:hover{
   border-color: rgba(212,175,55,.35);
   box-shadow: 0 15px 45px rgba(212,175,55,.12);
 
 }
 
-/* SUMMARY */
 .faq__item summary{
   list-style: none;
   cursor: pointer;
@@ -167,7 +164,6 @@
   content: "−";
 }
 
-/* CONTENT */
 .faq__content{
   padding: 0 24px 22px 24px;
   color: rgba(255,255,255,.75);
@@ -179,7 +175,6 @@
   color: #d4af37;
 }
 
-/* ===== MOBIL ===== */
 @media (max-width: 900px){
   .faq__list{
     grid-template-columns: 1fr;

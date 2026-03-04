@@ -17,13 +17,8 @@
   <h1>Vélemények</h1>
 
   <div id="status" class="status"></div>
-
-  <!-- 🔽 KOMMENT LISTA FELÜL -->
   <div id="commentsList" class="list"></div>
-
   <div class="divider"></div>
-
-  <!-- 🔽 KOMMENT ÍRÁS ALUL -->
   <form id="commentForm" class="card">
     <label for="content">Írj egy kommentet</label>
     <textarea id="content" rows="4" placeholder="Pl. nagyon korrekt szolgáltatás..." required></textarea>
@@ -31,8 +26,6 @@
     <div id="msg" class="msg"></div>
   </form>
 </div>
-
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("jwt_token");
@@ -44,17 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const msgEl = document.getElementById("msg");
   const contentEl = document.getElementById("content");
 
-  // 1) Kommentek mindig betöltődnek
   loadComments();
 
-  // 2) Komment írás csak tokennel
   if (!token) {
     statusEl.textContent = "Kommenteléshez jelentkezz be 👤";
     statusEl.className = "status error";
     sendBtn.disabled = true;
     contentEl.disabled = true;
   } else {
-    statusEl.textContent = "Be vagy jelentkezve ✅";
+    statusEl.textContent = "Be vagy jelentkezve ";
     statusEl.className = "status success";
     sendBtn.disabled = false;
     contentEl.disabled = false;
@@ -70,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!content) return;
 
     if (!token) {
-      msgEl.textContent = "Előbb jelentkezz be 😏";
+      msgEl.textContent = "Előbb jelentkezz be ";
       msgEl.className = "msg error";
       return;
     }
@@ -223,8 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
   border:1px solid #333;
   padding:16px;
   border-radius:14px;
-  margin-top:20px;   /* 👈 EZT ADD HOZZÁ */
-}
+  margin-top:20px;   
 
 
   label{

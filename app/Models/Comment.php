@@ -17,18 +17,11 @@ class Comment extends Model
         'content',
         ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | KAPCSOLATOK
-    |--------------------------------------------------------------------------
-    */
-
     // Komment tulajdonosa
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
     // Komment melyik autóhoz tartozik
     public function auto()
     {

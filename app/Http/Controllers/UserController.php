@@ -20,8 +20,6 @@ class UserController extends Controller
                 'message' => 'Nincs bejelentkezett felhasználó'
             ], 401);
         }
-
-        // régi kép törlése
         if ($user->profile_image) {
             Storage::disk('public')->delete($user->profile_image);
         }

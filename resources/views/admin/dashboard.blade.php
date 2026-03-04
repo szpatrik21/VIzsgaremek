@@ -4,8 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LuxCar Admin</title>
+</head>
 
-    <style>
+<body>
+<header>
+    <div class="logo">Lux<span>Car</span> Admin</div>
+
+    <form action="{{ route('admin.logout') }}" method="POST">
+        @csrf
+        <button class="logout-btn">Kijelentkezés</button>
+    </form>
+</header>
+
+<div class="content">
+
+    <h2>Adatok</h2>
+
+    <div class="stat">
+        <strong>Regisztrált felhasználók száma:</strong><br>
+        {{ $usersCount }}
+    </div>
+
+    <div class="stat">
+        <strong>Autók száma:</strong><br>
+        {{ $carsCount }}
+    </div>
+
+    <div class="stat">
+        <strong>Raktáron lévő autók:</strong><br>
+        {{ $availableCars }}
+    </div>
+
+    <div class="stat">
+        <strong>Adminok száma:</strong><br>
+        {{ $adminsCount }}
+    </div>
+
+</div>
+
+<div class="buttons">
+<div class="buttons">
+    <a class="btn" href="{{ route('admin.carcreate') }}">
+        Autó feltöltés
+    </a>
+
+    <a class="btn" href="{{ route('admin.cars') }}">
+        Autók kezelése
+    </a>
+
+    <a class="btn" href="{{ route('admin.comments.index') }}">
+        Kommentek kezelése
+    </a>
+
+    <a class="btn" href="{{ route('admin.users.index') }}">
+    Felhasználók kezelése
+</a>
+</div>
+<style>
         :root {
             --black: #000;
             --white: #fff;
@@ -105,54 +160,5 @@
             color: #000;
         }
     </style>
-</head>
-
-<body>
-
-<header>
-    <div class="logo">Lux<span>Car</span> Admin</div>
-
-    <form action="{{ route('admin.logout') }}" method="POST">
-        @csrf
-        <button class="logout-btn">Kijelentkezés</button>
-    </form>
-</header>
-
-<div class="content">
-
-    <h2>Adatok</h2>
-
-    <div class="stat">
-        <strong>Regisztrált felhasználók száma:</strong><br>
-        {{ $usersCount }}
-    </div>
-
-    <div class="stat">
-        <strong>Autók száma:</strong><br>
-        {{ $carsCount }}
-    </div>
-
-    <div class="stat">
-        <strong>Raktáron lévő autók:</strong><br>
-        {{ $availableCars }}
-    </div>
-
-    <div class="stat">
-        <strong>Adminok száma:</strong><br>
-        {{ $adminsCount }}
-    </div>
-
-</div>
-
-<div class="buttons">
-    <a class="btn" href="{{ route('admin.carcreate') }}">
-        Autó feltöltés
-    </a>
-
-    <a class="btn" href="{{ route('admin.cars') }}">
-        Autók kezelése
-    </a>
-</div>
-
 </body>
 </html>

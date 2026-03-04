@@ -15,9 +15,7 @@
 
 <body>
   <x-navbar />
-  
 <x-gyk />
-
   <x-footer />
 </body>
 

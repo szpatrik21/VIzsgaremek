@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CommentApiController extends Controller
 {
-    // ✅ Csak az adott autó kommentjei (GET: publikus)
+    //  Csak az adott autó kommentjei 
     public function index(Auto $auto)
     {
         return Comment::with('user:id,username,first_name,last_name')
@@ -17,14 +17,14 @@ class CommentApiController extends Controller
             ->get();
     }
 
-    // ✅ Komment mentése adott autóhoz (POST: JWT kell)
+    // Komment mentése megadott  autóhoz (POST: JWT kell)
     public function store(Request $request, Auto $auto)
     {
         $request->validate([
             'content' => 'required|string|min:2|max:2000',
         ]);
 
-        $user = auth('api')->user(); // JWT guard
+        $user = auth('api')->user(); 
 
         if (!$user) {
             return response()->json([
@@ -32,7 +32,6 @@ class CommentApiController extends Controller
             ], 401);
         }
 
-        // 🔥 FONTOS: $comment változó kell, mert ezt küldjük vissza
         $comment = Comment::create([
             'user_id' => $user->id,
             'auto_id' => $auto->id,
