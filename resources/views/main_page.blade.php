@@ -1,45 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LuxCar - Kezdőoldal</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="icon" href="{{ asset('ChatGPT Image 2026. márc. 1. 13_20_49 (1).ico') }}">
+  <link rel="icon" href="/images/favicon.ico">
+    @vite([
+      'resources/css/main_page.css',
+      'resources/css/navbar.css',
+      'resources/js/main.js'
+    ])
 
-  @vite([
-    'resources/css/main_page.css',
-    'resources/css/navbar.css',
-  ])
+  <!-- CSAK a main_page.css -->
+  <link rel="stylesheet" href="/resources/css/main_page.css">
 
 </head>
-
+<x-navbar />
 <body>
-  <x-navbar />
 
-  <!-- Képek -->
+  <!-- HERO -->
   <div class="slider">
-
-    <img src="{{ asset('images/14.jpg') }}" alt="car">
-    <img src="{{ asset('images/16.jpg') }}" alt="car">
-    <img src="{{ asset('images/17 (2).jpg') }}" alt="car">
-    <img src="{{ asset('images/19.jpg') }}" alt="car">
-    <img src="{{ asset('images/21.jpg') }}" alt="car">
-    <img src="{{ asset('images/22.jpg') }}" alt="car">
+    <img src="/images/14.jpg" alt="car">
+    <img src="/images/16.jpg" alt="car">
+    <img src="/images/17 (2).jpg" alt="car">
+    <img src="/images/19.jpg" alt="car">
+    <img src="/images/21.jpg" alt="car">
+    <img src="/images/22.jpg" alt="car">
 
     <div class="hero-overlay">
       <h1>Luxusautók egy helyen</h1>
       <p>Válogass prémium modellek közül, nézd meg a részleteket, és kérj ajánlatot gyorsan, egyszerűen.</p>
       <div class="hero-actions">
-        <a class="cta" href="{{ route('autok.index') }}">Autók megtekintése</a>
+        <a class="cta" href="/autok">Autók megtekintése</a>
       </div>
     </div>
   </div>
 
-  <!-- Statisztika -->
+  <!-- STATS -->
   <section class="stats" id="stats">
     <div class="stats__inner">
       <div class="stat-card">
@@ -72,68 +74,16 @@
     </div>
   </section>
 
-
-<br><br>
-  <!-- Kiemelt autók -->
+  <!-- KIEMELT AUTÓK -->
   <div class="container">
-  <h2 id="kiemelt" class="cim1 reveal">Kiemelt autók:</h2>
+    <h2 id="kiemelt" class="cim1 reveal">Kiemelt autók:</h2>
 
-  <div class="carbox carbox-grid carbox--featured">
-    @foreach($autok as $auto)
-      <div class="carbox1 reveal">
-        @if(!empty($auto->kep))
-          <img src="{{ asset($auto->kep) }}"
-               class="carsbox"
-               alt="{{ $auto->marka }} {{ $auto->modell }}">
-        @else
-          <img src="{{ asset('images/no-image.png') }}"
-               class="carsbox"
-               alt="Nincs kép">
-        @endif
-
-        <div class="card-content">
-          <p class="card-title">{{ $auto->marka }} {{ $auto->modell }}</p>
-          <p class="card-spec">{{ $auto->teljesitmeny }} LE • {{ $auto->uzemanyag }}</p>
-          <p class="card-price">{{ number_format($auto->ar, 0, ',', ' ') }} Ft</p>
-
-          <a class="yellowbutton" href="{{ route('autok.show', $auto) }}">
-            Érdekel
-          </a>
-        </div>
-      </div>
-    @endforeach
+    <div id="featuredCars" class="carbox carbox-grid carbox--featured">
+      <div class="api-msg">Kiemelt autók betöltése...</div>
+    </div>
   </div>
-</div>
 
-<style>
-  .reveal{
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity .8s ease, transform .8s ease;
-}
-
-.reveal.active{
-  opacity: 1;
-  transform: translateY(0);
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const reveals = document.querySelectorAll(".reveal");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add("active");
-      }
-    });
-  }, { threshold: 0.15 });
-
-  reveals.forEach(el => observer.observe(el));
-});
-</script>
-
+  <!-- RÓLUNK -->
   <section class="about">
     <div class="container">
       <div class="about-section">
@@ -159,66 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      /* ===== HERO SLIDER ===== */
-      const slides = document.querySelectorAll(".slider img");
-      if (slides.length) {
-        let current = 0;
+<x-footer />
 
-        const showSlide = (i) => {
-          slides.forEach(s => s.classList.remove("active"));
-          slides[i].classList.add("active");
-        };
-
-        showSlide(0);
-
-        setInterval(() => {
-          current = (current + 1) % slides.length;
-          showSlide(current);
-        }, 5000);
-      }
-
-      const counters = document.querySelectorAll(".countup");
-      if (!counters.length) return;
-
-      const runOnce = new WeakSet();
-
-      const animateCount = (el) => {
-        const target = Number(el.dataset.target || 0);
-        const suffix = el.dataset.suffix || "";
-        const duration = 900;
-
-        const startTime = performance.now();
-
-        const step = (now) => {
-          const progress = Math.min((now - startTime) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const value = Math.round(target * eased);
-
-          el.textContent = value.toLocaleString("hu-HU") + suffix;
-
-          if (progress < 1) requestAnimationFrame(step);
-        };
-
-        requestAnimationFrame(step);
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target;
-          if (runOnce.has(el)) return;
-
-          runOnce.add(el);
-          animateCount(el);
-        });
-      }, { threshold: 0.35 });
-
-      counters.forEach(c => observer.observe(c));
-    });
-  </script>
-
-  <x-footer />
 </body>
 </html>

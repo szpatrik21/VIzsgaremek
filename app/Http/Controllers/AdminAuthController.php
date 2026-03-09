@@ -4,42 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
-    public function showLogin() {
-        return view('admin.login');
-    }
-
-    public function login(Request $request) {
-        $creds = $request->only('email', 'password');
-
-        if (Auth::guard('admin')->attempt($creds)) {
-            return redirect()->route('admin.dashboard');
-        }
-
-        return back()->with('error', 'Hibás adatok!');
-    }
-
-    public function showRegister() {
-        return view('admin.register');
-    }
-
-    public function register(Request $request) {
-        Admin::create([
-            'username' => $request->username,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+    public function login(Request $request)
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        return redirect()->route('admin.login');
-    }
+        $admin = Admin::where('email', $data['email'])->first();
 
-    public function logout() {
-        Auth::guard('admin')->logout();
-        return redirect()->route('admin.login');
+        if (!$admin || !Hash::check($data['password'], $admin->password)) {
+            return response()->json([
+                'message' => 'Hibás email vagy jelszó.',
+            ], 401);
+        }
+
+        // Ha Sanctumot használsz:
+        $token = $admin->createToken('admin-token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Sikeres belépés.',
+            'token' => $token,
+            'admin' => [
+                'id' => $admin->id,
+                'name' => $admin->name ?? null,
+                'email' => $admin->email,
+            ]
+        ]);
     }
 }
-

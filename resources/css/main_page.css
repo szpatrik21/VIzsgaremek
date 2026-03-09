@@ -466,3 +466,34 @@ h3,
     height: 170px;
   }
 }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .api-msg {
+      width: 100%;
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #ddd;
+      text-align: center;
+      font-family: "Space Grotesk", Arial, sans-serif;
+    }
+
+    .simple-footer {
+      margin-top: 50px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 16px;
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+    }

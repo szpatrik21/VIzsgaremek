@@ -33,4 +33,27 @@ class OfferController extends Controller
 
         return back()->with('success', '✅ Ajánlatkérés elküldve!');
     }
+
+    public function storeApi(Request $request, Auto $auto)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:120',
+            'email' => 'required|email|max:160',
+            'phone' => 'nullable|string|max:60',
+            'message' => 'nullable|string|max:2000',
+        ]);
+
+        Mail::send('emails.offer_request', [
+            'auto' => $auto,
+            'data' => $validated,
+        ], function ($mail) use ($auto, $validated) {
+            $mail->to(env('MAIL_OFFER_TO'))
+                ->subject("Ajánlatkérés: {$auto->marka} {$auto->modell} ({$auto->evjarat})")
+                ->replyTo($validated['email'], $validated['name']);
+        });
+
+        return response()->json([
+            'message' => '✅ Ajánlatkérés elküldve!'
+        ], 200);
+    }
 }

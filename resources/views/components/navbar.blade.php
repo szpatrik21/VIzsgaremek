@@ -52,7 +52,7 @@
       <a href="{{ route('autok.index') }}" class="nav-link {{ request()->routeIs('autok.*') ? 'is-active' : '' }}">Autók</a>
       <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Kapcsolat</a>
 
-      <!-- ✅ GYIK MOBILON IS -->
+
       <a href="{{ route('gyik') }}" class="nav-link {{ request()->routeIs('gyik') ? 'is-active' : '' }}">GYIK</a>
     </nav>
 

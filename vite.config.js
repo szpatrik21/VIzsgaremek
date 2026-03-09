@@ -22,7 +22,9 @@ export default defineConfig({
                 'resources/css/profile.css',
                 'resources/css/autok.css',
                 'resources/css/contact.css',
-                'resources/css/createcars.css'
+                'resources/css/createcars.css',
+                'resources/js/main.js',
+                'resources/css/admin/carcreate.css',
             ],
             refresh: true,
         }),

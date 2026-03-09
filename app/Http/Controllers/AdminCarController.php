@@ -43,7 +43,7 @@ class AdminCarController extends Controller
         $path2 = $request->file('image2')->store('cars', 'public');
 
         // ===== Adatbázis mentés =====
-        Auto::create([
+        $auto = Auto::create([
             'marka' => $data['marka'],
             'modell' => $data['modell'],
             'evjarat' => $data['evjarat'],
@@ -64,7 +64,10 @@ class AdminCarController extends Controller
             'kep2' => 'storage/' . $path2,
         ]);
 
-        return back()->with('success', 'Autó sikeresen feltöltve! 🚗');
+        return response()->json([
+            'message' => 'Autó sikeresen feltöltve! 🚗',
+            'auto' => $auto,
+        ], 201);
     }
 
     // ===== Admin lista =====
