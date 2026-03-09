@@ -1,0 +1,49 @@
+
+
+
+<div class="wrap">
+<app-navbar></app-navbar>
+
+  <h1>Ajánlatkérés</h1>
+
+  <p class="sub" *ngIf="auto">
+    Autó:
+    <strong>{{ auto.marka }} {{ auto.modell }}</strong>
+    ({{ auto.evjarat }})
+  </p>
+
+  <div class="status success" *ngIf="sikerUzenet">
+    {{ sikerUzenet }}
+  </div>
+
+  <div class="status error" *ngIf="hibaUzenet">
+    {{ hibaUzenet }}
+  </div>
+
+  <form class="card" [formGroup]="urlap" (ngSubmit)="ajanlatKuldese()">
+    <label for="nev">Név *</label>
+    <input id="nev" type="text" formControlName="nev" required>
+
+    <label for="email">Email *</label>
+    <input id="email" type="email" formControlName="email" required>
+
+    <label for="telefon">Telefon</label>
+    <input id="telefon" type="text" formControlName="telefon" placeholder="+36 20 123 4567">
+
+    <label for="uzenet">Üzenet</label>
+    <textarea
+      id="uzenet"
+      rows="5"
+      formControlName="uzenet"
+      placeholder="Írd le, mire szeretnél ajánlatot..."
+    ></textarea>
+
+    <button type="submit" [disabled]="kuldesFolyamatban">
+      {{ kuldesFolyamatban ? 'Küldés...' : 'Ajánlat kérése' }}
+    </button>
+
+    <a class="back" routerLink="/autok">← Vissza</a>
+  </form>
+</div>
+
+<app-footer></app-footer>

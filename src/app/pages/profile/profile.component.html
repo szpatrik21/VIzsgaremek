@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+
+<div class="profile-container">
+  <h2 class="username">{{ user?.username ?? 'Profil' }}</h2>
+
+  <p class="state" *ngIf="loading">Betöltés...</p>
+  <p class="state err" *ngIf="!loading && errorMsg">{{ errorMsg }}</p>
+
+  <ng-container *ngIf="!loading && !errorMsg && user">
+    <div class="profile-top">
+      <img
+        class="profile-image"
+        [src]="profileImgSrc()"
+        [alt]="(user.username ?? 'Profil') + ' profilkép'"
+        [title]="(user.username ?? 'Profil') + ' profilkép'"
+        (error)="onImgError($event)"
+      />
+
+      <div class="upload-box">
+        <label class="upload-label">Profilkép feltöltés</label>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+        <button class="upload-btn" type="button" [disabled]="uploading" (click)="uploadProfileImage()">
+          {{ uploading ? 'Feltöltés...' : 'Feltöltés' }}
+        </button>
+
+        <p class="upload-msg" [class.ok]="uploadMsg.includes('✅')" [class.err]="uploadMsg && !uploadMsg.includes('✅')">
+          {{ uploadMsg }}
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-card">
+      <p><strong>Teljes név:</strong> <span>{{ fullName() }}</span></p>
+      <p><strong>Email cím:</strong> <span>{{ user.email ?? '—' }}</span></p>
+      <p><strong>Telefonszám:</strong> <span>{{ user.phone ?? '—' }}</span></p>
+      <p><strong>Születési dátum:</strong> <span>{{ user.birthdate ?? '—' }}</span></p>
+      <p><strong>Lakóhely:</strong> <span>{{ user.address ?? '—' }}</span></p>
+      <p><strong>Regisztráció dátuma:</strong> <span>{{ createdAtHu() }}</span></p>
+    </div>
+  </ng-container>
+</div>
+
+<!-- <app-footer></app-footer> -->

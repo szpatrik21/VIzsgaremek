@@ -1,0 +1,40 @@
+<header>
+  <div class="logo">Lux<span>Car</span> Admin</div>
+  <button class="logout-btn" type="button" (click)="logout()">Kijelentkezés</button>
+</header>
+
+<div class="content">
+  <h2>Adatok</h2>
+
+  <p *ngIf="loading">Betöltés...</p>
+  <p *ngIf="!loading && errorMsg" style="color:red;">{{ errorMsg }}</p>
+
+  <ng-container *ngIf="!loading && !errorMsg">
+    <div class="stat">
+      <strong>Regisztrált felhasználók száma:</strong><br>
+      {{ stats.usersCount }}
+    </div>
+
+    <div class="stat">
+      <strong>Autók száma:</strong><br>
+      {{ stats.carsCount }}
+    </div>
+
+    <div class="stat">
+      <strong>Raktáron lévő autók:</strong><br>
+      {{ stats.availableCars }}
+    </div>
+
+    <div class="stat">
+      <strong>Adminok száma:</strong><br>
+      {{ stats.adminsCount }}
+    </div>
+  </ng-container>
+</div>
+
+<div class="buttons">
+  <a class="btn" routerLink="/admin/carcreate">Autó feltöltés</a>
+  <a class="btn" routerLink="/admin/cars">Autók kezelése</a>
+  <a class="btn" routerLink="/admin/comments">Kommentek kezelése</a>
+  <a class="btn" routerLink="/admin/users">Felhasználók kezelése</a>
+</div>

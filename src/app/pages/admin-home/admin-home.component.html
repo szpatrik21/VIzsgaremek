@@ -1,0 +1,32 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="content">
+  <h2>Adatok</h2>
+
+  <div class="stat">
+    <strong>Regisztrált felhasználók száma:</strong><br>
+    {{ usersCount }}
+  </div>
+
+  <div class="stat">
+    <strong>Autók száma:</strong><br>
+    {{ carsCount }}
+  </div>
+
+  <div class="stat">
+    <strong>Raktáron lévő autók:</strong><br>
+    {{ availableCars }}
+  </div>
+
+  <div class="stat">
+    <strong>Adminok száma:</strong><br>
+    {{ adminsCount }}
+  </div>
+
+  <div class="buttons">
+    <a class="btn" routerLink="/admin/carcreate">Autó feltöltés</a>
+    <a class="btn" routerLink="/admin/cars">Autók kezelése</a>
+    <a class="btn" routerLink="/admin/comments">Kommentek kezelése</a>
+    <a class="btn" routerLink="/admin/users">Felhasználók kezelése</a>
+  </div>
+</div>

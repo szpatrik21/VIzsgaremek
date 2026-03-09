@@ -1,0 +1,77 @@
+.contact-hero {
+  padding: 90px 0 40px;
+  background: #000;
+  color: #fff;
+}
+
+.contact-inner {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+}
+
+.contact-hero h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 44px;
+  margin: 0 0 10px;
+}
+
+.contact-hero p {
+  opacity: 0.85;
+  margin: 0 0 26px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+
+.info-box {
+  background: #0b0b0b;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.info-box h3 {
+  margin: 0 0 8px;
+  font-weight: 800;
+}
+
+.info-box a {
+  color: #caa24a;
+  text-decoration: none;
+}
+
+.info-box a:hover {
+  text-decoration: underline;
+}
+
+.map-section {
+  padding: 26px 0 90px;
+  background: #000;
+  color: #fff;
+}
+
+.map-section h2 {
+  font-family: "Playfair Display", serif;
+  margin: 0 0 14px;
+}
+
+.map-wrapper {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #0b0b0b;
+}
+
+.map-wrapper iframe {
+  width: 100%;
+  height: 420px;
+  border: 0;
+  display: block;
+}

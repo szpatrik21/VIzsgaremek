@@ -1,0 +1,199 @@
+<header>
+  <div class="logo">Lux<span>Car</span> Admin</div>
+  <button class="back-btn" type="button" (click)="back()">Vissza</button>
+</header>
+
+<div class="container">
+  <h2>Új autó feltöltése</h2>
+
+  <p class="status" *ngIf="msg" [class.success]="msgOk" [class.error]="!msgOk">{{ msg }}</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <table class="form-table">
+      <tr>
+        <td><label for="image1">Első kép:</label></td>
+        <td><input id="image1" type="file" accept="image/*" (change)="onFile1($event)" required></td>
+      </tr>
+
+      <tr>
+        <td><label for="image2">Második kép:</label></td>
+        <td><input id="image2" type="file" accept="image/*" (change)="onFile2($event)" required></td>
+      </tr>
+    </table>
+
+    <h2>Műszaki adatok</h2>
+
+    <div class="tables-wrapper">
+      <table class="form-table">
+        <tr>
+          <td><label for="marka">Márka:</label></td>
+          <td>
+            <select id="marka" formControlName="marka" required>
+              <option value="">Válassz</option>
+              <option *ngFor="let b of brands" [value]="b">{{ b }}</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="modell">Modell:</label></td>
+          <td><input id="modell" formControlName="modell" required></td>
+        </tr>
+
+        <tr>
+          <td><label for="evjarat">Évjárat:</label></td>
+          <td><input id="evjarat" type="number" formControlName="evjarat" required></td>
+        </tr>
+
+        <tr>
+          <td><label for="kilometerora">Kilométeróra:</label></td>
+          <td><input id="kilometerora" type="number" formControlName="kilometerora" required></td>
+        </tr>
+
+        <tr>
+          <td><label for="ajtok_szama">Ajtók száma:</label></td>
+          <td>
+            <select id="ajtok_szama" formControlName="ajtok_szama" required>
+              <option [value]="2">2</option>
+              <option [value]="3">3</option>
+              <option [value]="4">4</option>
+              <option [value]="5">5</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="uzemanyag">Üzemanyag:</label></td>
+          <td>
+            <select id="uzemanyag" formControlName="uzemanyag" required>
+              <option>Benzin</option>
+              <option>Dízel</option>
+              <option>Elektromos</option>
+              <option>Hibrid</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="teljesitmeny">Teljesítmény (LE):</label></td>
+          <td><input id="teljesitmeny" type="number" formControlName="teljesitmeny" required></td>
+        </tr>
+
+        <tr>
+          <td><label for="ar">Ár (Ft):</label></td>
+          <td><input id="ar" type="number" formControlName="ar" required></td>
+        </tr>
+      </table>
+
+      <table class="form-table">
+        <tr>
+          <td><label for="kivitel">Kivitel:</label></td>
+          <td>
+            <select id="kivitel" formControlName="kivitel" required>
+              <option>Kupé</option>
+              <option>Szabadidő-autó</option>
+              <option>Limuzin</option>
+              <option>Terepjáró</option>
+              <option>Kabrió</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="allapot">Állapot:</label></td>
+          <td>
+            <select id="allapot" formControlName="allapot" required>
+              <option>Új</option>
+              <option>Újszerű</option>
+              <option>Megkímélt</option>
+              <option>Normál</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="szemelyek_szama">Személyek száma:</label></td>
+          <td>
+            <select id="szemelyek_szama" formControlName="szemelyek_szama" required>
+              <option [value]="2">2</option>
+              <option [value]="4">4</option>
+              <option [value]="5">5</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="szin">Szín:</label></td>
+          <td>
+            <select id="szin" formControlName="szin" required>
+              <optgroup label="Klasszikus elegáns">
+                <option>Fehér</option>
+                <option>Gyöngyház fehér</option>
+                <option>Fekete</option>
+                <option>Matt fekete</option>
+              </optgroup>
+              <optgroup label="Fémes / Metál">
+                <option>Ezüst</option>
+                <option>Szürke</option>
+                <option>Grafitszürke</option>
+                <option>Arany</option>
+                <option>Bronz</option>
+              </optgroup>
+              <optgroup label="Prémium mély árnyalatok">
+                <option>Kék</option>
+                <option>Zöld</option>
+                <option>Bordó</option>
+                <option>Barna</option>
+                <option>Bézs</option>
+              </optgroup>
+              <optgroup label="Sportos karakter">
+                <option>Piros</option>
+                <option>Sárga</option>
+                <option>Narancssárga</option>
+                <option>Lila</option>
+              </optgroup>
+              <optgroup label="Exkluzív különlegesség">
+                <option>Türkiz</option>
+                <option>Tükörkróm</option>
+              </optgroup>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="sebessegvalto">Sebességváltó:</label></td>
+          <td>
+            <select id="sebessegvalto" formControlName="sebessegvalto" required>
+              <option>Manuális</option>
+              <option>Automata</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="hengerurtartalom">Hengerűrtartalom (cm³):</label></td>
+          <td><input id="hengerurtartalom" type="number" formControlName="hengerurtartalom" required></td>
+        </tr>
+
+        <tr>
+          <td><label for="raktaron">Raktáron (db):</label></td>
+          <td><input id="raktaron" type="number" formControlName="raktaron" required></td>
+        </tr>
+
+        <tr>
+          <td><label for="kiemelt">Kiemelt:</label></td>
+          <td>
+            <select id="kiemelt" formControlName="kiemelt">
+              <option [value]="0">Nem</option>
+              <option [value]="1">Igen</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <button class="btn" type="submit" [disabled]="loading">
+      {{ loading ? 'Feltöltés...' : 'Autó feltöltése' }}
+    </button>
+  </form>
+</div>

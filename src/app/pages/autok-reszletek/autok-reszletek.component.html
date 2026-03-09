@@ -1,0 +1,159 @@
+<app-navbar></app-navbar>
+
+<main class="wrap">
+
+  <!-- TOP -->
+  <div class="top-grid">
+
+<div class="hero" id="heroBox">
+  <div *ngIf="loadingCar" class="pad18" aria-live="polite">Betöltés...</div>
+
+  <div *ngIf="!loadingCar && errorCar" class="pad18" role="alert">
+    {{ errorCar }}
+  </div>
+
+  <ng-container *ngIf="!loadingCar && !errorCar && auto">
+    <img
+      [src]="heroImg()"
+      [alt]="titleText() || 'Autó kép'"
+      (error)="onHeroImgError($event)"
+    />
+  </ng-container>
+</div>
+
+    <!-- SIDE -->
+    <aside class="side">
+      <div class="side-inner">
+
+            <img
+            class="mini-img"
+            *ngIf="miniImg()"
+            [src]="miniImg()"
+            [alt]="(titleText() || 'Autó') + ' - extra kép'"
+            (error)="onMiniImgError()"
+            />
+
+        <p class="side-title">Infó / ajánlatkérés</p>
+
+        <p class="price" *ngIf="auto; else priceDash">{{ formatFt(auto.ar) }}</p>
+        <ng-template #priceDash>
+          <p class="price">—</p>
+        </ng-template>
+
+        <div class="side-actions">
+          <a class="btn" href="tel:+36202813595">06 20 281 35 95</a>
+
+          <!-- ha nincs offer route-od még, cseréld sima href-re -->
+         <a class="btn btn-gold" [routerLink]="['/ajanlatkeres', autoId]">Kérj árajánlatot</a>
+          
+        </div>
+
+        <div class="badge">
+          <span>Raktáron:</span>
+          <b>{{ auto ? stockText() : '—' }}</b>
+        </div>
+
+      </div>
+    </aside>
+  </div>
+
+  <!-- TITLE -->
+  <div class="title">
+    <div>
+      <h1>{{ auto ? titleText() : 'Betöltés...' }}</h1>
+      <p class="subtitle">{{ auto ? subtitleText() : '—' }}</p>
+    </div>
+  </div>
+
+  <!-- QUICK -->
+  <section class="quick" aria-label="Fő adatok">
+    <div class="chip">
+      <div class="k">Évjárat</div>
+      <div class="v">{{ auto?.evjarat ?? '—' }}</div>
+    </div>
+    <div class="chip">
+      <div class="k">Hengerűrtartalom</div>
+      <div class="v">{{ auto?.hengerurtartalom ?? '—' }} ccm</div>
+    </div>
+    <div class="chip">
+      <div class="k">Teljesítmény</div>
+      <div class="v gold">{{ auto?.teljesitmeny ?? '—' }} LE</div>
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="section">
+    <div class="label">Jellemzők</div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="spec-head">
+          <span class="spec-tag">Alapadatok</span>
+          <span class="spec-muted">Részletek</span>
+        </div>
+        <table class="spec-table">
+          <tr><td>Modell</td><td>{{ auto?.modell ?? '—' }}</td></tr>
+          <tr><td>Évjárat</td><td>{{ auto?.evjarat ?? '—' }}</td></tr>
+          <tr><td>Kilométeróra</td><td>{{ auto ? formatKm(auto.kilometerora) : '—' }}</td></tr>
+          <tr><td>Ajtók száma</td><td>{{ auto?.ajtok_szama ?? '—' }}</td></tr>
+          <tr><td>Üzemanyag</td><td>{{ auto?.uzemanyag ?? '—' }}</td></tr>
+          <tr><td>Teljesítmény</td><td>{{ auto?.teljesitmeny ?? '—' }} LE</td></tr>
+        </table>
+      </div>
+
+      <div class="spec-card">
+        <div class="spec-head">
+          <span class="spec-tag">Műszaki</span>
+          <span class="spec-muted">Részletek</span>
+        </div>
+        <table class="spec-table">
+          <tr><td>Márka</td><td>{{ auto?.marka ?? '—' }}</td></tr>
+          <tr><td>Kivitel</td><td>{{ auto?.kivitel ?? '—' }}</td></tr>
+          <tr><td>Állapot</td><td>{{ auto?.allapot ?? '—' }}</td></tr>
+          <tr><td>Személyek száma</td><td>{{ auto?.szemelyek_szama ?? '—' }}</td></tr>
+          <tr><td>Szín</td><td>{{ auto?.szin ?? '—' }}</td></tr>
+          <tr><td>Sebességváltó</td><td>{{ auto?.sebessegvalto ?? '—' }}</td></tr>
+          <tr><td>Hengerűrtartalom</td><td>{{ auto?.hengerurtartalom ?? '—' }} ccm</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews">
+    <div class="label">Vélemények</div>
+
+    <div class="reviews-grid">
+
+      <div class="reviews-list">
+        <p *ngIf="loadingComments">Betöltés...</p>
+        <p *ngIf="!loadingComments && errorComments">{{ errorComments }}</p>
+
+        <p *ngIf="!loadingComments && !errorComments && (comments?.length ?? 0) === 0">
+          Még nincs vélemény.
+        </p>
+
+        <ng-container *ngIf="!loadingComments && !errorComments && (comments?.length ?? 0) > 0">
+          <div class="review-item" *ngFor="let c of comments">
+            <strong>{{ displayName(c) }}</strong>
+            <p>{{ c.content ?? '' }}</p>
+          </div>
+        </ng-container>
+      </div>
+
+      <form class="reviews-form" [formGroup]="commentForm" (ngSubmit)="sendComment()">
+        <textarea
+          formControlName="content"
+          placeholder="Írd le a véleményed..."
+        ></textarea>
+
+        <button type="submit" [disabled]="commentForm.disabled">Küldés</button>
+
+        <p *ngIf="msgText" [class.ok]="msgOk" [class.err]="!msgOk">{{ msgText }}</p>
+      </form>
+
+    </div>
+  </section>
+
+</main>
+<app-footer></app-footer>
