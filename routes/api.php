@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -51,3 +52,51 @@ Route::post('/admin/cars', [AdminCarController::class, 'store']);
 
 // --- ADMIN STATS ---
 Route::get('/admin/stats', [AdminStatsController::class, 'stats']);
+
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+
+Route::get('/admin/cars', [AdminCarController::class, 'apiIndex']);
+Route::patch('/admin/cars/{auto}', [AdminCarController::class, 'apiUpdate']);
+Route::delete('/admin/cars/{auto}', [AdminCarController::class, 'apiDestroy']);
+
+Route::get('/admin/autok', [AdminCarController::class, 'apiIndex']);
+Route::post('/admin/autok', [AdminCarController::class, 'store']);
+Route::put('/admin/autok/{auto}', [AdminCarController::class, 'apiUpdate']);
+Route::delete('/admin/autok/{auto}', [AdminCarController::class, 'apiDestroy']);
+
+Route::get('/featured-cars', [AdminCarController::class, 'featuredCars']);
+
+
+
+
+
+Route::get('/featured-cars', [AdminCarController::class, 'featuredCars']);
+
+Route::get('/admin/autok', [AdminCarController::class, 'apiIndex']);
+Route::post('/admin/autok', [AdminCarController::class, 'store']);
+Route::put('/admin/autok/{auto}', [AdminCarController::class, 'apiUpdate']);
+Route::delete('/admin/autok/{auto}', [AdminCarController::class, 'apiDestroy']);
+
+
+Route::get('/autok', [AdminCarController::class, 'apiIndex']);
+Route::get('/featured-cars', [AdminCarController::class, 'featuredCars']);
+
+Route::post('/admin/autok', [AdminCarController::class, 'store']);
+Route::put('/admin/autok/{auto}', [AdminCarController::class, 'apiUpdate']);
+Route::delete('/admin/autok/{auto}', [AdminCarController::class, 'apiDestroy']);
+
+
+Route::middleware('auth:sanctum')->get('/admin/stats', [AdminController::class, 'stats']);
+
+
+
+Route::get('/admin/stats', [AdminController::class, 'stats']);
+
+use App\Http\Controllers\Api\Admin\AdminUserController;
+
+
+Route::get('/admin/users', [AdminUserController::class, 'index']);
+
+use App\Http\Controllers\Api\Admin\AdminDashboardController;
+
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);

@@ -7,13 +7,62 @@ use Illuminate\Http\Request;
 
 class AdminCarController extends Controller
 {
-    // ===== Feltöltő form =====
-    public function create()
+    /**
+     * Összes autó listázása + filterek
+     */
+    public function apiIndex(Request $request)
     {
-        return view('admin.carcreate');
+        $query = Auto::query()->where('raktaron', '>', 0);
+
+        if ($request->filled('marka')) {
+            $query->where('marka', $request->marka);
+        }
+
+        if ($request->filled('allapot')) {
+            $query->where('allapot', $request->allapot);
+        }
+
+        if ($request->filled('kivitel')) {
+            $query->where('kivitel', $request->kivitel);
+        }
+
+        if ($request->filled('szin')) {
+            $query->where('szin', $request->szin);
+        }
+
+        $autok = $query
+            ->orderByDesc('kiemelt')
+            ->orderByDesc('id')
+            ->get();
+
+        return response()->json([
+            'data' => $autok,
+            'filters' => [
+                'markak' => Auto::select('marka')->distinct()->orderBy('marka')->pluck('marka'),
+                'allapotok' => Auto::select('allapot')->distinct()->orderBy('allapot')->pluck('allapot'),
+                'kivitelek' => Auto::select('kivitel')->distinct()->orderBy('kivitel')->pluck('kivitel'),
+                'szinek' => Auto::select('szin')->distinct()->orderBy('szin')->pluck('szin'),
+            ]
+        ]);
     }
 
-    // ===== Autó mentése adatbázisba =====
+    /**
+     * Kiemelt autók (homepage)
+     */
+    public function featuredCars()
+    {
+        $autok = Auto::where('kiemelt', 1)
+            ->where('raktaron', '>', 0)
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
+
+        return response()->json($autok);
+    }
+
+    /**
+     * Új autó feltöltése
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -38,11 +87,9 @@ class AdminCarController extends Controller
             'image2' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
 
-        // ===== Képek mentése storage-ba =====
         $path1 = $request->file('image1')->store('cars', 'public');
         $path2 = $request->file('image2')->store('cars', 'public');
 
-        // ===== Adatbázis mentés =====
         $auto = Auto::create([
             'marka' => $data['marka'],
             'modell' => $data['modell'],
@@ -65,39 +112,38 @@ class AdminCarController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Autó sikeresen feltöltve! 🚗',
+            'message' => 'Autó sikeresen feltöltve!',
             'auto' => $auto,
         ], 201);
     }
 
-    // ===== Admin lista =====
-    public function adminIndex()
-    {
-        $autok = Auto::orderByDesc('kiemelt')
-            ->orderByDesc('id')
-            ->get();
-
-        return view('admin.cars_index', compact('autok'));
-    }
-
-    // ===== Raktár + kiemelt frissítés =====
-    public function adminUpdate(Request $request, Auto $auto)
+    /**
+     * Autó módosítása
+     */
+    public function apiUpdate(Request $request, Auto $auto)
     {
         $data = $request->validate([
             'raktaron' => 'required|integer|min:0',
-            'kiemelt'  => 'required|in:0,1',
+            'kiemelt' => 'required|in:0,1',
         ]);
 
         $auto->update($data);
 
-        return back()->with('success', 'Autó frissítve!');
+        return response()->json([
+            'message' => 'Autó frissítve!',
+            'auto' => $auto,
+        ]);
     }
 
-    // ===== Törlés =====
-    public function adminDestroy(Auto $auto)
+    /**
+     * Autó törlése
+     */
+    public function apiDestroy(Auto $auto)
     {
         $auto->delete();
 
-        return back()->with('success', 'Autó törölve!');
+        return response()->json([
+            'message' => 'Autó törölve!'
+        ]);
     }
 }

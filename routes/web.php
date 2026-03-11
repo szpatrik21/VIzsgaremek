@@ -42,8 +42,8 @@ Route::get('/autok/{auto}/offer', [OfferController::class, 'create'])->name('off
 Route::post('/autok/{auto}/offer', [OfferController::class, 'store'])->name('offer.store');
 
 // ADMIN webes login/register oldalak
-Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
-Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
+// Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
+// Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
 
 Route::get('/admin/register', [AdminAuthController::class, 'showRegister'])->name('admin.register');
 Route::post('/admin/register', [AdminAuthController::class, 'register'])->name('admin.register.post');
