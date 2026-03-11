@@ -21,6 +21,7 @@ html{
 body{
   margin:0;
   background:var(--white);
+  font-family:sans-serif;
 }
 
 /* ===== LAYOUT ===== */
@@ -39,12 +40,14 @@ body{
   background:var(--white);
   border-right:1px solid var(--border);
   padding:32px 20px;
+  font-family: sans-serif;
 }
 
 .dashboard-main{
   flex:1;
   padding:40px;
   background:var(--white);
+  font-family: sans-serif;
 }
 
 /* ===== SIDEBAR ===== */

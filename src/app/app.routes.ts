@@ -76,7 +76,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/admin-home/admin-home.component').then(m => m.AdminHomeComponent),
   },
-
+{
+  path: 'admin/comments',
+  loadComponent: () =>
+    import('./pages/admin-comments/admin-comments.component').then(m => m.AdminCommentsComponent)
+},
   {
     path: 'admin/carcreate',
     loadComponent: () =>

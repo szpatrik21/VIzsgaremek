@@ -14,23 +14,18 @@ type AutoDetails = {
   evjarat?: number;
   uzemanyag?: string;
   szin?: string;
-
   ar?: number;
   raktaron?: number;
-
   kep?: string;
   kep2?: string;
-
   kilometerora?: number;
   ajtok_szama?: number;
   teljesitmeny?: number;
-
   kivitel?: string;
   allapot?: string;
   szemelyek_szama?: number;
   sebessegvalto?: string;
   hengerurtartalom?: number;
-
   url?: string;
 };
 
@@ -74,7 +69,6 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
-    // ✅ Itt már biztosan létezik this.fb
     this.commentForm = this.fb.group({
       content: ['', [Validators.required, Validators.minLength(2)]],
     });
@@ -83,6 +77,7 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.route.paramMap.subscribe((pm) => {
       const id = Number(pm.get('id'));
+
       if (!Number.isFinite(id) || id <= 0) {
         this.errorCar = 'Hibás autó azonosító az URL-ben.';
         this.auto = null;
@@ -98,8 +93,6 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
-
-  // -------- helpers --------
 
   formatFt(n?: number): string {
     return Number(n ?? 0).toLocaleString('hu-HU') + ' Ft';
@@ -131,10 +124,6 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
     return n > 0 ? `${n} db` : 'Nincs raktáron';
   }
 
-  offerLink(): any[] {
-    return ['/offer', this.autoId];
-  }
-
   private getToken(): string {
     return localStorage.getItem('jwt_token') || localStorage.getItem('token') || '';
   }
@@ -143,8 +132,6 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
     this.msgText = text || '';
     this.msgOk = ok;
   }
-
-  // -------- API calls --------
 
   loadCar(): void {
     this.loadingCar = true;
@@ -190,8 +177,9 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
     this.setMsg('');
 
     const token = this.getToken();
+
     if (!token) {
-      this.setMsg('Kommenteléshez be kell jelentkezned! 🔒');
+      this.setMsg('Kommenteléshez be kell jelentkezned. 🔒');
       return;
     }
 
@@ -201,6 +189,7 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
     }
 
     const content = String(this.commentForm.value?.content ?? '').trim();
+
     this.commentForm.disable();
 
     this.http.post<any>(
@@ -215,25 +204,28 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
       }
     ).subscribe({
       next: (res) => {
-        this.setMsg(res?.message || 'Komment elküldve ✅', true);
+        this.setMsg(
+          res?.message || 'A kommentet elmentettük. Admin jóváhagyás után jelenik meg. ✅',
+          true
+        );
         this.commentForm.reset({ content: '' });
         this.commentForm.enable();
-        this.loadComments();
       },
       error: (err) => {
         if (err?.status === 401 || err?.status === 403) {
           localStorage.removeItem('jwt_token');
           localStorage.removeItem('token');
-          this.setMsg('Lejárt / hibás token. Jelentkezz be újra! 🔒');
+          this.setMsg('Lejárt vagy hibás token. Jelentkezz be újra. 🔒');
+        } else if (err?.status === 422) {
+          this.setMsg(err?.error?.message || 'A komment mentése sikertelen, ellenőrizd a mezőt.');
         } else {
           this.setMsg(err?.error?.message || err?.error?.error || 'Hiba a küldésnél.');
         }
+
         this.commentForm.enable();
       },
     });
   }
-
-  // -------- image fallback --------
 
   onHeroImgError(ev: Event): void {
     const t = ev.target;

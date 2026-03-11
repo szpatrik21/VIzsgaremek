@@ -1,0 +1,124 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar-logo">Menü</div>
+
+    <nav class="dashboard-sidebar-menu">
+      <a
+        routerLink="/admin"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Főoldal
+      </a>
+
+      <a routerLink="/admin/carcreate" routerLinkActive="active">
+        Autó feltöltés
+      </a>
+
+      <a routerLink="/admin/cars" routerLinkActive="active">
+        Autók kezelése
+      </a>
+
+      <a routerLink="/admin/comments" routerLinkActive="active">
+        Kommentek kezelése
+      </a>
+
+      <a routerLink="/admin/users" routerLinkActive="active">
+        Felhasználók kezelése
+      </a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-panel">
+      <h2 class="dashboard-title">Kommentek kezelése</h2>
+      <p class="dashboard-text">Itt hagyhatók jóvá, utasíthatók el vagy törölhetők a hozzászólások.</p><br>
+
+      <p class="msg ok" *ngIf="msg && msgOk">{{ msg }}</p>
+      <p class="msg err" *ngIf="msg && !msgOk">{{ msg }}</p>
+
+      <p class="muted" *ngIf="loading">Betöltés...</p>
+
+      <div class="comment-admin-list" *ngIf="!loading && comments.length > 0">
+        <div class="comment-admin-card" *ngFor="let comment of comments">
+          <div class="comment-admin-top">
+            <div>
+              <h3>{{ comment.author }}</h3>
+              <p class="comment-car">{{ comment.car_name }}</p>
+            </div>
+
+            <span
+              class="comment-badge"
+              [class.pending]="comment.status === 'pending'"
+              [class.approved]="comment.status === 'approved'"
+              [class.rejected]="comment.status === 'rejected'"
+            >
+              {{
+                comment.status === 'pending' ? 'Ellenőrzésre vár' :
+                comment.status === 'approved' ? 'Jóváhagyva' :
+                'Elutasítva'
+              }}
+            </span>
+          </div>
+
+          <p class="comment-text">{{ comment.content }}</p>
+          <p class="comment-time">{{ formatDate(comment.created_at) }}</p>
+
+          <div class="comment-actions">
+            <button
+              class="btn btn-approve"
+              type="button"
+              (click)="approveComment(comment)"
+              [disabled]="comment.status === 'approved'"
+            >
+              Jóváhagyás
+            </button>
+
+            <button
+              class="btn btn-reject"
+              type="button"
+              (click)="rejectComment(comment)"
+              [disabled]="comment.status === 'rejected'"
+            >
+              Elutasítás
+            </button>
+
+            <button class="btn btn-del" type="button" (click)="deleteComment(comment)">
+              Törlés
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination" *ngIf="!loading && totalPages > 1">
+        <button class="page-btn" type="button" (click)="prevPage()" [disabled]="currentPage === 1">
+          Előző
+        </button>
+
+        <button
+          class="page-btn"
+          type="button"
+          *ngFor="let page of visiblePages"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <button class="page-btn" type="button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Következő
+        </button>
+      </div>
+
+      <p class="page-info" *ngIf="!loading && totalPages > 1">
+        {{ currentPage }} / {{ totalPages }} oldal • összesen {{ totalItems }} komment
+      </p>
+
+      <p class="muted" *ngIf="!loading && comments.length === 0">
+        Nincs megjeleníthető komment.
+      </p>
+    </div>
+  </main>
+</div>
