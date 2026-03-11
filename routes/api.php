@@ -11,6 +11,8 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminStatsController;
 use App\Http\Controllers\AdminCarController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\Admin\AdminCommentController;
 
 // --- PING ---
 Route::get('/ping', fn () => response()->json(['ok' => true]));
@@ -70,7 +72,10 @@ Route::get('/featured-cars', [AdminCarController::class, 'featuredCars']);
 
 
 
+
 Route::get('/featured-cars', [AdminCarController::class, 'featuredCars']);
+
+
 
 Route::get('/admin/autok', [AdminCarController::class, 'apiIndex']);
 Route::post('/admin/autok', [AdminCarController::class, 'store']);
@@ -100,3 +105,23 @@ Route::get('/admin/users', [AdminUserController::class, 'index']);
 use App\Http\Controllers\Api\Admin\AdminDashboardController;
 
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);
+
+
+
+
+/* publikus kommentek */
+Route::get('/cars/{id}/comments', [CommentController::class, 'indexByCar']);
+Route::post('/comments', [CommentController::class, 'store']);
+
+/* admin kommentkezelés */
+Route::get('/admin/comments', [AdminCommentController::class, 'index']);
+Route::patch('/admin/comments/{id}/approve', [AdminCommentController::class, 'approve']);
+Route::patch('/admin/comments/{id}/reject', [AdminCommentController::class, 'reject']);
+Route::delete('/admin/comments/{id}', [AdminCommentController::class, 'destroy']);
+
+
+
+
+
+Route::get('/autok/{id}/comments', [CommentController::class, 'index']);
+Route::middleware('auth:sanctum')->post('/autok/{id}/comments', [CommentController::class, 'store']);
