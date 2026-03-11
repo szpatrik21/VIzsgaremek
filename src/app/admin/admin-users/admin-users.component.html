@@ -1,0 +1,94 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <h2 class="dashboard-sidebar-logo">Menü</h2>
+
+    <nav class="dashboard-sidebar-menu">
+      <a routerLink="/admin">Főoldal</a>
+      <a routerLink="/admin/car-create">Autó feltöltés</a>
+      <a routerLink="/admin/cars">Autók kezelése</a>
+      <a routerLink="/admin/comments">Kommentek kezelése</a>
+      <a routerLink="/admin/users" class="active">Felhasználók kezelése</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <section class="dashboard-panel">
+      <h1 class="dashboard-title">Felhasználók kezelése</h1>
+      <p class="dashboard-text">
+        Itt láthatod az adatbázisban szereplő felhasználókat Laravel API-n keresztül.
+      </p>
+
+      <div class="toolbar">
+        <input
+          type="text"
+          [(ngModel)]="search"
+          placeholder="Keresés név, email, telefon alapján..."
+        />
+        <button type="button" (click)="onSearch()">Keresés</button>
+      </div>
+
+      <p class="msg err" *ngIf="errorMsg">{{ errorMsg }}</p>
+      <p class="muted" *ngIf="loading">Betöltés...</p>
+
+      <div class="table-wrap" *ngIf="!loading && users.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Kép</th>
+              <th>Felhasználónév</th>
+              <th>Név</th>
+              <th>Email</th>
+              <th>Telefon</th>
+              <th>Születési dátum</th>
+              <th>Lakcím</th>
+              <th>Szerepkör</th>
+              <th>Létrehozva</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.id }}</td>
+              <td>
+                <img
+                  [src]="imageUrl(user.profile_image)"
+                  alt="profilkép"
+                  class="avatar"
+                />
+              </td>
+              <td>{{ user.username || '-' }}</td>
+              <td>{{ fullName(user) || '-' }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.phone || '-' }}</td>
+              <td>{{ formatDate(user.birthdate) }}</td>
+              <td>{{ user.address || '-' }}</td>
+              <td>
+                <span class="role" [class.admin]="user.role === 'admin'">
+                  {{ user.role }}
+                </span>
+              </td>
+              <td>{{ formatDate(user.created_at) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="muted empty" *ngIf="!loading && users.length === 0">
+        Nincs megjeleníthető felhasználó.
+      </p>
+
+      <div class="pagination" *ngIf="!loading && users.length > 0">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">Előző</button>
+
+        <span>{{ currentPage }} / {{ lastPage }} oldal</span>
+        <span>Összesen: {{ total }} felhasználó</span>
+
+        <button (click)="nextPage()" [disabled]="currentPage === lastPage">
+          Következő
+        </button>
+      </div>
+    </section>
+  </main>
+</div>

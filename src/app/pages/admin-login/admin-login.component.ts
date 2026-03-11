@@ -100,7 +100,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
         this.successMsg = 'Sikeres bejelentkezés!';
 
         setTimeout(() => {
-          this.router.navigate(['/admin/carcreate']);
+          this.router.navigate(['/admin']);
         }, 1200);
       },
       error: (e: HttpErrorResponse) => {

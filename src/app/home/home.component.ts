@@ -1,25 +1,14 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
-
-type Auto = {
-  id: number;
-  marka?: string;
-  modell?: string;
-  teljesitmeny?: number;
-  uzemanyag?: string;
-  ar?: number;
-  kep?: string;
-  url?: string;
-};
+import { Auto, CarApiService } from '../services/car-api.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
+  imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -32,7 +21,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private countObserver?: IntersectionObserver;
   private sliderTimer?: number;
 
-  constructor(private http: HttpClient) {}
+  constructor(private carApi: CarApiService) {}
 
   ngAfterViewInit(): void {
     this.initRevealObserver();
@@ -44,16 +33,23 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.revealObserver?.disconnect();
     this.countObserver?.disconnect();
-    if (this.sliderTimer) window.clearInterval(this.sliderTimer);
+
+    if (this.sliderTimer) {
+      window.clearInterval(this.sliderTimer);
+    }
   }
 
   private initRevealObserver(): void {
     const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
     if (!reveals.length) return;
 
+    this.revealObserver?.disconnect();
+
     this.revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) (entry.target as HTMLElement).classList.add('active');
+        if (entry.isIntersecting) {
+          (entry.target as HTMLElement).classList.add('active');
+        }
       });
     }, { threshold: 0.15 });
 
@@ -95,19 +91,26 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         const progress = Math.min((now - startTime) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         const value = Math.round(target * eased);
+
         el.textContent = value.toLocaleString('hu-HU') + suffix;
 
-        if (progress < 1) requestAnimationFrame(step);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
       };
 
       requestAnimationFrame(step);
     };
 
+    this.countObserver?.disconnect();
+
     this.countObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
+
         const el = entry.target as HTMLElement;
         if (runOnce.has(el)) return;
+
         runOnce.add(el);
         animateCount(el);
       });
@@ -120,17 +123,17 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.loading = true;
     this.errorMsg = '';
 
-    this.http.get<Auto[]>('/api/featured-cars', { headers: { Accept: 'application/json' } }).subscribe({
+    this.carApi.getFeaturedCars().subscribe({
       next: (autok) => {
         this.featured = Array.isArray(autok) ? autok : [];
         this.loading = false;
 
-        // Angular most renderelte ki a kártyákat → reveal újrafuttatás
         setTimeout(() => this.initRevealObserver(), 0);
       },
-      error: () => {
-        this.loading = false;
+      error: (err) => {
+        console.error('Kiemelt autók betöltési hiba:', err);
         this.featured = [];
+        this.loading = false;
         this.errorMsg = 'Nem sikerült betölteni a kiemelt autókat.';
       }
     });
@@ -144,12 +147,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     return a.url || `/autok/${a.id}`;
   }
 
-  // ✅ DB-ből jön: "images/..." vagy "storage/..." vagy teljes URL vagy NULL
   autoKep(a: Auto): string {
-    const p = (a.kep || '').trim();
-    if (!p) return '/assets/images/no-image.png';
-    if (p.startsWith('http://') || p.startsWith('https://')) return p;
-    return p.startsWith('/') ? p : `/${p}`;
+    return this.carApi.getImageUrl(a.kep);
   }
 
   onImgError(ev: Event): void {

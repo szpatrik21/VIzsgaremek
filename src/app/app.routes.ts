@@ -11,6 +11,18 @@ export const routes: Routes = [
   },
 
   {
+    path: 'admin/cars',
+    loadComponent: () =>
+      import('./pages/admin-cars/admin-cars.component').then(m => m.AdminCarsComponent),
+  },
+
+  {
+    path: 'admin/users',
+    loadComponent: () =>
+      import('./pages/admin-users/admin-users.component').then(m => m.AdminUsersComponent),
+  },
+
+  {
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login.component').then(m => m.LoginComponent),
@@ -53,23 +65,25 @@ export const routes: Routes = [
       import('./pages/admin-login/admin-login.component').then(m => m.AdminLoginComponent),
   },
 
-{
-  path: 'ajanlatkeres/:id',
-  loadComponent: () =>
-    import('./ajanlatkeres/ajanlatkeres.component').then(m => m.AjanlatkeresComponent),
-},
-{
-  path: 'admin',
-  loadComponent: () =>
-    import('./pages/admin-home/admin-home.component').then(m => m.AdminHomeComponent),
-},
+  {
+    path: 'ajanlatkeres/:id',
+    loadComponent: () =>
+      import('./ajanlatkeres/ajanlatkeres.component').then(m => m.AjanlatkeresComponent),
+  },
 
-{
-  path: 'admin/carcreate',
-  loadComponent: () =>
-    import('./pages/admin-carcreate/admin-carcreate.component')
-      .then(m => m.AdminCarcreateComponent),
-},
+  {
+    path: 'admin',
+    loadComponent: () =>
+      import('./pages/admin-home/admin-home.component').then(m => m.AdminHomeComponent),
+  },
+
+  {
+    path: 'admin/carcreate',
+    loadComponent: () =>
+      import('./pages/admin-carcreate/admin-carcreate.component')
+        .then(m => m.AdminCarcreateComponent),
+  },
+
   // ⚠️ mindig utolsó!
   { path: '**', redirectTo: '' },
 ];

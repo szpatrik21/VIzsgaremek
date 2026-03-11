@@ -27,11 +27,19 @@
   margin:90px 0 24px;
 }
 
-/* ===== FILTERS ===== */
+/* ===== FILTERS / KERESŐ ===== */
+.szuro{
+  margin-bottom: 12px;
+}
+
 .filters{
   max-width:1200px;
   margin:0 auto 24px;
-  padding:0 24px;
+  padding:20px 24px;
+  background:#0d0d0d;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
 }
 
 .filters-row{
@@ -50,6 +58,7 @@
 .f label{
   font-size:14px;
   color:#ddd;
+  font-weight:500;
 }
 
 .f select{
@@ -59,6 +68,11 @@
   background:#111;
   color:#fff;
   outline:none;
+  transition:.2s ease;
+}
+
+.f select:hover{
+  border-color:#555;
 }
 
 .f select:focus{
@@ -82,6 +96,7 @@
   justify-content:center;
   cursor:pointer;
   white-space:nowrap;
+  transition:.2s ease;
 }
 
 .btn-filter{
@@ -91,10 +106,20 @@
   border:none;
 }
 
+.btn-filter:hover{
+  background:#d3b17b;
+  box-shadow:0 6px 16px rgba(212,175,55,.18);
+}
+
 .btn-reset{
   background:transparent;
   color:#ddd;
   border:1px solid #333;
+}
+
+.btn-reset:hover{
+  border-color:var(--gold);
+  color:#fff;
 }
 
 /* ===== AUTÓK RÁCS ===== */
@@ -142,7 +167,9 @@
 .card-content b{
   font-size:16px;
 }
+
 .pad18 { padding: 18px; }
+
 .yellowbutton{
   width:100%;
   margin-top:10px;
@@ -179,7 +206,7 @@
 
 @media (max-width:520px){
   .container{ padding:0 16px; }
-  .filters{ padding:0 16px; }
+  .filters{ padding:20px 16px; }
 
   .filters-row{ grid-template-columns:1fr; }
 
@@ -203,4 +230,76 @@
   .carsbox{
     height:160px;
   }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0 10px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 10px 14px;
+  border: 1px solid #d4af37;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.pagination button.active {
+  background: #d4af37;
+  color: #000;
+  font-weight: 700;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.f select{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #333;
+  background:#111;
+  color:#fff;
+  outline:none;
+  appearance:none;
+  transition:.2s ease;
+}
+
+.f select:hover{
+  border-color:#555;
+}
+
+.f select:focus{
+  border-color:#d4af37;
+  box-shadow:0 0 0 3px rgba(212,175,55,.15);
+}
+.f{
+  position:relative;
+}
+
+.f select{
+  width:100%;
+  padding-right:35px;
+}
+
+.f::after{
+  content:"▾";
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  font-size:14px;
+  color:#d4af37;
+  pointer-events:none;
 }

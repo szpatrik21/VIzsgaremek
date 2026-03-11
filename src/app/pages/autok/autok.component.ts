@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { FooterComponent } from '../../footer/footer.component';
 
-
 type Auto = {
   id: number;
   marka?: string;
@@ -39,6 +38,9 @@ export class AutokComponent implements OnInit, OnDestroy {
 
   filtersForm!: FormGroup;
 
+  currentPage = 1;
+  itemsPerPage = 12;
+
   private sub?: Subscription;
 
   constructor(
@@ -67,6 +69,7 @@ export class AutokComponent implements OnInit, OnDestroy {
         { emitEvent: false }
       );
 
+      this.currentPage = 1;
       this.fetchCarsAndFilters();
     });
   }
@@ -88,12 +91,14 @@ export class AutokComponent implements OnInit, OnDestroy {
     if (v.kivitel) queryParams.kivitel = v.kivitel;
     if (v.szin) queryParams.szin = v.szin;
 
+    this.currentPage = 1;
     this.router.navigate(['/autok'], { queryParams });
   }
 
   resetFilters(e?: Event): void {
     e?.preventDefault();
     this.filtersForm.reset({ marka: '', allapot: '', kivitel: '', szin: '' });
+    this.currentPage = 1;
     this.router.navigate(['/autok']);
   }
 
@@ -119,6 +124,7 @@ export class AutokComponent implements OnInit, OnDestroy {
               : [];
 
           this.autok = cars;
+          this.currentPage = 1;
 
           const filters = json?.filters || {};
           this.markak = filters.markak || json?.markak || [];
@@ -136,6 +142,40 @@ export class AutokComponent implements OnInit, OnDestroy {
       });
   }
 
+  get paginatedAutok(): Auto[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.autok.slice(start, end);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.autok.length / this.itemsPerPage);
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
   formatFt(n?: number): string {
     return Number(n ?? 0).toLocaleString('hu-HU') + ' Ft';
   }
@@ -148,7 +188,6 @@ export class AutokComponent implements OnInit, OnDestroy {
     return a.kep?.trim() ? a.kep : '/assets/images/no-image.png';
   }
 
-  // strict-safe: target típusa ellenőrzött
   onImgError(ev: Event): void {
     const target = ev.target;
     if (!(target instanceof HTMLImageElement)) return;

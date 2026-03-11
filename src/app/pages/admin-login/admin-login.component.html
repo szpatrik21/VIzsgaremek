@@ -1,21 +1,21 @@
-
-
 <div class="admin-page">
   <div class="page">
     <div class="box">
       <h2>Admin Belépés</h2>
 
-      <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
-      <p class="err" *ngIf="errorMsg">{{ errorMsg }}</p>
-
       <form [formGroup]="form" (ngSubmit)="submit()">
-        <label>Email:</label><br>
-        <input type="email" formControlName="email"><br><br>
+        <label>Email</label>
+        <input type="email" formControlName="email">
 
-        <label>Jelszó:</label><br>
-        <input type="password" formControlName="password"><br><br>
+        <label>Jelszó</label>
+        <input type="password" formControlName="password">
 
-        <button type="submit" [disabled]="loading">
+        <div class="msg-space">
+          <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
+          <p class="err" *ngIf="!successMsg && errorMsg">{{ errorMsg }}</p>
+        </div>
+
+        <button class="gomb" type="submit" [disabled]="loading">
           {{ loading ? 'Beléptetés...' : 'Belépés' }}
         </button>
       </form>

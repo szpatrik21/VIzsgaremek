@@ -28,58 +28,43 @@ export class AdminDashboardComponent implements OnInit {
     adminsCount: 0,
   };
 
+  private apiUrl = 'http://127.0.0.1:8000/api/admin/stats';
+
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // ha nincs token -> admin login
-    const token = localStorage.getItem('admin_token') || '';
-    if (!token) {
-      this.router.navigate(['/admin/login']);
-      return;
-    }
-
-    this.loadStats(token);
+    this.loadStats();
   }
 
-  private loadStats(token: string): void {
+  private loadStats(): void {
     this.loading = true;
     this.errorMsg = '';
 
-    // ✅ Endpoint: ha nálad más, itt cseréld
-    this.http.get<AdminStats>('/api/admin/stats', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-        Accept: 'application/json',
-      },
-    }).subscribe({
-      next: (s) => {
+    this.http.get<AdminStats>(this.apiUrl).subscribe({
+      next: (res) => {
+        console.log('STAT API válasz:', res);
+
         this.stats = {
-          usersCount: Number((s as any)?.usersCount ?? 0),
-          carsCount: Number((s as any)?.carsCount ?? 0),
-          availableCars: Number((s as any)?.availableCars ?? 0),
-          adminsCount: Number((s as any)?.adminsCount ?? 0),
+          usersCount: Number(res.usersCount ?? 0),
+          carsCount: Number(res.carsCount ?? 0),
+          availableCars: Number(res.availableCars ?? 0),
+          adminsCount: Number(res.adminsCount ?? 0),
         };
+
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
+        console.error('STAT API hiba:', err);
         this.loading = false;
-
-        if (err.status === 401 || err.status === 403) {
-          localStorage.removeItem('admin_token');
-          this.router.navigate(['/admin/login']);
-          return;
-        }
-
-        this.errorMsg = 'Nem sikerült betölteni az admin adatokat.';
+        this.errorMsg = `Nem sikerült betölteni az adatokat. Hibakód: ${err.status}`;
       },
     });
   }
 
   logout(): void {
-    // ha a backendnek is kell logout endpoint, azt itt lehet hívni
     localStorage.removeItem('admin_token');
     this.router.navigate(['/admin/login']);
   }

@@ -102,10 +102,6 @@ export class AdminCarcreateComponent implements OnInit, OnDestroy {
     return 'Hiba történt feltöltés közben.';
   }
 
-  back(): void {
-    this.router.navigate(['/admin']);
-  }
-
   onFile1(ev: Event): void {
     const input = ev.target as HTMLInputElement | null;
     this.image1 = input?.files?.[0] ?? null;
