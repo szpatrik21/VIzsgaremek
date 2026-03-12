@@ -28,7 +28,7 @@ export class AdminCarcreateComponent implements OnInit, OnDestroy {
   brands = [
     'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Bugatti', 'Cadillac', 'Ferrari', 'Genesis', 'Infiniti',
     'Jaguar', 'Koenigsegg', 'Lamborghini', 'Land Rover', 'Lexus', 'Lotus', 'Maserati', 'Maybach', 'McLaren',
-    'Mercedes-Benz', 'Pagani', 'Porsche', 'Range Rover', 'Rimac', 'Rolls-Royce'
+    'Mercedes-Benz', 'Pagani', 'Porsche', 'Range Rover', 'Rimac', 'Rolls-Royce', 'Tesla'
   ];
 
   form: FormGroup;

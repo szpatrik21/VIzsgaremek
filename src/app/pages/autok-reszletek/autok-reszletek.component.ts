@@ -179,7 +179,7 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
     const token = this.getToken();
 
     if (!token) {
-      this.setMsg('Kommenteléshez be kell jelentkezned. 🔒');
+      this.setMsg('A folytatáshoz be kell jelentkezned. ');
       return;
     }
 
@@ -205,7 +205,7 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (res) => {
         this.setMsg(
-          res?.message || 'A kommentet elmentettük. Admin jóváhagyás után jelenik meg. ✅',
+          res?.message || 'A kommentet elmentettük. Az admin jóváhagyása után jelenik meg. ',
           true
         );
         this.commentForm.reset({ content: '' });
@@ -215,7 +215,7 @@ export class AutokReszletekComponent implements OnInit, OnDestroy {
         if (err?.status === 401 || err?.status === 403) {
           localStorage.removeItem('jwt_token');
           localStorage.removeItem('token');
-          this.setMsg('Lejárt vagy hibás token. Jelentkezz be újra. 🔒');
+          this.setMsg('Jelentkezz be újra. ');
         } else if (err?.status === 422) {
           this.setMsg(err?.error?.message || 'A komment mentése sikertelen, ellenőrizd a mezőt.');
         } else {

@@ -3,37 +3,35 @@
 <main class="wrap">
 
   <!-- TOP -->
-  <div class="top-grid">
+  <section class="top-grid">
+    <div class="hero-card" id="heroBox">
+      <div *ngIf="loadingCar" class="pad18 state-box" aria-live="polite">Betöltés...</div>
 
-<div class="hero" id="heroBox">
-  <div *ngIf="loadingCar" class="pad18" aria-live="polite">Betöltés...</div>
+      <div *ngIf="!loadingCar && errorCar" class="pad18 state-box" role="alert">
+        {{ errorCar }}
+      </div>
 
-  <div *ngIf="!loadingCar && errorCar" class="pad18" role="alert">
-    {{ errorCar }}
-  </div>
+      <ng-container *ngIf="!loadingCar && !errorCar && auto">
+        <img
+          [src]="heroImg()"
+          [alt]="titleText() || 'Autó kép'"
+          (error)="onHeroImgError($event)"
+        />
+      </ng-container>
+    </div>
 
-  <ng-container *ngIf="!loadingCar && !errorCar && auto">
-    <img
-      [src]="heroImg()"
-      [alt]="titleText() || 'Autó kép'"
-      (error)="onHeroImgError($event)"
-    />
-  </ng-container>
-</div>
-
-    <!-- SIDE -->
     <aside class="side">
       <div class="side-inner">
 
-            <img
-            class="mini-img"
-            *ngIf="miniImg()"
-            [src]="miniImg()"
-            [alt]="(titleText() || 'Autó') + ' - extra kép'"
-            (error)="onMiniImgError()"
-            />
+        <img
+          class="mini-img"
+          *ngIf="miniImg()"
+          [src]="miniImg()"
+          [alt]="(titleText() || 'Autó') + ' - extra kép'"
+          (error)="onMiniImgError()"
+        />
 
-        <p class="side-title">Infó / ajánlatkérés</p>
+        <span class="panel-kicker">Infó / ajánlatkérés</span>
 
         <p class="price" *ngIf="auto; else priceDash">{{ formatFt(auto.ar) }}</p>
         <ng-template #priceDash>
@@ -41,29 +39,26 @@
         </ng-template>
 
         <div class="side-actions">
-          <a class="btn" href="tel:+36202813595">06 20 281 35 95</a>
-
-          <!-- ha nincs offer route-od még, cseréld sima href-re -->
-         <a class="btn btn-gold" [routerLink]="['/ajanlatkeres', autoId]">Kérj árajánlatot</a>
-          
+          <a class="btn btn-dark" href="tel:+36202813595">06 20 281 35 95</a>
+          <a class="btn btn-gold" [routerLink]="['/ajanlatkeres', autoId]">Kérj árajánlatot</a>
         </div>
 
         <div class="badge">
-          <span>Raktáron:</span>
+          <span>Raktáron</span>
           <b>{{ auto ? stockText() : '—' }}</b>
         </div>
-
       </div>
     </aside>
-  </div>
+  </section>
 
   <!-- TITLE -->
-  <div class="title">
-    <div>
-      <h1>{{ auto ? titleText() : 'Betöltés...' }}</h1>
-      <p class="subtitle">{{ auto ? subtitleText() : '—' }}</p>
+  <section class="title-block">
+    <div class="section-head section-head--compact">
+      <span class="section-kicker">LuxCar modell</span>
+      <h1 class="section-title">{{ auto ? titleText() : 'Betöltés...' }}</h1>
+      <p class="section-subtitle">{{ auto ? subtitleText() : '—' }}</p>
     </div>
-  </div>
+  </section>
 
   <!-- QUICK -->
   <section class="quick" aria-label="Fő adatok">
@@ -83,7 +78,13 @@
 
   <!-- SPECS -->
   <section class="section">
-    <div class="label">Jellemzők</div>
+    <div class="section-head">
+      <span class="section-kicker">Részletek</span>
+      <h2 class="section-title small">Jellemzők</h2>
+      <p class="section-subtitle">
+        A kiválasztott modell főbb műszaki és alapadatai egy helyen.
+      </p>
+    </div>
 
     <div class="spec-grid">
       <div class="spec-card">
@@ -121,10 +122,15 @@
 
   <!-- REVIEWS -->
   <section class="reviews">
-    <div class="label">Vélemények</div>
+    <div class="section-head">
+      <span class="section-kicker">Közösség</span>
+      <h2 class="section-title small">Vélemények</h2>
+      <p class="section-subtitle">
+        Olvasd el mások tapasztalatait, vagy írd le a saját véleményed.
+      </p>
+    </div>
 
     <div class="reviews-grid">
-
       <div class="reviews-list">
         <p *ngIf="loadingComments">Betöltés...</p>
         <p *ngIf="!loadingComments && errorComments">{{ errorComments }}</p>
@@ -151,9 +157,9 @@
 
         <p *ngIf="msgText" [class.ok]="msgOk" [class.err]="!msgOk">{{ msgText }}</p>
       </form>
-
     </div>
   </section>
 
 </main>
+
 <app-footer></app-footer>

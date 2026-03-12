@@ -5,6 +5,23 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { Auto, CarApiService } from '../services/car-api.service';
 
+type Advantage = {
+  icon: string;
+  title: string;
+  text: string;
+};
+
+type ProcessStep = {
+  number: string;
+  title: string;
+  text: string;
+};
+
+type AboutFact = {
+  value: string;
+  label: string;
+};
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -16,6 +33,62 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   loading = true;
   featured: Auto[] = [];
   errorMsg = '';
+
+  advantages: Advantage[] = [
+    {
+      icon: '01',
+      title: 'Ellenőrzött prémium kínálat',
+      text: 'Gondosan válogatott modellek, amelyek megjelenésben és minőségben is illenek a prémium kategóriához.'
+    },
+    {
+      icon: '02',
+      title: 'Gyors kapcsolatfelvétel',
+      text: 'Az érdeklődéstől az ajánlatkérésig átlátható és gyors folyamat vár, felesleges körök nélkül.'
+    },
+    {
+      icon: '03',
+      title: 'Exkluzív megjelenés',
+      text: 'A LuxCar célja nem csupán az autók bemutatása, hanem a luxus hangulat vizuális átadása is.'
+    },
+    {
+      icon: '04',
+      title: 'Letisztult élmény',
+      text: 'Átgondolt felépítés, jól olvasható tartalom és erős vizuális fókusz minden fontos ponton.'
+    }
+  ];
+
+  steps: ProcessStep[] = [
+    {
+      number: '01',
+      title: 'Válassz modellt',
+      text: 'Nézd át a kínálatot, hasonlítsd össze a prémium modelleket, és találd meg a hozzád illőt.'
+    },
+    {
+      number: '02',
+      title: 'Kérj ajánlatot',
+      text: 'Pár kattintással jelezheted érdeklődésedet, és felveheted velünk a kapcsolatot.'
+    },
+    {
+      number: '03',
+      title: 'Lépj tovább',
+      text: 'Segítünk a következő lépésben, hogy a kiválasztott autóhoz gyorsan és gördülékenyen közelebb kerülj.'
+    }
+  ];
+
+  aboutFacts: AboutFact[] = [
+    {
+      value: '24h',
+      label: 'Gyors visszajelzési cél prémium érdeklődések esetén'
+    },
+    {
+      value: '8+',
+      label: 'Luxus márka a kínálatban és a fókuszban'
+    },
+    {
+      value: '100%',
+      label: 'Prémium szemlélet a megjelenésben és a válogatásban'
+    }
+  ];
 
   private revealObserver?: IntersectionObserver;
   private countObserver?: IntersectionObserver;
