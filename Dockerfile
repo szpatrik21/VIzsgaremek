@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libonig-dev \
     libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip bcmath \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
