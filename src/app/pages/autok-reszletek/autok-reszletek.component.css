@@ -3,19 +3,30 @@
 
   --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+
   --gold: #d4af37;
   --gold-light: #f1d27d;
-  --bg: #050505;
-  --panel: rgba(15, 15, 15, 0.88);
-  --card: #111111;
-  --card-2: #0b0b0b;
-  --text: rgba(255, 255, 255, 0.86);
-  --muted: rgba(255, 255, 255, 0.65);
-  --border: rgba(255, 255, 255, 0.08);
+
+  --bg: #121212;
+  --bg-2: #1b1b1b;
+  --panel: rgba(42, 42, 42, 0.94);
+  --panel-soft: rgba(28, 28, 28, 0.96);
+  --card: #2a2a2a;
+  --card-2: #1e1e1e;
+
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.72);
+  --border: rgba(255, 255, 255, 0.10);
 }
 
 * {
   box-sizing: border-box;
+}
+
+:host {
+  background:
+    radial-gradient(circle at top, rgba(212, 175, 55, 0.06), transparent 28%),
+    linear-gradient(180deg, #1c1c1c 0%, #121212 100%);
 }
 
 .wrap {
@@ -85,10 +96,10 @@ h1, h2, h3, .section-title, .price {
 .hero-card {
   border-radius: 24px;
   overflow: hidden;
-  height: 460px; /* fix magasság */
-  background: linear-gradient(180deg, #171717, #090909);
+  height: 460px;
+  background: linear-gradient(180deg, #303030, #1f1f1f);
   border: 1px solid var(--border);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, .45);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, .28);
 }
 
 .hero-card img {
@@ -100,7 +111,7 @@ h1, h2, h3, .section-title, .price {
 }
 
 .state-box {
-  color: #ddd;
+  color: #e5e5e5;
 }
 
 .side {
@@ -112,20 +123,20 @@ h1, h2, h3, .section-title, .price {
   top: 92px;
   border-radius: 24px;
   padding: 20px;
-  background: linear-gradient(180deg, rgba(24,24,24,.96), rgba(10,10,10,.96));
+  background: linear-gradient(180deg, rgba(45, 45, 45, .98), rgba(28, 28, 28, .98));
   border: 1px solid var(--border);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .24);
 }
 
 .mini-img {
   width: 100%;
-  height: 220px; /* fix magasság */
+  height: 220px;
   object-fit: cover;
   object-position: center;
   border-radius: 16px;
   display: block;
   margin-bottom: 16px;
-  border: 1px solid rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
 }
 
 .panel-kicker {
@@ -161,17 +172,23 @@ h1, h2, h3, .section-title, .price {
   border-radius: 14px;
   text-decoration: none;
   font-weight: 800;
-  transition: .2s ease;
+  transition: none;
+  box-shadow: none;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .btn-dark {
   background: rgba(255,255,255,.05);
   color: #fff;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.btn-dark:hover {
+  background: rgba(255,255,255,.05);
+  color: #fff;
 }
 
 .btn-gold {
@@ -181,7 +198,8 @@ h1, h2, h3, .section-title, .price {
 }
 
 .btn-gold:hover {
-  background: #d8b27c;
+  background: #c9a16b;
+  color: #000;
 }
 
 .badge {
@@ -191,9 +209,9 @@ h1, h2, h3, .section-title, .price {
   gap: 12px;
   padding: 14px 16px;
   border-radius: 16px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.06);
-  color: #ddd;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  color: #e2e2e2;
 }
 
 .badge b {
@@ -214,15 +232,15 @@ h1, h2, h3, .section-title, .price {
 }
 
 .chip {
-  background: linear-gradient(180deg, rgba(24,24,24,.96), rgba(11,11,11,.96));
+  background: linear-gradient(180deg, rgba(46, 46, 46, .98), rgba(30, 30, 30, .98));
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 18px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, .25);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .20);
 }
 
 .k {
-  opacity: .7;
+  opacity: .76;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: .7px;
@@ -252,11 +270,11 @@ h1, h2, h3, .section-title, .price {
 }
 
 .spec-card {
-  background: linear-gradient(180deg, rgba(24,24,24,.96), rgba(10,10,10,.96));
+  background: linear-gradient(180deg, rgba(46, 46, 46, .98), rgba(30, 30, 30, .98));
   border: 1px solid var(--border);
   border-radius: 22px;
   padding: 18px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, .3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .22);
 }
 
 .spec-head {
@@ -283,7 +301,7 @@ h1, h2, h3, .section-title, .price {
 
 .spec-table td {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.07);
 }
 
 .spec-table tr:last-child td {
@@ -291,7 +309,7 @@ h1, h2, h3, .section-title, .price {
 }
 
 .spec-table td:first-child {
-  opacity: .72;
+  opacity: .74;
   width: 45%;
 }
 
@@ -304,16 +322,16 @@ h1, h2, h3, .section-title, .price {
 
 .reviews-list,
 .reviews-form {
-  background: linear-gradient(180deg, rgba(24,24,24,.96), rgba(10,10,10,.96));
+  background: linear-gradient(180deg, rgba(46, 46, 46, .98), rgba(30, 30, 30, .98));
   border: 1px solid var(--border);
   border-radius: 22px;
   padding: 18px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, .3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .22);
 }
 
 .review-item {
   padding: 14px 0;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.07);
 }
 
 .review-item:last-child {
@@ -342,13 +360,13 @@ textarea {
   min-height: 150px;
   border-radius: 16px;
   padding: 14px;
-  background: rgba(255,255,255,.04);
+  background: rgba(255,255,255,.05);
   color: #fff;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
   resize: vertical;
   font: inherit;
   outline: none;
-  transition: .2s ease;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
 
 textarea:focus {
@@ -364,12 +382,13 @@ button {
   color: #000;
   font-weight: 900;
   cursor: pointer;
-  transition: .2s ease;
+  transition: none;
+  box-shadow: none;
 }
 
 button:hover:not([disabled]) {
-  transform: translateY(-2px);
-  background: #d8b27c;
+  transform: none;
+  background: #c9a16b;
 }
 
 button[disabled] {
@@ -411,9 +430,12 @@ button[disabled] {
     padding: 20px 16px 56px;
   }
 
-  .hero-card,
+  .hero-card {
+    height: 300px;
+  }
+
   .hero-card img {
-    min-height: 300px;
+    height: 100%;
   }
 
   .price {

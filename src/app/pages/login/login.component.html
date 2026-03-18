@@ -11,14 +11,17 @@
       </div>
 
       <div class="field">
-        <label for="password">Jelszó</label>
-        <input type="password" id="password" formControlName="password" required>
-      </div>
+  <label for="password">Jelszó</label>
+  <input type="password" id="password" formControlName="password" required>
+  </div>
 
-      <div class="register-wrapper">
-        <a class="reg-link" routerLink="/register">Új fiók létrehozása</a>
-      </div>
+  <div class="help-links">
+    <a class="forgot-link" routerLink="/forgot-password">Elfelejtetted a jelszavad?</a>
+  </div>
 
+  <div class="register-wrapper">
+    <a class="reg-link" routerLink="/register">Új fiók létrehozása</a>
+  </div>
       <button type="submit" [disabled]="loading">
         {{ loading ? 'Folyamatban…' : 'Bejelentkezés' }}
       </button>

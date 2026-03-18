@@ -20,7 +20,7 @@ export type Auto = {
   providedIn: 'root'
 })
 export class CarApiService {
-  private apiBase = 'http://127.0.0.1:8000/api';
+  private apiBase = 'http://127.0.0.1:8080/api';
 
   private jsonHeaders = new HttpHeaders({
     Accept: 'application/json'
@@ -71,6 +71,6 @@ export class CarApiService {
       return p;
     }
 
-    return `http://127.0.0.1:8000/${p.replace(/^\/+/, '')}`;
+    return `http://127.0.0.1:8080/${p.replace(/^\/+/, '')}`;
   }
 }

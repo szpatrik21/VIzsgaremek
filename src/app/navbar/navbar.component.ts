@@ -28,10 +28,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    // első állapot
     this.refreshAuthState();
 
-    // route váltásnál is frissít (ha login/logout után navigálsz)
     this.sub = this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe(() => this.refreshAuthState());
@@ -51,22 +49,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     if (!token) {
       this.fullName = '';
+      localStorage.removeItem('user_full_name');
       return;
     }
 
-    // név lekérés backendről (proxyval: /api -> Laravel 8080)
+    const cachedName = localStorage.getItem('user_full_name');
+    if (cachedName) {
+      this.fullName = cachedName;
+    }
+
     this.http.get<UserDto>('/api/user', {
-      headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' }
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json'
+      }
     }).subscribe({
       next: (u) => {
         const name = `${u.first_name ?? ''} ${u.last_name ?? ''}`.trim();
         this.fullName = name || u.username || 'Profil';
         this.isLoggedIn = true;
+
+        localStorage.setItem('user_full_name', this.fullName);
       },
       error: () => {
-        // ha rossz a token, dobjuk
         localStorage.removeItem('jwt_token');
         localStorage.removeItem('token');
+        localStorage.removeItem('user_full_name');
         this.isLoggedIn = false;
         this.fullName = '';
       }
@@ -85,6 +93,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     e?.preventDefault();
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('token');
+    localStorage.removeItem('user_full_name');
     this.isLoggedIn = false;
     this.fullName = '';
     this.closeMenu();

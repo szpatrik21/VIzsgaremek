@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -27,9 +27,9 @@ type AboutFact = {
   standalone: true,
   imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = true;
   featured: Auto[] = [];
   errorMsg = '';
@@ -96,11 +96,14 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   constructor(private carApi: CarApiService) {}
 
+  ngOnInit(): void {
+    this.loadFeaturedCars();
+  }
+
   ngAfterViewInit(): void {
     this.initRevealObserver();
     this.initSlider();
     this.initCountUp();
-    this.loadFeaturedCars();
   }
 
   ngOnDestroy(): void {
@@ -118,15 +121,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     this.revealObserver?.disconnect();
 
-    this.revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          (entry.target as HTMLElement).classList.add('active');
-        }
-      });
-    }, { threshold: 0.15 });
+    this.revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('active');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
 
-    reveals.forEach(el => this.revealObserver!.observe(el));
+    reveals.forEach((el) => this.revealObserver?.observe(el));
   }
 
   private initSlider(): void {
@@ -135,9 +141,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     let current = 0;
 
-    const showSlide = (i: number) => {
-      slides.forEach(s => s.classList.remove('active'));
-      slides[i].classList.add('active');
+    const showSlide = (index: number) => {
+      slides.forEach((slide) => slide.classList.remove('active'));
+      slides[index]?.classList.add('active');
     };
 
     showSlide(0);
@@ -177,19 +183,22 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
     this.countObserver?.disconnect();
 
-    this.countObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+    this.countObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-        const el = entry.target as HTMLElement;
-        if (runOnce.has(el)) return;
+          const el = entry.target as HTMLElement;
+          if (runOnce.has(el)) return;
 
-        runOnce.add(el);
-        animateCount(el);
-      });
-    }, { threshold: 0.35 });
+          runOnce.add(el);
+          animateCount(el);
+        });
+      },
+      { threshold: 0.35 }
+    );
 
-    counters.forEach(c => this.countObserver!.observe(c));
+    counters.forEach((counter) => this.countObserver?.observe(counter));
   }
 
   private loadFeaturedCars(): void {
@@ -197,11 +206,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.errorMsg = '';
 
     this.carApi.getFeaturedCars().subscribe({
-      next: (autok) => {
+      next: (autok: Auto[]) => {
         this.featured = Array.isArray(autok) ? autok : [];
         this.loading = false;
 
-        setTimeout(() => this.initRevealObserver(), 0);
+        setTimeout(() => {
+          this.initRevealObserver();
+        }, 0);
       },
       error: (err) => {
         console.error('Kiemelt autók betöltési hiba:', err);
@@ -224,9 +235,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     return this.carApi.getImageUrl(a.kep);
   }
 
-  onImgError(ev: Event): void {
-    const img = ev.target as HTMLImageElement;
+  onImgError(event: Event): void {
+    const img = event.target as HTMLImageElement;
     img.onerror = null;
-    img.src = '/assets/images/no-image.png';
+    img.src = 'assets/images/no-image.png';
   }
 }

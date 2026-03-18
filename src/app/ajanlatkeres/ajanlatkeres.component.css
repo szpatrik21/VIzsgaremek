@@ -1,14 +1,34 @@
-* {
-  box-sizing: border-box;
-}
-
 :host {
   display: block;
   min-height: 100vh;
-  background: #0f0f0f;
+
+  --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+
+  --bg: #111111;
+  --bg-soft: #1a1a1a;
+  --panel: #232323;
+  --panel-2: #2d2d2d;
+
+  --gold: #d4af37;
+  --gold-soft: #e6c35c;
+
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.72);
+  --border: rgba(255, 255, 255, 0.12);
+  --success: #86efac;
+  --danger: #fca5a5;
+
+  background:
+    radial-gradient(circle at top, rgba(212, 175, 55, 0.07), transparent 28%),
+    linear-gradient(180deg, #1a1a1a 0%, #111111 100%);
   padding-top: 120px;
-  font-family: Arial, sans-serif;
-  color: #f5f5f5;
+  font-family: var(--font-body);
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .wrap {
@@ -20,43 +40,56 @@
 h1 {
   text-align: center;
   margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 40px);
+  color: #fff;
+  line-height: 1.1;
 }
 
 .sub {
   text-align: center;
-  color: #bbb;
+  color: var(--muted);
   margin: 0 0 18px;
+  line-height: 1.7;
+  font-size: 15px;
 }
 
 .status {
   margin: 10px 0 16px;
-  padding: 12px;
-  border-radius: 12px;
-  background: #1a1a1a;
-  border: 1px solid #333;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(44, 44, 44, 0.96), rgba(28, 28, 28, 0.96));
+  border: 1px solid var(--border);
   text-align: center;
   font-weight: 800;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
 }
 
 .status.success {
-  color: #66ff99;
+  color: var(--success);
 }
 
 .status.error {
-  color: #ff5c5c;
+  color: var(--danger);
 }
 
 .card {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  padding: 18px;
-  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(44, 44, 44, 0.96), rgba(28, 28, 28, 0.96));
+  border: 1px solid var(--border);
+  padding: 22px;
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 label {
   display: block;
   margin: 12px 0 6px;
   font-weight: 800;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 0.2px;
 }
 
 input,
@@ -64,10 +97,30 @@ textarea {
   width: 100%;
   border-radius: 12px;
   padding: 12px;
-  background: #2b2b2b;
-  border: 1px solid #444;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   color: #fff;
   outline: none;
+  font: inherit;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+input:hover,
+textarea:hover {
+  border-color: rgba(255, 255, 255, 0.20);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
 }
 
 button {
@@ -78,13 +131,15 @@ button {
   border-radius: 12px;
   cursor: pointer;
   font-weight: 900;
-  background: #d4af37;
+  font-size: 15px;
+  background: #c9a16b;
   color: #000;
-  transition: 0.2s;
+  transition: none;
+  box-shadow: none;
 }
 
-button:hover {
-  background: #e6c35c;
+button:hover:not(:disabled) {
+  background: var(--gold-soft);
 }
 
 button:disabled {
@@ -96,10 +151,36 @@ button:disabled {
   display: block;
   text-align: center;
   margin-top: 12px;
-  color: #bbb;
+  color: var(--muted);
   text-decoration: none;
+  font-weight: 600;
+  transition: none;
 }
 
 .back:hover {
-  color: #fff;
+  color: var(--gold);
+  text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  :host {
+    padding-top: 96px;
+  }
+
+  .wrap {
+    max-width: calc(100% - 24px);
+  }
+
+  .card {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  button {
+    height: 44px;
+  }
 }

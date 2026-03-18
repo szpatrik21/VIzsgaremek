@@ -1,0 +1,29 @@
+<div class="ai-page">
+  <div class="ai-card">
+    <h1>LuxCar AI asszisztens</h1>
+    <p class="sub">
+      Kérdezz az autókról, árakról, ajánlásokról vagy arról, milyen modell illik hozzád.
+    </p>
+
+    <div class="form-group">
+      <label for="message">Üzenet</label>
+      <textarea
+        id="message"
+        [(ngModel)]="message"
+        placeholder="Például: Milyen autót ajánlasz 15 millió forintig családi használatra?"
+        rows="6"
+      ></textarea>
+    </div>
+
+    <button (click)="send()" [disabled]="loading">
+      {{ loading ? 'Küldés...' : 'Kérdezés' }}
+    </button>
+
+    <p *ngIf="error" class="error">{{ error }}</p>
+
+    <div *ngIf="answer" class="answer-box">
+      <h2>Válasz</h2>
+      <p>{{ answer }}</p>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/profile/profile.component').then(m => m.ProfileComponent),
   },
+{
+  path: 'ai-chat',
+  loadComponent: () =>
+    import('./pages/ai-chat/ai-chat.component').then(m => m.AiChatComponent)
+},
 
   {
     path: 'admin/cars',
@@ -16,6 +21,19 @@ export const routes: Routes = [
       import('./pages/admin-cars/admin-cars.component').then(m => m.AdminCarsComponent),
   },
 
+
+  {
+  path: 'reset-password',
+  loadComponent: () =>
+    import('./pages/reset-password/reset-password.component')
+      .then(m => m.ResetPasswordComponent),
+},
+{
+  path: 'forgot-password',
+  loadComponent: () =>
+    import('./pages/forgot-password/forgot-password.component')
+      .then(m => m.ForgotPasswordComponent),
+},
   {
     path: 'admin/users',
     loadComponent: () =>
