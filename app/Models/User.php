@@ -3,24 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
-protected $fillable = [
-    'email',
-    'username',
-    'first_name',
-    'last_name',
-    'password',
-    'phone',
-    'birthdate',
-    'address',
-];
-
+    protected $fillable = [
+        'email',
+        'username',
+        'first_name',
+        'last_name',
+        'password',
+        'phone',
+        'birthdate',
+        'address',
+    ];
 
     protected $hidden = [
         'password',
@@ -35,9 +35,9 @@ protected $fillable = [
     {
         return [];
     }
-    public function comments()
-{
-    return $this->hasMany(Comment::class);
-}
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
