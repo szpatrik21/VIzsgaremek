@@ -1,0 +1,156 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar-logo">Menü</div>
+
+    <nav class="dashboard-sidebar-menu">
+      <a
+        routerLink="/admin"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Főoldal
+      </a>
+
+      <a routerLink="/admin/carcreate" routerLinkActive="active">
+        Autó feltöltés
+      </a>
+
+      <a routerLink="/admin/cars" routerLinkActive="active">
+        Autók kezelése
+      </a>
+      <a routerLink="/admin/comments" routerLinkActive="active">
+        Kommentek kezelése
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active">
+        Felhasználók kezelése
+      </a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-panel">
+      <div class="wrap">
+        <h1>Autók kezelése</h1>
+
+        <p class="msg ok" *ngIf="msg && msgOk">{{ msg }}</p>
+        <p class="msg err" *ngIf="msg && !msgOk">{{ msg }}</p>
+
+        <p class="muted" *ngIf="loading">Betöltés...</p>
+
+        <table *ngIf="!loading && autok.length > 0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Kép</th>
+              <th>Márka / Modell</th>
+              <th>Ár</th>
+              <th>Kiemelt</th>
+              <th>Raktáron</th>
+              <th>Műveletek</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let auto of pagedAutok">
+              <td>{{ auto.id }}</td>
+
+              <td>
+                <img *ngIf="auto.kep; else noImage" [src]="imageUrl(auto.kep)" alt="autó kép">
+                <ng-template #noImage>
+                  <span class="muted">nincs kép</span>
+                </ng-template>
+              </td>
+
+              <td>
+                <strong>{{ auto.marka }} {{ auto.modell }}</strong><br>
+                <span class="muted">{{ auto.evjarat }} • {{ auto.teljesitmeny }} LE • {{ auto.uzemanyag }}</span>
+              </td>
+
+              <td><strong>{{ auto.ar | number:'1.0-0' }} Ft</strong></td>
+
+              <td>
+                <span class="badge b-on" *ngIf="auto.kiemelt">KIEMELT</span>
+                <span class="badge b-off" *ngIf="!auto.kiemelt">nem</span>
+              </td>
+
+              <td>{{ auto.raktaron }}</td>
+
+              <td>
+                <div class="rowform">
+                  <label class="muted">Raktáron:</label>
+                  <input
+                    class="inp"
+                    type="number"
+                    min="0"
+                    [(ngModel)]="auto.raktaron"
+                    [ngModelOptions]="{standalone: true}"
+                  >
+
+                  <div class="radio">
+                    <label class="muted">Kiemelt:</label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        [name]="'kiemelt_' + auto.id"
+                        [value]="1"
+                        [(ngModel)]="auto.kiemelt"
+                        [ngModelOptions]="{standalone: true}"
+                      >
+                      Igen
+                    </label>
+
+                    <label>
+                      <input
+                        type="radio"
+                        [name]="'kiemelt_' + auto.id"
+                        [value]="0"
+                        [(ngModel)]="auto.kiemelt"
+                        [ngModelOptions]="{standalone: true}"
+                      >
+                      Nem
+                    </label>
+                  </div>
+
+                  <button class="btn btn-save" type="button" (click)="updateCar(auto)">Mentés</button>
+                </div>
+
+                <button class="btn btn-del" type="button" (click)="deleteCar(auto)">
+                  Törlés
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination" *ngIf="!loading && autok.length > 0 && totalPages > 1">
+          <button class="page-btn" type="button" (click)="prevPage()" [disabled]="currentPage === 1">
+            Előző
+          </button>
+
+          <button
+            class="page-btn"
+            type="button"
+            *ngFor="let page of visiblePages"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+
+          <button class="page-btn" type="button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+            Következő
+          </button>
+        </div>
+
+        <p class="page-info" *ngIf="!loading && autok.length > 0 && totalPages > 1">
+          {{ currentPage }} / {{ totalPages }} oldal
+        </p>
+
+        <p class="muted" *ngIf="!loading && autok.length === 0">Nincs megjeleníthető autó.</p>
+      </div>
+    </div>
+  </main>
+</div>

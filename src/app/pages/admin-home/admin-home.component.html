@@ -1,0 +1,108 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar-logo">Menü</div>
+
+    <nav class="dashboard-sidebar-menu">
+      <a
+        routerLink="/admin"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Főoldal
+      </a>
+
+      <a routerLink="/admin/carcreate" routerLinkActive="active">
+        Autó feltöltés
+      </a>
+
+      <a routerLink="/admin/cars" routerLinkActive="active">
+        Autók kezelése
+      </a>
+      <a routerLink="/admin/comments" routerLinkActive="active">
+        Kommentek kezelése
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active">
+        Felhasználók kezelése
+      </a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-panel">
+      <h2 class="dashboard-title">Admin vezérlőpult</h2>
+      <p class="dashboard-text">
+      </p>
+
+      <p class="dashboard-text" *ngIf="loading">Betöltés...</p>
+      <p class="dashboard-text error-text" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+      <div class="admin-extra-panel" *ngIf="!loading && !errorMsg">
+        <div class="admin-extra-stats">
+          <div class="admin-extra-card">
+            <span class="admin-extra-label">Összes autó</span>
+            <strong class="admin-extra-value">{{ stats.carsCount }}</strong>
+            <small class="admin-extra-note">jelenleg a rendszerben</small>
+          </div>
+
+          <div class="admin-extra-card">
+            <span class="admin-extra-label">Kiemelt autók</span>
+            <strong class="admin-extra-value">{{ stats.featuredCars }}</strong>
+            <small class="admin-extra-note">főoldalon látható</small>
+          </div>
+
+          <div class="admin-extra-card">
+            <span class="admin-extra-label">Felhasználók</span>
+            <strong class="admin-extra-value">{{ stats.usersCount }}</strong>
+            <small class="admin-extra-note">regisztrált fiók</small>
+          </div>
+
+          <div class="admin-extra-card">
+            <span class="admin-extra-label">Kommentek</span>
+            <strong class="admin-extra-value">{{ stats.commentsCount }}</strong>
+            <small class="admin-extra-note">összes hozzászólás</small>
+          </div>
+        </div>
+
+        <div class="admin-extra-grid admin-extra-grid-single">
+          <div class="admin-extra-box">
+            <div class="admin-extra-head">
+              <h3>Legutóbbi kommentek</h3>
+              <span class="admin-extra-tag">{{ latestComments.length }} db</span>
+            </div>
+
+            <div class="admin-comments" *ngIf="latestComments.length > 0; else noComments">
+              <div class="admin-comment-item" *ngFor="let comment of latestComments">
+                <div class="admin-comment-top">
+                  <strong>{{ comment.author }}</strong>
+                  <span
+                    class="admin-comment-badge"
+                    [class.new]="comment.is_new"
+                    [class.ok]="!comment.is_new"
+                  >
+                    {{ comment.is_new ? 'Új' : 'Komment' }}
+                  </span>
+                </div>
+
+                <div class="admin-comment-car">{{ comment.car_name }}</div>
+
+                <p class="admin-comment-text">
+                  {{ comment.content }}
+                </p>
+
+                <div class="admin-comment-time">
+                  {{ formatDate(comment.created_at) }}
+                </div>
+              </div>
+            </div>
+
+            <ng-template #noComments>
+              <p class="dashboard-text">Nincs még megjeleníthető komment.</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

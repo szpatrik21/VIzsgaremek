@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+
+<section class="contact-hero">
+  <div class="contact-inner">
+    <h1>Kapcsolat</h1>
+    <p>Elérhetőségeink az alábbiakban találhatók.</p><br><br>
+
+    <div class="contact-grid">
+      <div class="info-box">
+        <h3>Email</h3>
+        <p>
+          <a [href]="'mailto:' + email">{{ email }}</a>
+        </p>
+      </div>
+
+      <div class="info-box">
+        <h3>Telefon</h3>
+        <p>
+          <a [href]="'tel:' + phone.replaceAll(' ', '')">{{ phone }}</a>
+        </p>
+      </div>
+
+      <div class="info-box">
+        <h3>Cím</h3>
+        <p>{{ address }}</p>
+      </div>
+
+      <div class="info-box">
+        <h3>Nyitvatartás</h3>
+        <p *ngFor="let h of hours">{{ h }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="map-section">
+  <div class="contact-inner">
+    <h2>Bemutatótermünk</h2><br><br>
+
+    <div class="map-wrapper">
+      <iframe
+        [src]="mapSrc"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="LuxCar térkép"
+      ></iframe>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

@@ -1,0 +1,107 @@
+<app-navbar></app-navbar>
+
+<div class="register-wrapper">
+
+  <!-- BAL OLDAL -->
+  <div class="register-left">
+    <div class="brand-box">
+      <h1>Csatlakozz a LuxCar világához</h1>
+      <p>Hozz létre fiókot, és kérj ajánlatot prémium modellekre gyorsan, egyszerűen.</p>
+
+      <div class="brand-pills">
+        <span class="pill">Prémium modellek</span>
+        <span class="pill">Gyors ajánlatkérés</span>
+        <span class="pill">Egyszerű kezelés</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOBB OLDAL -->
+  <div class="register-right">
+    <div class="form-shell">
+      <h2>Regisztráció</h2>
+      <p class="sub">Add meg az adataidat, és már mehetsz is válogatni a kiemelt autók között.</p>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="grid">
+          <div class="field full">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" required />
+          </div>
+
+          <div class="field full">
+            <label for="username">Felhasználónév</label>
+            <input type="text" id="username" formControlName="username" required />
+          </div>
+
+          <div class="field">
+            <label for="last_name">Vezetéknév</label>
+            <input type="text" id="last_name" formControlName="last_name" required />
+          </div>
+
+          <div class="field">
+            <label for="first_name">Keresztnév</label>
+            <input type="text" id="first_name" formControlName="first_name" required />
+          </div>
+
+          <div class="field full">
+            <label for="password">Jelszó</label>
+            <input type="password" id="password" formControlName="password" required />
+          </div>
+
+          <div class="field">
+            <label for="phone">Telefonszám</label>
+            <input type="tel" id="phone" formControlName="phone" required />
+          </div>
+
+          <div class="field">
+            <label for="birthdate">Születési dátum</label>
+            <input type="date" id="birthdate" formControlName="birthdate" required />
+          </div>
+
+          <div class="field full">
+            <label for="address">Lakóhely</label>
+            <input type="text" id="address" formControlName="address" required />
+          </div>
+        </div>
+
+        <div class="consents">
+          <label class="checkbox-row">
+            <input type="checkbox" formControlName="acceptPrivacy" />
+            <span>
+              Elfogadom az
+              <a routerLink="/adatvedelem" target="_blank">adatkezelési nyilatkozatot</a>.
+            </span>
+          </label>
+
+          <label class="checkbox-row">
+            <input type="checkbox" formControlName="acceptTerms" />
+            <span>
+              Elfogadom a
+              <a routerLink="/aszf" target="_blank">felhasználási feltételeket</a>.
+            </span>
+          </label>
+
+          <small
+            class="consent-error"
+            *ngIf="
+              (form.get('acceptPrivacy')?.touched || form.get('acceptTerms')?.touched) &&
+              (form.get('acceptPrivacy')?.invalid || form.get('acceptTerms')?.invalid)
+            "
+          >
+            A regisztrációhoz kötelező elfogadni az adatkezelési nyilatkozatot és a felhasználási feltételeket.
+          </small>
+        </div>
+
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Folyamatban…' : 'Regisztráció' }}
+        </button>
+
+        <p id="msg" [class.error]="msgType==='error'" [class.success]="msgType==='success'">
+          {{ msg }}
+        </p>
+      </form>
+    </div>
+  </div>
+
+</div>

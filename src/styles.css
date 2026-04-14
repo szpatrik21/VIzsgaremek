@@ -1,0 +1,506 @@
+:root {
+  --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --gold: #d4af37;
+  --gold-light: #ffd230;
+  --bg: #000;
+  --panel: rgba(15, 15, 15, .75);
+  --card: #191919;
+  --text: rgba(255, 255, 255, .82);
+  --muted: rgba(255, 255, 255, .65);
+  --border: rgba(255, 255, 255, .10);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body:not(.admin-mode) {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  padding-top: 70px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body:not(.admin-mode) .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+body:not(.admin-mode) h1,
+body:not(.admin-mode) h2,
+body:not(.admin-mode) h3,
+body:not(.admin-mode) .hero-overlay h1,
+body:not(.admin-mode) .cim1,
+body:not(.admin-mode) .about-section h2,
+body:not(.admin-mode) .faq__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+body:not(.admin-mode) .slider {
+  position: relative;
+  width: 100%;
+  height: 490px;
+  overflow: hidden;
+}
+
+body:not(.admin-mode) .slider img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity .8s ease, transform 3.5s ease;
+}
+
+body:not(.admin-mode) .slider img.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+body:not(.admin-mode) .hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 90px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .72), rgba(0, 0, 0, .10));
+}
+
+body:not(.admin-mode) .hero-overlay h1 {
+  margin: 0;
+  font-size: 54px;
+  letter-spacing: -.5px;
+}
+
+body:not(.admin-mode) .hero-overlay p {
+  margin: 0;
+  max-width: 650px;
+  color: #ddd;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+body:not(.admin-mode) .hero-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+body:not(.admin-mode) .hero-actions a {
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body:not(.admin-mode) .hero-actions .cta {
+  background: var(--gold);
+  color: #000;
+}
+
+body:not(.admin-mode) .stats {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin-top: -52px;
+  position: relative;
+  z-index: 10;
+}
+
+body:not(.admin-mode) .stats__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+body:not(.admin-mode) .stat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 16px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .55);
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+body:not(.admin-mode) .stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 55, .22);
+  background: rgba(212, 175, 55, .06);
+}
+
+body:not(.admin-mode) .stat-card__num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 34px;
+  color: var(--gold);
+  margin-bottom: 6px;
+  letter-spacing: .3px;
+  line-height: 1;
+}
+
+body:not(.admin-mode) .stat-card__label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: .35px;
+}
+
+body:not(.admin-mode) .markak {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 44px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 22px 24px 10px;
+  margin: 26px auto 30px;
+  max-width: 1200px;
+  opacity: .95;
+  -webkit-overflow-scrolling: touch;
+}
+
+body:not(.admin-mode) .markak::-webkit-scrollbar {
+  display: none;
+}
+
+body:not(.admin-mode) .wallpaper {
+  flex: 0 0 auto;
+}
+
+body:not(.admin-mode) .wallpaper img {
+  width: auto;
+  height: 26px;
+  opacity: .75;
+  transition: .2s ease;
+  filter: grayscale(100%);
+}
+
+body:not(.admin-mode) .wallpaper img:hover {
+  transform: scale(1.06);
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+body:not(.admin-mode) .cim1 {
+  margin: 30px 0 18px;
+  font-size: 32px;
+  border-bottom: 2px solid var(--gold);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+body:not(.admin-mode) .carbox-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin: 32px 0 72px;
+}
+
+body:not(.admin-mode) .carbox1 {
+  background: var(--card);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .06);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .55);
+  transition: .25s ease;
+}
+
+body:not(.admin-mode) .carbox1:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 175, 55, .25);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .7);
+}
+
+body:not(.admin-mode) .carsbox {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+  transition: transform .25s ease;
+}
+
+body:not(.admin-mode) .carbox1:hover .carsbox {
+  transform: scale(1.03);
+}
+
+body:not(.admin-mode) .card-content {
+  padding: 18px;
+}
+
+body:not(.admin-mode) .card-content p {
+  margin: 6px 0;
+  color: #dcdcdc;
+}
+
+body:not(.admin-mode) .card-content b {
+  color: #fff;
+  font-size: 17px;
+}
+
+body:not(.admin-mode) .card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: #fff;
+}
+
+body:not(.admin-mode) .card-spec {
+  font-size: 14px;
+  color: #bbb;
+  margin: 0 0 10px;
+}
+
+body:not(.admin-mode) .card-price {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: #fff;
+}
+
+body:not(.admin-mode) .yellowbutton {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px 0;
+  border-radius: 14px;
+  background: #C9A16B;
+  color: #000;
+  text-decoration: none;
+  font-weight: 800;
+  transition: .2s ease;
+}
+
+body:not(.admin-mode) .yellowbutton:hover {
+  background: #d8b27c;
+}
+
+body:not(.admin-mode) .about-section {
+  margin: 0 0 30px;
+  padding: 0;
+  color: #ddd;
+}
+
+body:not(.admin-mode) .about-section h2 {
+  font-size: 32px;
+  margin: 0 0 18px;
+  border-bottom: 2px solid var(--gold);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+
+body:not(.admin-mode) .about-section p {
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0 0 14px;
+}
+
+body:not(.admin-mode) .about-section .highlight {
+  color: var(--gold);
+  font-weight: 800;
+}
+
+body:not(.admin-mode) .reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+body:not(.admin-mode) .reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body:not(.admin-mode) .api-msg {
+  width: 100%;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #ddd;
+  text-align: center;
+  font-family: "Space Grotesk", Arial, sans-serif;
+}
+
+body:not(.admin-mode) .simple-footer {
+  margin-top: 50px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 24px 16px;
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+}
+
+@media (max-width: 1100px) {
+  body:not(.admin-mode) .carbox-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 980px) {
+  body:not(.admin-mode) .stats {
+    margin-top: -40px;
+  }
+
+  body:not(.admin-mode) .stats__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  body:not(.admin-mode) .slider {
+    height: 420px;
+  }
+
+  body:not(.admin-mode) .hero-overlay {
+    padding: 0 24px;
+  }
+
+  body:not(.admin-mode) .hero-overlay h1 {
+    font-size: 36px;
+  }
+
+  body:not(.admin-mode) .hero-overlay p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 850px) {
+  body:not(.admin-mode) .carbox-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  body:not(.admin-mode) {
+    padding-top: 64px;
+  }
+
+  body:not(.admin-mode) .container {
+    padding: 0 16px;
+  }
+
+  body:not(.admin-mode) .cim1 {
+    margin-left: 16px;
+    margin-bottom: 18px;
+    font-size: 26px;
+  }
+
+  body:not(.admin-mode) .markak {
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 20px 16px 8px;
+    margin-bottom: 18px;
+    scroll-behavior: smooth;
+  }
+
+  body:not(.admin-mode) .wallpaper img {
+    height: 22px;
+    opacity: .65;
+    filter: grayscale(100%);
+  }
+
+  body:not(.admin-mode) .wallpaper img:active {
+    opacity: 1;
+  }
+
+  body:not(.admin-mode) .carbox-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+
+  body:not(.admin-mode) .carsbox {
+    height: 170px;
+  }
+
+  body:not(.admin-mode) .carbox--featured {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 14px;
+    padding: 0 16px 12px;
+    margin: 0 0 40px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:not(.admin-mode) .carbox--featured::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:not(.admin-mode) .carbox--featured .carbox1 {
+    flex: 0 0 auto;
+    width: 240px;
+    scroll-snap-align: start;
+    border-radius: 16px;
+  }
+
+  body:not(.admin-mode) .carbox--featured .carsbox {
+    height: 150px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  body:not(.admin-mode) .carbox--featured .card-content {
+    padding: 14px;
+  }
+
+  body:not(.admin-mode) .carbox--featured .yellowbutton {
+    padding: 10px 0;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  body:not(.admin-mode) .stats {
+    margin-top: -28px;
+  }
+
+  body:not(.admin-mode) .stats__inner {
+    grid-template-columns: 1fr;
+  }
+
+  body:not(.admin-mode) .stat-card__num {
+    font-size: 32px;
+  }
+
+  body:not(.admin-mode) .carbox-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  body:not(.admin-mode) .carsbox {
+    height: 170px;
+  }
+}

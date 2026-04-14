@@ -1,0 +1,180 @@
+:root{
+  --black:#000;
+  --white:#fff;
+  --gold:#d4af37;
+  --gray:#e6e6e6;
+}
+
+/* ===== PAGE ===== */
+
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+html{
+  overflow-y:scroll;
+}
+
+body{
+  margin:0;
+}
+
+.admin-page{
+  min-height:100vh;
+  background:var(--white);
+  font-family:Arial, sans-serif;
+  padding:24px 12px;
+}
+
+.page{
+  min-height:calc(100vh - 48px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===== LOGIN BOX ===== */
+
+.box{
+  width:100%;
+  max-width:420px;
+  min-height:360px;
+  background:var(--white);
+  padding:28px 30px;
+  border-radius:10px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  border:1px solid #f0f0f0;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ===== TITLE ===== */
+
+h2{
+  margin:0 0 22px;
+  color:var(--black);
+  font-size:28px;
+  font-weight:700;
+  border-left:6px solid var(--gold);
+  padding-left:12px;
+}
+
+/* ===== FORM ===== */
+
+form{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+label{
+  color:var(--black);
+  font-size:14px;
+  font-weight:bold;
+  margin-top:2px;
+}
+
+input{
+  width:100%;
+  height:44px;
+  padding:0 12px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-size:14px;
+  color:var(--black);
+  background:var(--white);
+  transition:0.2s;
+}
+
+input:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(212,175,55,0.15);
+}
+
+input::placeholder{
+  color:#777;
+}
+
+/* ===== MESSAGE AREA ===== */
+
+.msg-line{
+  min-height:20px;
+  margin-top:2px;
+  margin-bottom:8px;
+}
+
+.success,
+.err{
+  margin:0;
+  font-size:14px;
+  font-weight:bold;
+  line-height:1.2;
+}
+
+.success{
+  color:#1e7e34;
+}
+
+.err{
+  color:#a94442;
+}
+
+/* ===== BUTTON ===== */
+
+.gomb{
+  margin-top:auto;
+  background:var(--black);
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--black);
+  border:2px solid var(--black);
+  height:46px;
+  border-radius:6px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.25s;
+}
+
+.gomb:hover:not(:disabled){
+  background:black;
+  border-color:var(--gold);
+  color:white;
+}
+
+.gomb:disabled{
+  opacity:0.65;
+  cursor:not-allowed;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width:600px){
+  .admin-page{
+    padding:16px 10px;
+  }
+
+  .page{
+    min-height:calc(100vh - 32px);
+  }
+
+  .box{
+    max-width:380px;
+    min-height:340px;
+    padding:22px 18px;
+  }
+
+  h2{
+    font-size:24px;
+    margin-bottom:18px;
+  }
+
+  input,
+  .gomb{
+    height:42px;
+  }
+}

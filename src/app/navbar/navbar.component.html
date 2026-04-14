@@ -1,0 +1,125 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="yel3">
+      <h1>LuxCar</h1>
+    </div>
+
+    <a
+      class="nav-link"
+      routerLink="/"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Kezdőoldal
+    </a>
+
+    <a class="nav-link" routerLink="/autok" routerLinkActive="is-active">
+      Autók
+    </a>
+
+    <a class="nav-link" routerLink="/kapcsolat" routerLinkActive="is-active">
+      Kapcsolat
+    </a>
+
+    <a class="nav-link" routerLink="/gyik" routerLinkActive="is-active">
+      GYIK
+    </a>
+
+    <!-- ✅ PROFIL MENÜPONT (csak belépve) -->
+    <a class="nav-link" routerLink="/profile" routerLinkActive="is-active" *ngIf="isLoggedIn">
+      Profil
+    </a>
+  </div>
+
+  <!-- HAMBURGER -->
+  <button
+    class="hamburger"
+    id="hamburger"
+    type="button"
+    aria-label="Menü"
+    aria-controls="mobileMenu"
+    [attr.aria-expanded]="menuOpen"
+    [class.is-open]="menuOpen"
+    (click)="toggleMenu()"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- BACKDROP -->
+  <div
+    class="menu-backdrop"
+    id="menuBackdrop"
+    [class.is-open]="menuOpen"
+    (click)="closeMenu()"
+  ></div>
+
+  <!-- MOBIL MENÜ -->
+  <aside
+    class="mobile-menu"
+    id="mobileMenu"
+    [class.is-open]="menuOpen"
+    [attr.aria-hidden]="!menuOpen"
+  >
+    <div class="mobile-menu__head">
+      <div class="mobile-brand">LuxCar</div>
+      <button
+        class="menu-close"
+        id="menuClose"
+        type="button"
+        aria-label="Bezárás"
+        (click)="closeMenu()"
+      >✕</button>
+    </div>
+
+    <nav class="mobile-menu__links">
+      <a
+        class="nav-link"
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
+      >Kezdőoldal</a>
+
+      <a class="nav-link" routerLink="/autok" routerLinkActive="is-active" (click)="closeMenu()">Autók</a>
+      <a class="nav-link" routerLink="/kapcsolat" routerLinkActive="is-active" (click)="closeMenu()">Kapcsolat</a>
+      <a class="nav-link" routerLink="/gyik" routerLinkActive="is-active" (click)="closeMenu()">GYIK</a>
+
+      <!-- ✅ PROFIL MENÜPONT (csak belépve) -->
+      <a class="nav-link" routerLink="/profile" routerLinkActive="is-active" *ngIf="isLoggedIn" (click)="closeMenu()">
+        Profil
+      </a>
+    </nav>
+
+    <div class="mobile-menu__auth">
+      <!-- Guest -->
+      <div class="auth-buttons" id="guestAuthMobile" *ngIf="!isLoggedIn">
+        <a class="btn-auth btn-login" routerLink="/login" (click)="closeMenu()">Bejelentkezés</a>
+        <a class="btn-auth btn-register" routerLink="/register" (click)="closeMenu()">Regisztráció</a>
+      </div>
+
+      <!-- User -->
+      <div class="userbox" id="userBoxMobile" *ngIf="isLoggedIn">
+        <a class="profile-link" id="profileNameMobile" routerLink="/profile" (click)="closeMenu()">
+          {{ fullName || 'Profil' }}
+        </a>
+        <a href="#" class="logout-link" id="logoutBtnMobile" (click)="logout($event)">Kijelentkezés</a>
+      </div>
+    </div>
+  </aside>
+
+  <div class="navbar-right">
+    <!-- Guest -->
+    <div class="auth-buttons" id="guestAuth" *ngIf="!isLoggedIn">
+      <a class="btn-auth btn-login" routerLink="/login">Bejelentkezés</a>
+      <a class="btn-auth btn-register" routerLink="/register">Regisztráció</a>
+    </div>
+
+    <!-- User -->
+    <div class="userbox" id="userBox" *ngIf="isLoggedIn">
+      <a class="profile-link" id="profileName" routerLink="/profile"><b>{{ fullName || 'Profil' }}</b></a>
+      <a href="#" class="logout-link" id="logoutBtn" (click)="logout($event)">Kijelentkezés</a>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,23 @@
+<app-navbar></app-navbar>
+
+<section class="faq-hero">
+  <div class="faq-inner">
+    <h1>GYIK</h1>
+    <p>Gyakran ismételt kérdések – gyors válaszok, hogy ne kelljen keresgélni. </p><br>
+
+    <div class="faq-list">
+      <div class="faq-item" *ngFor="let f of faqs; let i = index" [class.is-open]="f.open">
+        <button class="faq-q" type="button" (click)="toggle(i)" [attr.aria-expanded]="f.open">
+          <span>{{ f.q }}</span>
+          <span class="chev">{{ f.open ? '–' : '+' }}</span>
+        </button>
+
+        <div class="faq-a" *ngIf="f.open">
+          <p>{{ f.a }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

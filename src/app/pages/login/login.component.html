@@ -1,0 +1,34 @@
+<app-navbar></app-navbar>
+
+<div class="login-page">
+  <div class="login-wrapper">
+    <h2>Bejelentkezés</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="field">
+        <label for="username">Felhasználónév</label>
+        <input type="text" id="username" formControlName="username" required>
+      </div>
+
+      <div class="field">
+  <label for="password">Jelszó</label>
+  <input type="password" id="password" formControlName="password" required>
+  </div>
+
+  <div class="help-links">
+    <a class="forgot-link" routerLink="/forgot-password">Elfelejtetted a jelszavad?</a>
+  </div>
+
+  <div class="register-wrapper">
+    <a class="reg-link" routerLink="/register">Új fiók létrehozása</a>
+  </div>
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Folyamatban…' : 'Bejelentkezés' }}
+      </button>
+
+      <p id="msg" [class.error]="msgType==='error'" [class.success]="msgType==='success'">
+        {{ msg }}
+      </p>
+    </form>
+  </div>
+</div>

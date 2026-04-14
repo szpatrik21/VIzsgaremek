@@ -1,0 +1,125 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar-logo">Menü</div>
+
+    <nav class="dashboard-sidebar-menu">
+      <a
+        routerLink="/admin"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Főoldal
+      </a>
+
+      <a routerLink="/admin/carcreate" routerLinkActive="active">
+        Autó feltöltés
+      </a>
+
+      <a routerLink="/admin/cars" routerLinkActive="active">
+        Autók kezelése
+      </a>
+      <a routerLink="/admin/comments" routerLinkActive="active">
+        Kommentek kezelése
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active">
+        Felhasználók kezelése
+      </a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-panel">
+      <div class="wrap">
+        <h1>Felhasználók kezelése</h1>
+
+        <p class="msg ok" *ngIf="msg && msgOk">{{ msg }}</p>
+        <p class="msg err" *ngIf="msg && !msgOk">{{ msg }}</p>
+
+        <p class="muted" *ngIf="loading">Betöltés...</p>
+
+        <table *ngIf="!loading && users.length > 0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Profilkép</th>
+              <th>Felhasználó</th>
+              <th>Kapcsolat</th>
+              <th>Születési dátum / Cím</th>
+              <th>Szerepkör</th>
+              <th>Regisztráció</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let user of pagedUsers">
+              <td>{{ user.id }}</td>
+
+              <td>
+                <img
+                  *ngIf="user.profile_image; else noImage"
+                  [src]="imageUrl(user.profile_image)"
+                  alt="profilkép"
+                  class="avatar"
+                >
+                <ng-template #noImage>
+                  <span class="muted">nincs kép</span>
+                </ng-template>
+              </td>
+
+              <td>
+                <strong>{{ fullName(user) || '-' }}</strong><br>
+                <span class="muted">&#64;{{ user.username || '-' }}</span><br>
+                <span class="muted">{{ user.email }}</span>
+              </td>
+
+              <td>
+                <strong>{{ user.phone || '-' }}</strong><br>
+                <span class="muted">{{ user.email }}</span>
+              </td>
+
+              <td>
+                <strong>{{ formatDate(user.birthdate) }}</strong><br>
+                <span class="muted">{{ user.address || '-' }}</span>
+              </td>
+
+              <td>
+                <span class="badge role-admin" *ngIf="user.role === 'admin'">ADMIN</span>
+                <span class="badge role-user" *ngIf="user.role !== 'admin'">USER</span>
+              </td>
+
+              <td>{{ formatDate(user.created_at) }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination" *ngIf="!loading && users.length > 0 && totalPages > 1">
+          <button class="page-btn" type="button" (click)="prevPage()" [disabled]="currentPage === 1">
+            Előző
+          </button>
+
+          <button
+            class="page-btn"
+            type="button"
+            *ngFor="let page of visiblePages"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+
+          <button class="page-btn" type="button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+            Következő
+          </button>
+        </div>
+
+        <p class="page-info" *ngIf="!loading && users.length > 0 && totalPages > 1">
+          {{ currentPage }} / {{ totalPages }} oldal
+        </p>
+
+        <p class="muted" *ngIf="!loading && users.length === 0">Nincs megjeleníthető felhasználó.</p>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,130 @@
+<app-navbar></app-navbar>
+
+<div class="autok">
+
+  <div class="container">
+    <h2 class="autocim">Autók:</h2>
+  </div>
+
+  <div class="szuro">
+    <form *ngIf="filtersForm as f" class="filters" [formGroup]="f" (ngSubmit)="applyFilters()">
+      <div class="filters-row">
+
+        <div class="f">
+          <label for="markaSelect">Márka</label>
+          <select
+            formControlName="marka"
+            id="markaSelect"
+            aria-label="Márka"
+            title="Márka"
+          >
+            <option value="">Összes</option>
+            <option *ngFor="let m of markak" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+
+        <div class="f">
+          <label for="allapotSelect">Állapot</label>
+          <select
+            formControlName="allapot"
+            id="allapotSelect"
+            aria-label="Állapot"
+            title="Állapot"
+          >
+            <option value="">Összes</option>
+            <option *ngFor="let a of allapotok" [value]="a">{{ a }}</option>
+          </select>
+        </div>
+
+        <div class="f">
+          <label for="kivitelSelect">Kivitel</label>
+          <select
+            formControlName="kivitel"
+            id="kivitelSelect"
+            aria-label="Kivitel"
+            title="Kivitel"
+          >
+            <option value="">Összes</option>
+            <option *ngFor="let k of kivitelek" [value]="k">{{ k }}</option>
+          </select>
+        </div>
+
+        <div class="f">
+          <label for="szinSelect">Szín</label>
+          <select
+            formControlName="szin"
+            id="szinSelect"
+            aria-label="Szín"
+            title="Szín"
+          >
+            <option value="">Összes</option>
+            <option *ngFor="let s of szinek" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+
+        <div class="f f-actions">
+          <button type="submit" class="btn-filter">Szűrés</button>
+          <a class="btn-reset" routerLink="/autok" (click)="resetFilters($event)">Törlés</a>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <div class="carbox" id="carsRoot">
+
+      <p class="no-results" *ngIf="loading">Betöltés...</p>
+      <p class="no-results" *ngIf="!loading && errorMsg">{{ errorMsg }}</p>
+
+      <p class="no-results" *ngIf="!loading && !errorMsg && (autok?.length ?? 0) === 0">
+        Nincs találat a szűrésre.
+      </p>
+
+      <ng-container *ngIf="!loading && !errorMsg && (autok?.length ?? 0) > 0">
+        <div class="carbox1" *ngFor="let auto of paginatedAutok; trackBy: trackByAutoId">
+
+          <img
+            [src]="autoKep(auto)"
+            class="carsbox"
+            [alt]="((auto.marka || '') + ' ' + (auto.modell || '')).trim() || 'Autó kép'"
+            title="Autó kép"
+            (error)="onImgError($event)"
+          />
+
+          <div class="card-content">
+            <p><strong>{{ auto.marka }} {{ auto.modell }}</strong></p>
+            <p>{{ auto.teljesitmeny ?? 0 }} LE • {{ auto.uzemanyag }}</p>
+            <p><b>{{ formatFt(auto.ar) }}</b></p>
+
+            <a class="yellowbutton" [routerLink]="['/autok', auto.id]">Érdekel</a>
+          </div>
+
+        </div>
+      </ng-container>
+
+    </div>
+
+    <div class="pagination" *ngIf="!loading && !errorMsg && totalPages > 1">
+      <button type="button" (click)="prevPage()" [disabled]="currentPage === 1">
+        Előző
+      </button>
+
+      <button
+        type="button"
+        *ngFor="let page of pages"
+        (click)="goToPage(page)"
+        [class.active]="page === currentPage"
+      >
+        {{ page }}
+      </button>
+
+      <button type="button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Következő
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<app-footer></app-footer>

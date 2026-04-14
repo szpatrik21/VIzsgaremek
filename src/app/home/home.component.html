@@ -1,0 +1,171 @@
+<app-navbar></app-navbar>
+
+<!-- HERO -->
+<div class="slider">
+  <img src="/images/bejelentkezes.jpg" alt="car">
+  <img src="/images/19.jpg" alt="car">
+  <img src="/images/21.jpg" alt="car">
+  <img src="/images/22.jpg" alt="car">
+  <img src="/images/Autok/Autok/Audi%20R8%20V10%20Performance/R81.webp" alt="car">
+  <img src="/images/Autok/Autok/Ferrari%20LaFerrari/laferrari1.jpg" alt="car">
+  <img src="/images/Autok/Autok/Maserati%20MC20/Maserati.jpg" alt="car">
+  <img src="/images/Autok/Autok/Aston%20Martin%20DB11/Aston1.jpg" alt="car">
+
+  <div class="hero-overlay">
+    <h1>Luxusautók egy helyen</h1>
+    <p>
+      Válogass prémium modellek közül, nézd meg a részleteket,
+      és kérj ajánlatot gyorsan, egyszerűen.
+    </p>
+
+    <div class="hero-actions">
+      <a class="cta" routerLink="/autok">Autók megtekintése</a>
+    </div>
+  </div>
+</div>
+<br><br><br>
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="stats__inner">
+    <div class="stat-card">
+      <div class="stat-card__num">
+        <span class="countup" data-target="20" data-suffix="+">0</span>
+      </div>
+      <div class="stat-card__label">Prémium modell</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__num">
+        <span class="countup" data-target="8">0</span>
+      </div>
+      <div class="stat-card__label">Luxus márka</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__num">
+        <span class="countup" data-target="120" data-suffix="+">0</span>
+      </div>
+      <div class="stat-card__label">Ajánlatkérés / hónap</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__num">
+        <span class="countup" data-target="100" data-suffix="%">0</span>
+      </div>
+      <div class="stat-card__label">Minőségellenőrzés</div>
+    </div>
+  </div>
+</section>
+<br>
+<!-- MIÉRT MINKET -->
+<section class="trust reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-kicker">Miért LuxCar</span>
+      <h2 class="section-title">Prémium élmény az első kattintástól</h2>
+      <p class="section-subtitle">
+        Nem csak autókat kínálunk, hanem egy letisztult, gyors és megbízható prémium élményt.
+      </p>
+    </div>
+
+    <div class="trust-grid">
+      <article class="trust-card" *ngFor="let item of advantages">
+        <div class="trust-card__icon">{{ item.icon }}</div>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.text }}</p>
+      </article>
+    </div>
+  </div>
+</section>
+<br><br><br>
+<!-- KIEMELT AUTÓK -->
+<div class="container">
+  <h2 id="kiemelt" class="cim1 reveal">Kiemelt autók:</h2>
+
+  <div id="featuredCars" class="carbox carbox-grid carbox--featured">
+    <div class="api-msg" *ngIf="loading">Kiemelt autók betöltése...</div>
+
+    <div class="api-msg" *ngIf="!loading && errorMsg">
+      {{ errorMsg }}
+    </div>
+
+    <div class="api-msg" *ngIf="!loading && !errorMsg && featured.length === 0">
+      Nincs kiemelt autó.
+    </div>
+
+    <div class="carbox1 reveal" *ngFor="let auto of featured">
+      <img
+        class="carsbox"
+        [src]="autoKep(auto)"
+        [alt]="(auto.marka || '') + ' ' + (auto.modell || '')"
+        (error)="onImgError($event)"
+      >
+
+      <div class="card-content">
+        <p class="card-title">{{ auto.marka }} {{ auto.modell }}</p>
+        <p class="card-spec">{{ auto.teljesitmeny ?? 0 }} LE • {{ auto.uzemanyag }}</p>
+        <p class="card-price">{{ formatFt(auto.ar) }}</p>
+
+        <a class="yellowbutton" [routerLink]="['/autok', auto.id]">Érdekel</a>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br>
+<!-- HOGYAN MŰKÖDIK -->
+<section class="process reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-kicker">Egyszerű folyamat</span>
+      <h2 class="section-title">Így működik</h2>
+      <p class="section-subtitle">
+        Rövid, átlátható és gyors folyamat, hogy minél hamarabb közelebb kerülj a kiválasztott autóhoz.
+      </p>
+    </div>
+
+    <div class="process-grid">
+      <article class="process-card" *ngFor="let step of steps">
+        <div class="process-card__num">{{ step.number }}</div>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.text }}</p>
+      </article>
+    </div>
+  </div>
+</section>
+<br><br><br>
+<!-- RÓLUNK -->
+<section class="about reveal">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-section">
+        <h2 class="section-title">Rólunk</h2>
+
+        <p>
+          Üdvözlünk a <span class="highlight">LuxCar</span>-nél, ahol a négy kerék nem csupán közlekedési eszköz,
+          hanem életstílus. Webshopunkban a világ legismertebb és legexkluzívabb márkáinak luxusautóit találod –
+          <span class="highlight">Ferrari</span>, <span class="highlight">Lamborghini</span>,
+          <span class="highlight">Aston Martin</span>, <span class="highlight">Bugatti</span> és még sok más ikonikus név.
+        </p>
+
+        <p>
+          Célunk, hogy ügyfeleink számára elérhetővé tegyük az autózás legfelsőbb szintjét:
+          a teljesítményt, a kifinomultságot és a páratlan dizájnt.
+        </p>
+
+        <p>
+          Legyen szó vadonatúj sportautóról vagy gondosan válogatott használt prémium modellről,
+          kínálatunk minden darabja a minőség és a luxus garanciája.
+        </p>
+      </div>
+
+      <div class="about-side">
+        <div class="about-card" *ngFor="let fact of aboutFacts">
+          <div class="about-card__value">{{ fact.value }}</div>
+          <div class="about-card__label">{{ fact.label }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

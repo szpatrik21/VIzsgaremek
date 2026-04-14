@@ -1,0 +1,143 @@
+<app-navbar></app-navbar>
+
+<div class="profile-container">
+  <h2 class="username">{{ user?.username ?? 'Profil' }}</h2>
+
+  <p class="state" *ngIf="loading">Betöltés...</p>
+  <p class="state err" *ngIf="!loading && errorMsg">{{ errorMsg }}</p>
+
+  <ng-container *ngIf="!loading && !errorMsg && user">
+    <div class="profile-top">
+      <img
+        class="profile-image"
+        [src]="profileImgSrc()"
+        [alt]="(user.username ?? 'Profil') + ' profilkép'"
+        [title]="(user.username ?? 'Profil') + ' profilkép'"
+        (error)="onImgError($event)"
+      />
+
+      <div class="upload-box">
+        <label class="upload-label">Profilkép feltöltés</label>
+
+        <div class="file-row">
+          <input
+            class="file-input"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+          />
+
+          <button
+            class="upload-btn"
+            type="button"
+            [disabled]="uploading"
+            (click)="uploadProfileImage()"
+          >
+            {{ uploading ? 'Feltöltés...' : 'Feltöltés' }}
+          </button>
+        </div>
+
+        <p
+          class="upload-msg"
+          [class.ok]="uploadMsg.includes('✅')"
+          [class.err]="uploadMsg && !uploadMsg.includes('✅')"
+        >
+          {{ uploadMsg }}
+        </p>
+      </div>
+    </div>
+<br><br>
+    <div class="profile-card info-card">
+      <div class="info-row">
+        <span class="info-label">Teljes név</span>
+        <span class="info-value">{{ fullName() }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-label">Email cím</span>
+        <span class="info-value">{{ user.email ?? '—' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-label">Telefonszám</span>
+        <span class="info-value">{{ user.phone ?? '—' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-label">Születési dátum</span>
+        <span class="info-value">{{ user.birthdate ?? '—' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-label">Lakóhely</span>
+        <span class="info-value">{{ user.address ?? '—' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="info-label">Regisztráció dátuma</span>
+        <span class="info-value">{{ createdAtHu() }}</span>
+      </div>
+    </div>
+<br><br>
+    <div class="profile-sections">
+      <div class="profile-card">
+        <h3>Jelszó módosítása</h3>
+
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form" novalidate>
+          <div class="field">
+            <label for="current_password">Jelenlegi jelszó</label>
+            <input id="current_password" type="password" formControlName="current_password" />
+          </div>
+
+          <div class="field">
+            <label for="password">Új jelszó</label>
+            <input id="password" type="password" formControlName="password" />
+          </div>
+
+          <div class="field">
+            <label for="password_confirmation">Új jelszó megerősítése</label>
+            <input id="password_confirmation" type="password" formControlName="password_confirmation" />
+          </div>
+
+          <button class="save-btn" type="submit" [disabled]="passwordLoading">
+            {{ passwordLoading ? 'Mentés...' : 'Jelszó módosítása' }}
+          </button>
+
+          <p class="action-msg ok" *ngIf="passwordMsgType === 'success'">{{ passwordMsg }}</p>
+          <p class="action-msg err" *ngIf="passwordMsgType === 'error'">{{ passwordMsg }}</p>
+        </form>
+      </div>
+
+      <div class="profile-card">
+        <h3>Saját kommentjeim</h3>
+
+        <p class="state" *ngIf="commentsLoading">Kommentek betöltése...</p>
+        <p class="state" *ngIf="!commentsLoading && myComments.length === 0">
+          Még nincs saját kommented.
+        </p>
+
+        <div class="my-comments" *ngIf="!commentsLoading && myComments.length > 0">
+          <div class="comment-item" *ngFor="let comment of myComments">
+            <div class="comment-head">
+              <div>
+                <strong>{{ comment.auto_nev || 'Autó' }}</strong>
+                <p class="comment-date">{{ formatDate(comment.created_at) }}</p>
+              </div>
+
+              <button class="delete-btn" type="button" (click)="deleteComment(comment.id)">
+                Törlés
+              </button>
+            </div>
+
+            <p class="comment-text">{{ comment.content }}</p>
+          </div>
+        </div>
+
+        <p class="action-msg ok" *ngIf="commentMsgType === 'success'">{{ commentMsg }}</p>
+        <p class="action-msg err" *ngIf="commentMsgType === 'error'">{{ commentMsg }}</p>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<app-footer></app-footer>
